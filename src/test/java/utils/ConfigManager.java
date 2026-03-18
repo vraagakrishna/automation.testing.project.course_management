@@ -1,0 +1,31 @@
+package utils;
+
+import common.Constants;
+
+public class ConfigManager {
+
+    public static String getPlatformName() {
+        return System.getProperty("PLATFORM_NAME", Constants.PLATFORM_ANDROID);
+    }
+
+    public static String getExecutionType() {
+        return System.getProperty("EXECUTION_TYPE", Constants.EXECUTION_TYPE_MOBILE_WEB);
+    }
+
+    public static String getBrowserName() {
+        return System.getProperty("BROWSER_NAME", "chrome");
+    }
+
+    public static String getAppPath() {
+        return System.getProperty("APP_PATH", "target/app/app-release.apk");
+    }
+
+    public static String getAppUrl() {
+        return System.getProperty("APP_URL", Constants.DEV_APK_URL);
+    }
+
+    public static String getAutomatorName() {
+        return System.getProperty("AUTOMATOR_NAME", "UiAutomator2");
+    }
+
+}
