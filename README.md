@@ -56,8 +56,8 @@ The goal of this project is to:
 * **Device**: 
   * **Android** (Real Device / Emulator) - fully supported
   * **iOS** (Planned) - not yet tested due to lack of device and iOS app
-* **Inspector Tool**: Appium Inspector
-* **Screen Mirroring**: scrcpy
+* **Inspector Tool**: [Appium Inspector](https://github.com/appium/appium-inspector/releases)
+* **Screen Mirroring**: [scrcpy](https://github.com/Genymobile/scrcpy/releases)
 
 <br/>
 

@@ -12,19 +12,23 @@ import java.nio.file.StandardCopyOption;
 public class ScreenshotUtils {
 
     // <editor-fold desc="Class Fields / Constants">
-    private static final String screenshotDir = System.getProperty("user.dir") + File.separator +
+    private static final String SCREENSHOT_DIR = System.getProperty("user.dir") + File.separator +
             "Reports" + File.separator + "Screenshots";
     // </editor-fold>
 
     // <editor-fold desc="Public Methods">
     public static void captureAndAttach(WebDriver driver, String label) {
-        takeScreenshot(driver, label.replace(" ", "_") + "_" + System.currentTimeMillis());
+        String path = takeScreenshot(driver, label.replace(" ", "_") + "_" +
+                System.currentTimeMillis());
+        ReportManager.getTest()
+                     .info(label)
+                     .addScreenCaptureFromPath(path, label);//
     }
     // </editor-fold>
 
     // <editor-fold desc="Private Methods">
     private static File getScreenshotPath(String screenshotName) {
-        return new File(screenshotDir, screenshotName + ".png");
+        return new File(SCREENSHOT_DIR, screenshotName + ".png");
     }
 
     private static String takeScreenshot(WebDriver driver, String screenshotName) {
