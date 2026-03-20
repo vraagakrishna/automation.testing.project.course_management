@@ -21,7 +21,7 @@ public class ScreenshotUtils {
         String path = takeScreenshot(driver, label.replace(" ", "_") + "_" +
                 System.currentTimeMillis());
         ReportManager.getTest()
-                     .info(label)
+                     .info("Screenshot: " + label)
                      .addScreenCaptureFromPath(path, label);//
     }
     // </editor-fold>

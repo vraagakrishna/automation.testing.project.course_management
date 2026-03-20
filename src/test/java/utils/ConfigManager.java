@@ -28,4 +28,12 @@ public class ConfigManager {
         return System.getProperty("AUTOMATOR_NAME", "UiAutomator2");
     }
 
+    public static String getAdminEmail() {
+        return System.getProperty("ADMIN_EMAIL", System.getenv("ADMIN_EMAIL"));
+    }
+
+    public static String getAdminPassword() {
+        return System.getProperty("ADMIN_PASSWORD", System.getenv("ADMIN_PASSWORD"));
+    }
+
 }

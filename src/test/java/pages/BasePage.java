@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import utils.AlertUtils;
 
 import java.time.Duration;
 import java.util.List;
@@ -16,11 +17,14 @@ public class BasePage {
 
     // <editor-fold desc="Class Fields / Constants">
     protected final AppiumDriver driver;
+
+    protected final AlertUtils alertUtils;
     // </editor-fold>
 
     // <editor-fold desc="Ctor">
     public BasePage(AppiumDriver driver) {
         this.driver = driver;
+        this.alertUtils = new AlertUtils(driver);
     }
     // </editor-fold>
 

@@ -5,7 +5,10 @@ import factory.PageFactory;
 import io.appium.java_client.AppiumDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import pages.interfaces.DashboardPage;
 import pages.interfaces.HomePage;
+import pages.interfaces.LoginPage;
+import pages.interfaces.NavigationBar;
 
 import java.net.MalformedURLException;
 import java.util.logging.Logger;
@@ -18,6 +21,12 @@ public class TestsBase {
     protected AppiumDriver driver;
 
     protected HomePage homePage;
+
+    protected NavigationBar navigationBar;
+
+    protected LoginPage loginPage;
+
+    protected DashboardPage dashboardPage;
     // </editor-fold>
 
     // <editor-fold desc="Ctor">
@@ -35,9 +44,14 @@ public class TestsBase {
         driver = DriverFactory.getDriver();
 
         this.homePage = PageFactory.getHomePage(driver);
+        this.navigationBar = PageFactory.getNavigationBar(driver);
+        this.loginPage = PageFactory.getLoginPage(driver);
+        this.dashboardPage = PageFactory.getDashboardPage(driver);
+
+        this.setUpPage();
     }
 
-    @AfterClass
+    @AfterClass(alwaysRun = true)
     public void tearDown() {
         logger.info("Tearing down...");
 
@@ -45,6 +59,12 @@ public class TestsBase {
             DriverFactory.quitDriver();
             driver = null;
         }
+    }
+    // </editor-fold>
+
+    // <editor-fold desc="Protected Methods">
+    protected void setUpPage() {
+        // the inherited classes will implement this, if necessary
     }
     // </editor-fold>
 

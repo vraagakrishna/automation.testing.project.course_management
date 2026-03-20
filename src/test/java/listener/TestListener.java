@@ -4,15 +4,12 @@ import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
 import factory.DriverFactory;
-import org.testng.ITestContext;
-import org.testng.ITestListener;
-import org.testng.ITestNGMethod;
-import org.testng.ITestResult;
+import org.testng.*;
 import utils.ExtentReportManager;
 import utils.ReportManager;
 import utils.ScreenshotUtils;
 
-public class TestListener implements ITestListener {
+public class TestListener implements ITestListener, IConfigurationListener {
 
     // <editor-fold desc="Class Fields / Constants">
     private static ExtentReports extent;
@@ -29,7 +26,8 @@ public class TestListener implements ITestListener {
         ExtentTest extentTest = extent.createTest(this.getDescription(result.getMethod()));
         ReportManager.setTest(extentTest);
 
-        String[] groups = result.getMethod().getGroups();
+        String[] groups = result.getMethod()
+                                .getGroups();
         for (String group : groups) {
             extentTest.assignCategory(group);
         }
@@ -45,13 +43,13 @@ public class TestListener implements ITestListener {
     }
 
     @Override
+    public void onConfigurationFailure(ITestResult result) {
+        handleFailure(result);
+    }
+
+    @Override
     public void onTestFailure(ITestResult result) {
-        ReportManager.getTest()
-                     .log(
-                             Status.FAIL,
-                             "Test Case '" + this.getDescription(result.getMethod()) + "' has Failed."
-                     );
-        ScreenshotUtils.captureAndAttach(DriverFactory.getDriver(), result.getName());
+        handleFailure(result);
     }
 
     @Override
@@ -76,6 +74,22 @@ public class TestListener implements ITestListener {
             description = method.getMethodName();
 
         return description;
+    }
+
+    private void handleFailure(ITestResult result) {
+        ExtentTest test = ReportManager.getTest();
+        String testCase = null;
+
+        // If no test exists yet (config failure), create one
+        if (test == null) {
+            testCase = this.getDescription(result.getMethod());
+            test = extent.createTest("Configuration Failure: " + testCase);
+            ReportManager.setTest(test);
+        }
+
+        test.log(Status.FAIL, "Test Case '" + testCase + "' has Failed.");
+
+        ScreenshotUtils.captureAndAttach(DriverFactory.getDriver(), testCase);
     }
     // </editor-fold>
 
