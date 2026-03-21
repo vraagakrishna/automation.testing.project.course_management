@@ -1,13 +1,12 @@
-package pages.android;
+package pages.android.auth;
 
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
-import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import pages.BasePage;
-import pages.interfaces.LoginPage;
-import pages.web.LoginPageWeb;
+import pages.interfaces.auth.LoginPage;
+import pages.web.auth.LoginPageWeb;
 import utils.ReportManager;
 
 import java.util.logging.Logger;
@@ -17,7 +16,8 @@ public class LoginPageAndroid extends BasePage implements LoginPage {
     // <editor-fold desc="Class Fields / Constants">
     private static final Logger logger = Logger.getLogger(LoginPageWeb.class.getName());
 
-    private final By loginHeading = By.xpath("//android.view.View[@content-desc=\"Login to Access Learning Materials\"]");
+    private final By loginHeading = By.xpath(
+            "//android.view.View[@content-desc=\"Login to Access Learning Materials\"]");
 
     private final By emailField = By.xpath("(//android.widget.EditText)[1]");
 
@@ -27,7 +27,8 @@ public class LoginPageAndroid extends BasePage implements LoginPage {
 
     private final By registerButton = By.xpath("//android.view.View[@content-desc=\"Sign Up Here\"]");
 
-    private final By errorPanel = By.xpath("//android.view.View[@focusable='true' and @clickable='false' and @content-desc][2]");
+    private final By errorPanel = By.xpath(
+            "//android.view.View[@focusable='true' and @clickable='false' and @content-desc][2]");
     // </editor-fold>
 
     // <editor-fold desc="Ctor">

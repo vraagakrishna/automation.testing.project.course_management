@@ -1,4 +1,4 @@
-package pages.interfaces;
+package pages.interfaces.dashboard;
 
 public interface DashboardPage {
 

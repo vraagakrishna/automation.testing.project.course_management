@@ -1,9 +1,9 @@
-package pages.android;
+package pages.android.dashboard;
 
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
 import pages.BasePage;
-import pages.interfaces.DashboardPage;
+import pages.interfaces.dashboard.DashboardPage;
 import utils.SoftAssertManager;
 
 import java.util.logging.Logger;
