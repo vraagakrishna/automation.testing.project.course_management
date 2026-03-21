@@ -17,16 +17,16 @@ public class UserTestData {
             "gmail.com", "yahoo.com", "outlook.com", "hotmail.com", "icloud.com"
     );
 
+    private static final String firstName = generateFakeFirstName();
+
+    private static final String lastName = generateFakeLastName();
+
+    private static final String email = generateFakeEmail();
+
     public static String weakPassword = faker.internet()
                                              .password(1, 5, true, true, true);
 
     private static String password = generateFakePassword();
-
-    private static String firstName = generateFakeFirstName();
-
-    private static String lastName = generateFakeLastName();
-
-    private static String email = generateFakeEmail();
     // </editor-fold>
 
     // <editor-fold desc="Getters and Setters">

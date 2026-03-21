@@ -1,4 +1,4 @@
-package pages.interfaces;
+package pages.interfaces.auth;
 
 public interface LoginPage {
 

@@ -19,6 +19,12 @@ public class NavigationBarAndroid extends BasePage implements NavigationBar {
     private final By logoutBtn = By.xpath("//android.widget.Button[@content-desc=\"Logout\"]");
 
     private final By adminPanelBtn = By.xpath("//android.widget.Button[@content-desc=\"Admin Panel\"]");
+
+    private final By adminNavBurgerBtn = By.xpath("//android.widget.ScrollView/android.view.View[1]");
+
+    private final By coursesNavBtn = By.xpath("//android.widget.Button[@content-desc=\"Courses\"]");
+
+    private final By backToWebsiteBtn = By.xpath("//android.widget.Button[@content-desc=\"Back to Home\"]");
     // </editor-fold>
 
     // <editor-fold desc="Ctor">
@@ -46,11 +52,27 @@ public class NavigationBarAndroid extends BasePage implements NavigationBar {
         this.clickNavBurger();
         this.clickButton(adminPanelBtn);
     }
+
+    @Override
+    public void clickBackToWebsiteBtn() {
+        this.clickAdminNavBurger();
+        this.clickButton(backToWebsiteBtn);
+    }
+
+    @Override
+    public void clickCoursesBtn() {
+        this.clickAdminNavBurger();
+        this.clickButton(coursesNavBtn);
+    }
     // </editor-fold>
 
     // <editor-fold desc="Private Methods">
     private void clickNavBurger() {
         this.clickButton(navBurgerBtn);
+    }
+
+    private void clickAdminNavBurger() {
+        this.clickButton(adminNavBurgerBtn);
     }
     // </editor-fold>
 

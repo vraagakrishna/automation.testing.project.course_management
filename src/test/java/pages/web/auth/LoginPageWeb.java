@@ -1,4 +1,4 @@
-package pages.web;
+package pages.web.auth;
 
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
@@ -6,7 +6,7 @@ import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import pages.BasePage;
-import pages.interfaces.LoginPage;
+import pages.interfaces.auth.LoginPage;
 import utils.ReportManager;
 
 import java.util.logging.Logger;

@@ -1,10 +1,10 @@
-package pages.web;
+package pages.web.dashboard;
 
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import pages.BasePage;
-import pages.interfaces.DashboardPage;
+import pages.interfaces.dashboard.DashboardPage;
 
 import java.util.logging.Logger;
 
@@ -25,6 +25,7 @@ public class DashboardPageWeb extends BasePage implements DashboardPage {
     // <editor-fold desc="Public Methods">
     @Override
     public void verifyDashboardPageIsDisplayed() {
+        logger.info("Verify Dashboard Page is displayed");
         try {
             getElement(welcomeHeading);
         } catch (TimeoutException ex) {

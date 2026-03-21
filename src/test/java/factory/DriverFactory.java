@@ -11,36 +11,42 @@ import java.net.URI;
 public class DriverFactory {
 
     // <editor-fold desc="Class Fields / Constants">
-    private static AppiumDriver driver;
+    private static final ThreadLocal<AppiumDriver> driver = new ThreadLocal<>();
     // </editor-fold>
 
     // <editor-fold desc="Public Methods">
-    public static void initDriver() throws MalformedURLException {
-        if (driver != null) return;
-
+    public static AppiumDriver initDriver() throws MalformedURLException {
         AppiumServiceManager.startService();
         String appiumUrl = AppiumServiceManager.getServiceUrl();
 
-        driver = new AppiumDriver(URI.create(appiumUrl)
-                                     .toURL(), CapabilityFactory.getCapabilities());
+        AppiumDriver driverInstance = new AppiumDriver(URI.create(appiumUrl)
+                                                          .toURL(), CapabilityFactory.getCapabilities());
 
         String executionType = ConfigManager.getExecutionType();
 
         if (executionType.equalsIgnoreCase(Constants.EXECUTION_TYPE_MOBILE_WEB)) {
-            driver.get(Constants.DEV_URL);
+            driverInstance.get(Constants.DEV_URL);
         }
+
+        return driverInstance;
     }
 
     public static AppiumDriver getDriver() {
-        return driver;
+        return driver.get();
+    }
+
+    public static void setDriver(AppiumDriver driverInstance) {
+        driver.set(driverInstance);
     }
 
     public static void quitDriver() {
-        if (driver != null) {
-            driver.quit();
-            AppiumServiceManager.stopService();
-            driver = null;
+        AppiumDriver driverInstance = driver.get();
+        if (driverInstance != null) {
+            driverInstance.quit();
+            driver.remove();
         }
+
+        AppiumServiceManager.stopService();
     }
     // </editor-fold>
 

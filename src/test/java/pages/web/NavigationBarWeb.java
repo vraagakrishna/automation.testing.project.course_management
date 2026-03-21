@@ -20,6 +20,13 @@ public class NavigationBarWeb extends BasePage implements NavigationBar {
 
     private final By adminPanelBtn = By.xpath(
             "//button[contains(@class, 'mobile-menu-item') and contains(., 'Admin Panel')]");
+
+    private final By adminNavBurgerBtn = By.xpath("//button[@class='admin-burger-btn']");
+
+    private final By coursesNavBtn = By.xpath("//nav//button[contains(text(), 'Courses')]");
+
+    private final By backToWebsiteBtn = By.xpath(
+            "//div[contains(@class, 'admin-sidebar-footer')]//button[contains(., 'Back to Website')]");
     // </editor-fold>
 
     // <editor-fold desc="Ctor">
@@ -52,11 +59,27 @@ public class NavigationBarWeb extends BasePage implements NavigationBar {
         this.clickNavBurger();
         this.clickButton(adminPanelBtn);
     }
+
+    @Override
+    public void clickBackToWebsiteBtn() {
+        this.clickAdminNavBurger();
+        this.clickButton(backToWebsiteBtn);
+    }
+
+    @Override
+    public void clickCoursesBtn() {
+        this.clickAdminNavBurger();
+        this.clickButton(coursesNavBtn);
+    }
     // </editor-fold>
 
     // <editor-fold desc="Private Methods">
     private void clickNavBurger() {
         this.clickButton(navBurgerBtn);
+    }
+
+    private void clickAdminNavBurger() {
+        this.clickButton(adminNavBurgerBtn);
     }
     // </editor-fold>
 

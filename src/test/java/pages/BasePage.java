@@ -109,7 +109,8 @@ public class BasePage {
                 .pollingEvery(Duration.ofMillis(300));
 
         boolean popupDisplayed = wait.until(d ->
-                d.getPageSource().contains("live-region=\"1\"")
+                d.getPageSource()
+                 .contains("live-region=\"1\"")
         );
 
         if (!popupDisplayed)
