@@ -52,7 +52,10 @@ public class BasePage {
         WebElement element = this.getElement(by);
         String actualMessage = element.getText();
 
-        Assert.assertTrue(actualMessage.contains(expectedMessage), "Text does not match");
+        Assert.assertTrue(
+                actualMessage.contains(expectedMessage),
+                "Expected message: " + expectedMessage + ", but actual message: " + actualMessage
+        );
     }
 
     protected void verifyIfTextDisplayedAnywhere(String expectedMessage) {

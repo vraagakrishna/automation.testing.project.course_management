@@ -31,7 +31,10 @@ public class AlertUtils {
         ReportManager.getTest()
                      .info(String.format("Alert message found: %s", alertMessage));
 
-        Assert.assertTrue(alertMessage.contains(expectedMessage), "Alert message does not match");
+        Assert.assertTrue(
+                alertMessage.contains(expectedMessage),
+                "Expected alert message: " + expectedMessage + ", but actual alert message: " + alertMessage
+        );
     }
 
     public void verifyIfConfirmationAlertMessageIsCorrect(String expectedMessage, boolean accept) {

@@ -76,7 +76,10 @@ public class LoginPageAndroid extends BasePage implements LoginPage {
         String actualMessage = element.getAttribute("content-desc");
         logger.info("Actual Message: " + actualMessage);
 
-        Assert.assertTrue(actualMessage.contains(expectedMessage), "Error message is not correct");
+        Assert.assertTrue(
+                actualMessage.contains(expectedMessage),
+                "Expected message: " + expectedMessage + ", but actual message: " + actualMessage
+        );
     }
     // </editor-fold>
 

@@ -15,7 +15,7 @@ public class TestListener implements ITestListener, IConfigurationListener {
     private static ExtentReports extent;
     // </editor-fold>
 
-    // <editor-fold desc="Private Methods">
+    // <editor-fold desc="Public Methods">
     @Override
     public void onStart(ITestContext context) {
         extent = ExtentReportManager.extentReportSetup();
@@ -86,9 +86,17 @@ public class TestListener implements ITestListener, IConfigurationListener {
             ReportManager.setTest(test);
         }
 
-        test.log(Status.FAIL, "Test Case '" + testCase + "' has Failed.");
+        // Log the actual exception/assertion message
+        Throwable throwable = result.getThrowable();
+        if (throwable != null) {
+            test.log(Status.FAIL, "Test Case '" + testCase + "' has Failed.");
+            test.log(Status.FAIL, "Reason: " + throwable.getMessage());
 
-        ScreenshotUtils.captureAndAttach(DriverFactory.getDriver(), testCase);
+            // If you also want the stacktrace:
+            test.log(Status.FAIL, throwable);
+        }
+
+        ScreenshotUtils.captureAndAttach(DriverFactory.getDriver(), "'" + testCase + "' failed");
     }
     // </editor-fold>
 
