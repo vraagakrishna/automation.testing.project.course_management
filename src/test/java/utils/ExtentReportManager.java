@@ -11,21 +11,25 @@ public class ExtentReportManager {
     // <editor-fold desc="Class Fields / Constants">
     private static final String REPORT_DIR = System.getProperty("user.dir") + File.separator + "Reports";
 
+    private static ExtentReports extent;
     // </editor-fold>
 
     // <editor-fold desc="Public Methods">
     public static ExtentReports extentReportSetup() {
+        if (extent != null)
+            return extent;
+
         // Create report directory
         File dir = new File(REPORT_DIR);
         if (!dir.exists()) {
             dir.mkdirs();
         }
 
-        ExtentReports extentReports = new ExtentReports();
+        extent = new ExtentReports();
         ExtentSparkReporter extentSparkReporter = new ExtentSparkReporter(new File(
                 REPORT_DIR + File.separator + "report_" + System.currentTimeMillis() + ".html"
         ));
-        extentReports.attachReporter(extentSparkReporter);
+        extent.attachReporter(extentSparkReporter);
 
         extentSparkReporter.config()
                            .setDocumentTitle("Course Management Report");
@@ -45,13 +49,17 @@ public class ExtentReportManager {
         String javaVersion = System.getProperty("java.version");
 
         // Add them to the report
-        extentReports.setSystemInfo("Operating System", os + " " + osVersion);
-        extentReports.setSystemInfo("Java Version", javaVersion);
-        extentReports.setSystemInfo("Platform Name", ConfigManager.getPlatformName());
-        extentReports.setSystemInfo("Execution Type", ConfigManager.getExecutionType());
-        extentReports.setSystemInfo("Browser Name", ConfigManager.getBrowserName());
+        extent.setSystemInfo("Operating System", os + " " + osVersion);
+        extent.setSystemInfo("Java Version", javaVersion);
+        extent.setSystemInfo("Platform Name", ConfigManager.getPlatformName());
+        extent.setSystemInfo("Execution Type", ConfigManager.getExecutionType());
+        extent.setSystemInfo("Browser Name", ConfigManager.getBrowserName());
 
-        return extentReports;
+        return extent;
+    }
+
+    public static ExtentReports getExtent() {
+        return extent;
     }
     // </editor-fold>
 

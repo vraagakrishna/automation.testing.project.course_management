@@ -63,6 +63,7 @@ public class TestListener implements ITestListener, IConfigurationListener {
 
     @Override
     public void onFinish(ITestContext context) {
+        ReportManager.unload();
         extent.flush();
     }
     // </editor-fold>
@@ -79,12 +80,6 @@ public class TestListener implements ITestListener, IConfigurationListener {
     private void handleFailure(ITestResult result) {
         ExtentTest test = ReportManager.getTest();
         String testCase = this.getDescription(result.getMethod());
-
-        // If no test exists yet (config failure), create one
-        if (test == null) {
-            test = extent.createTest("Configuration Failure: " + testCase);
-            ReportManager.setTest(test);
-        }
 
         // Log the actual exception/assertion message
         Throwable throwable = result.getThrowable();
