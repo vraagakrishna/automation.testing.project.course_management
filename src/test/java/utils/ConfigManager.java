@@ -17,7 +17,7 @@ public class ConfigManager {
     }
 
     public static String getAppPath() {
-        return System.getProperty("APP_PATH", "target/app/app-release.apk");
+        return System.getProperty("APP_PATH", "target/app/app-qa-release.apk");
     }
 
     public static String getAppUrl() {
@@ -26,6 +26,14 @@ public class ConfigManager {
 
     public static String getAutomatorName() {
         return System.getProperty("AUTOMATOR_NAME", "UiAutomator2");
+    }
+
+    public static String getAdminEmail() {
+        return System.getProperty("ADMIN_EMAIL", System.getenv("ADMIN_EMAIL"));
+    }
+
+    public static String getAdminPassword() {
+        return System.getProperty("ADMIN_PASSWORD", System.getenv("ADMIN_PASSWORD"));
     }
 
 }

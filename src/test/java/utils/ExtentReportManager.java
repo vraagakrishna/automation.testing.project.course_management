@@ -27,13 +27,17 @@ public class ExtentReportManager {
         ));
         extentReports.attachReporter(extentSparkReporter);
 
-        extentSparkReporter.config().setDocumentTitle("Course Management Report");
-        extentSparkReporter.config().setReportName("Course Management");
+        extentSparkReporter.config()
+                           .setDocumentTitle("Course Management Report");
+        extentSparkReporter.config()
+                           .setReportName("Course Management");
 
         // Make the right-hand details panel scrollable
-        extentSparkReporter.config().setCss(".test-contents { overflow-y: scroll; max-height: 600px; }");
+        extentSparkReporter.config()
+                           .setCss(".test-contents { overflow-y: scroll; max-height: 600px; }");
 
-        extentSparkReporter.config().setTheme(Theme.DARK);
+        extentSparkReporter.config()
+                           .setTheme(Theme.DARK);
 
         // Fetch system details
         String os = System.getProperty("os.name");

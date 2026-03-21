@@ -12,6 +12,6 @@ public class Constants {
 
     public static final String DEV_URL = "https://ndosisimplifiedautomation.vercel.app/";
 
-    public static final String DEV_APK_URL = "https://ndosisimplifiedautomation.vercel.app/MobileApps/app-release.apk";
+    public static final String DEV_APK_URL = "https://ndosisimplifiedautomation.vercel.app/MobileApps/app-qa-release.apk";
 
 }

@@ -2,11 +2,12 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="All Test Suite">
     <listeners>
-        <listener class-name="listener.TestListener"></listener>
+        <listener class-name="listener.TestListener" />
     </listeners>
     <test verbose="2" preserve-order="true" name="Course Management">
         <classes>
             <class name="tests.home.HomePageTests" />
+            <class name="tests.auth.LoginTests" />
         </classes>
     </test>
 </suite>
