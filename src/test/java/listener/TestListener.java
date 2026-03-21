@@ -5,13 +5,18 @@ import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
 import factory.DriverFactory;
 import org.testng.*;
+import pages.web.auth.LoginPageWeb;
 import utils.ExtentReportManager;
 import utils.ReportManager;
 import utils.ScreenshotUtils;
 
+import java.util.logging.Logger;
+
 public class TestListener implements ITestListener, IConfigurationListener {
 
     // <editor-fold desc="Class Fields / Constants">
+    private static final Logger logger = Logger.getLogger(TestListener.class.getName());
+
     private static ExtentReports extent;
     // </editor-fold>
 
@@ -23,7 +28,8 @@ public class TestListener implements ITestListener, IConfigurationListener {
 
     @Override
     public void onTestStart(ITestResult result) {
-        ExtentTest extentTest = extent.createTest(this.getDescription(result.getMethod()));
+        String testName = this.getDescription(result.getMethod());
+        ExtentTest extentTest = extent.createTest(testName);
         ReportManager.setTest(extentTest);
 
         String[] groups = result.getMethod()
@@ -31,10 +37,16 @@ public class TestListener implements ITestListener, IConfigurationListener {
         for (String group : groups) {
             extentTest.assignCategory(group);
         }
+
+        logger.info("========================================");
+        logger.info(">> Group : " + groups.toString());
+        logger.info(">> Test Name: " + testName);
+        logger.info("========================================");
     }
 
     @Override
     public void onTestSuccess(ITestResult result) {
+        logger.info(">> Status  : PASSED");
         ReportManager.getTest()
                      .log(
                              Status.PASS,
@@ -54,6 +66,7 @@ public class TestListener implements ITestListener, IConfigurationListener {
 
     @Override
     public void onTestSkipped(ITestResult result) {
+        logger.info(">> Status  : SKIPPED");
         ReportManager.getTest()
                      .log(
                              Status.SKIP,
@@ -78,6 +91,7 @@ public class TestListener implements ITestListener, IConfigurationListener {
     }
 
     private void handleFailure(ITestResult result) {
+        logger.info(">> Status  : FAILED");
         ExtentTest test = ReportManager.getTest();
         String testCase = this.getDescription(result.getMethod());
 
