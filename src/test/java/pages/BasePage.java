@@ -4,13 +4,17 @@ import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import utils.AlertUtils;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated;
 
@@ -97,6 +101,31 @@ public class BasePage {
         });
 
         return driver.findElement(by);
+    }
+
+    protected String getSnackBarText() {
+        Wait<AppiumDriver> wait = new FluentWait<>(driver)
+                .withTimeout(Duration.ofSeconds(5))
+                .pollingEvery(Duration.ofMillis(300));
+
+        boolean popupDisplayed = wait.until(d ->
+                d.getPageSource().contains("live-region=\"1\"")
+        );
+
+        if (!popupDisplayed)
+            return null;
+
+        String source = driver.getPageSource();
+
+        Pattern pattern = Pattern.compile("content-desc=\"([^\"]*)\"[^>]*live-region=\"1\"");
+        Matcher matcher = pattern.matcher(source);
+
+        String popupText = null;
+        if (matcher.find()) {
+            popupText = matcher.group(1);
+        }
+
+        return popupText;
     }
     // </editor-fold>
 
