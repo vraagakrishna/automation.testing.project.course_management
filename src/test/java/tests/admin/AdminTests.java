@@ -1,0 +1,69 @@
+package tests.admin;
+
+import org.testng.annotations.Test;
+import tests.TestsBase;
+import utils.ConfigManager;
+import utils.ScreenshotUtils;
+import utils.SoftAssertManager;
+
+public class AdminTests extends TestsBase {
+
+    // <editor-fold desc="Overrides">
+    @Override
+    protected void setUpPage() {
+        homePage.verifyHomePageIsDisplayed();
+
+        navigationBar.goToLoginPage();
+
+        loginPage.verifyLoginPageIsDisplayed();
+
+        loginPage.loginUser(ConfigManager.getAdminEmail(), ConfigManager.getAdminPassword());
+
+        dashboardPage.verifyDashboardPageIsDisplayed();
+    }
+    // </editor-fold>
+
+    // <editor-fold desc="Public Methods">
+    @Test(description = "Navigate to Admin Dashboard", groups = "2. Admin Tests")
+    public void navigateToAdminDashboard() {
+        navigationBar.goToAdminPanel();
+
+        adminDashboardPage.verifyAdminDashboardIsDisplayed();
+
+        navigationBar.clickBackToWebsiteBtn();
+
+        dashboardPage.verifyDashboardPageIsDisplayed();
+    }
+
+    @Test(description = "Navigate to Manage Courses page from Quick Actions", groups = "2. Admin Tests", dependsOnMethods = "navigateToAdminDashboard", priority = 1)
+    public void navigateToManageCoursePageFromQuickActions() {
+        navigationBar.goToAdminPanel();
+
+        adminDashboardPage.verifyAdminDashboardIsDisplayed();
+
+        adminDashboardPage.navigateToManageCourses();
+
+        courseManagementPage.verifyCourseManagementPageIsDisplayed();
+
+        navigationBar.clickBackToWebsiteBtn();
+
+        dashboardPage.verifyDashboardPageIsDisplayed();
+    }
+
+    @Test(description = "Navigate to Manage Courses page", groups = "2. Admin Tests", dependsOnMethods = "navigateToAdminDashboard", priority = 2)
+    public void navigateToManageCoursePage() {
+        navigationBar.goToAdminPanel();
+
+        adminDashboardPage.verifyAdminDashboardIsDisplayed();
+
+        navigationBar.clickCoursesBtn();
+
+        courseManagementPage.verifyCourseManagementPageIsDisplayed();
+
+        navigationBar.clickBackToWebsiteBtn();
+
+        dashboardPage.verifyDashboardPageIsDisplayed();
+    }
+    // </editor-fold>
+
+}

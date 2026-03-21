@@ -8,4 +8,8 @@ public interface NavigationBar {
 
     void goToAdminPanel();
 
+    void clickBackToWebsiteBtn();
+
+    void clickCoursesBtn();
+
 }
