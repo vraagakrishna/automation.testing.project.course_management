@@ -17,7 +17,7 @@ public class ConfigManager {
     }
 
     public static String getAppPath() {
-        return System.getProperty("APP_PATH", "target/app/app-release.apk");
+        return System.getProperty("APP_PATH", "target/app/app-qa-release.apk");
     }
 
     public static String getAppUrl() {
