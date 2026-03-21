@@ -11,7 +11,7 @@ import java.net.URI;
 public class DriverFactory {
 
     // <editor-fold desc="Class Fields / Constants">
-    private static ThreadLocal<AppiumDriver> driver = new ThreadLocal<>();
+    private static final ThreadLocal<AppiumDriver> driver = new ThreadLocal<>();
     // </editor-fold>
 
     // <editor-fold desc="Public Methods">
@@ -31,12 +31,12 @@ public class DriverFactory {
         return driverInstance;
     }
 
-    public static void setDriver(AppiumDriver driverInstance) {
-        driver.set(driverInstance);
-    }
-
     public static AppiumDriver getDriver() {
         return driver.get();
+    }
+
+    public static void setDriver(AppiumDriver driverInstance) {
+        driver.set(driverInstance);
     }
 
     public static void quitDriver() {

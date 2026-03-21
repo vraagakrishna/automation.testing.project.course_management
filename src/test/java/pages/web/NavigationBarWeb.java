@@ -23,10 +23,6 @@ public class NavigationBarWeb extends BasePage implements NavigationBar {
 
     private final By adminNavBurgerBtn = By.xpath("//button[@class='admin-burger-btn']");
 
-    private final By approvalsNavBtn = By.xpath("//nav//button[contains(., 'Approvals')]");
-
-    private final By usersNavBtn = By.xpath("//nav//button[contains(text(), 'Users')]");
-
     private final By coursesNavBtn = By.xpath("//nav//button[contains(text(), 'Courses')]");
 
     private final By backToWebsiteBtn = By.xpath(

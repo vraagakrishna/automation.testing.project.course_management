@@ -3,8 +3,6 @@ package tests.admin;
 import org.testng.annotations.Test;
 import tests.TestsBase;
 import utils.ConfigManager;
-import utils.ScreenshotUtils;
-import utils.SoftAssertManager;
 
 public class AdminTests extends TestsBase {
 

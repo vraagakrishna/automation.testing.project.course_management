@@ -8,7 +8,8 @@ public class ReportManager {
 
     public static ExtentTest getTest() {
         if (test.get() == null) {
-            ExtentTest setupNode = ExtentReportManager.getExtent().createTest("Setup");
+            ExtentTest setupNode = ExtentReportManager.getExtent()
+                                                      .createTest("Setup");
             test.set(setupNode);
         }
         return test.get();

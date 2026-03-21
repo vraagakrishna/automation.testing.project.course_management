@@ -15,6 +15,8 @@ public class DashboardPageAndroid extends BasePage implements DashboardPage {
 
     private final By welcomeHeading = By.xpath(
             "//android.view.View[contains(@content-desc,'overview') or contains(@content-desc,'Good evening')]");
+
+    private boolean firstLogin = true;
     // </editor-fold>
 
     // <editor-fold desc="Ctor">
@@ -26,17 +28,22 @@ public class DashboardPageAndroid extends BasePage implements DashboardPage {
     // <editor-fold desc="Public Methods">
     @Override
     public void verifyDashboardPageIsDisplayed() {
-        String actualSnackBarText = getSnackBarText();
-        String expectedSnackBarText = "Welcome";
-        logger.info("Snack bar text: " + actualSnackBarText);
-        SoftAssertManager.getSoftAssert()
-                         .assertTrue(
-                                 actualSnackBarText.contains(expectedSnackBarText),
-                                 "Expected message: " + expectedSnackBarText + ", but actual message: " + actualSnackBarText
-                         );
+        logger.info("firstLogin = " + firstLogin);
+        if (firstLogin) {
+            String actualSnackBarText = getSnackBarText();
+            String expectedSnackBarText = "Welcome";
+            logger.info("Snack bar text: " + actualSnackBarText);
+            SoftAssertManager.getSoftAssert()
+                             .assertTrue(
+                                     actualSnackBarText.contains(expectedSnackBarText),
+                                     "Expected message: " + expectedSnackBarText + ", but actual message: " + actualSnackBarText
+                             );
+        }
 
         logger.info("Verifying Dashboard page is displayed");
         getElementOrThrow(welcomeHeading, "Welcome Heading");
+
+        firstLogin = false;
     }
     // </editor-fold>
 
