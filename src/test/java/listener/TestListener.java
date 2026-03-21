@@ -78,11 +78,10 @@ public class TestListener implements ITestListener, IConfigurationListener {
 
     private void handleFailure(ITestResult result) {
         ExtentTest test = ReportManager.getTest();
-        String testCase = null;
+        String testCase = this.getDescription(result.getMethod());
 
         // If no test exists yet (config failure), create one
         if (test == null) {
-            testCase = this.getDescription(result.getMethod());
             test = extent.createTest("Configuration Failure: " + testCase);
             ReportManager.setTest(test);
         }

@@ -2,7 +2,10 @@ package factory;
 
 import common.Constants;
 import io.appium.java_client.AppiumDriver;
+import pages.android.DashboardPageAndroid;
 import pages.android.HomePageAndroid;
+import pages.android.LoginPageAndroid;
+import pages.android.NavigationBarAndroid;
 import pages.interfaces.DashboardPage;
 import pages.interfaces.HomePage;
 import pages.interfaces.LoginPage;
@@ -36,7 +39,7 @@ public class PageFactory {
             return new NavigationBarWeb(driver);
 
         if (platformName.equalsIgnoreCase(Constants.PLATFORM_ANDROID))
-            throw new RuntimeException("Unsupported platform: " + platformName);
+            return new NavigationBarAndroid(driver);
 
         throw new RuntimeException("Unsupported platform: " + platformName);
     }
@@ -49,7 +52,7 @@ public class PageFactory {
             return new LoginPageWeb(driver);
 
         if (platformName.equalsIgnoreCase(Constants.PLATFORM_ANDROID))
-            throw new RuntimeException("Unsupported platform: " + platformName);
+            return new LoginPageAndroid(driver);
 
         throw new RuntimeException("Unsupported platform: " + platformName);
     }
@@ -62,7 +65,7 @@ public class PageFactory {
             return new DashboardPageWeb(driver);
 
         if (platformName.equalsIgnoreCase(Constants.PLATFORM_ANDROID))
-            throw new RuntimeException("Unsupported platform: " + platformName);
+            return new DashboardPageAndroid(driver);
 
         throw new RuntimeException("Unsupported platform: " + platformName);
     }

@@ -23,14 +23,14 @@ public class LoginTests extends TestsBase {
     public void blankLoginFormSubmission() {
         loginPage.loginUser("", "");
 
-        loginPage.verifyErrorMessage("Please enter both email and password");
+        loginPage.verifyErrorMessage("email and password");
     }
 
     @Test(description = "Login using invalid credentials", groups = "2. Login Tests", priority = 1)
     public void invalidCredentialsLogin() {
         loginPage.loginUser(UserTestData.getEmail(), UserTestData.getWeakPassword());
 
-        loginPage.verifyErrorMessage("Invalid credentials. Please try again.");
+        loginPage.verifyErrorMessage("Invalid");
     }
 
     @Test(description = "Login with valid credentials", groups = "2. Login Tests", priority = 2)

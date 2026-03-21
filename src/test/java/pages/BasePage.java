@@ -2,6 +2,7 @@ package pages;
 
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -34,6 +35,14 @@ public class BasePage {
                 .until(visibilityOfElementLocated(by));
     }
 
+    protected WebElement getElementOrThrow(By by, String elementName) {
+        try {
+            return getElement(by);
+        } catch (TimeoutException ex) {
+            throw new TimeoutException(elementName + " not displayed", ex);
+        }
+    }
+
     protected void clickButton(By by) {
         this.getElement(by)
             .click();
@@ -55,6 +64,7 @@ public class BasePage {
 
     protected void enterKeys(By by, Object keys) {
         WebElement element = this.getElement(by);
+        element.click();
         element.clear();
         element.sendKeys((CharSequence) keys);
     }
