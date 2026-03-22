@@ -7,12 +7,14 @@ import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeSuite;
 import pages.interfaces.HomePage;
 import pages.interfaces.NavigationBar;
 import pages.interfaces.admin.CourseManagementPage;
 import pages.interfaces.auth.LoginPage;
 import pages.interfaces.dashboard.AdminDashboardPage;
 import pages.interfaces.dashboard.DashboardPage;
+import utils.LoggingManager;
 import utils.SoftAssertManager;
 
 import java.net.MalformedURLException;
@@ -39,6 +41,11 @@ public class TestsBase {
     // </editor-fold>
 
     // <editor-fold desc="Public Methods">
+    @BeforeSuite
+    public void setupSuite() {
+        LoggingManager.configureLogging();
+    }
+
     @BeforeMethod
     public void setUp() throws MalformedURLException {
         logger.info("Setting up the driver");
