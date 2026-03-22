@@ -16,17 +16,18 @@ public class DriverFactory {
 
     // <editor-fold desc="Public Methods">
     public static AppiumDriver initDriver() throws MalformedURLException {
-        AppiumServiceManager.startService();
-        String appiumUrl = AppiumServiceManager.getServiceUrl();
+        String appiumUrl = AppiumServiceManager.startServiceIfRequired();
 
-        AppiumDriver driverInstance = new AppiumDriver(URI.create(appiumUrl)
-                                                          .toURL(), CapabilityFactory.getCapabilities());
+        AppiumDriver driverInstance = new AppiumDriver(
+                URI.create(appiumUrl)
+                   .toURL(),
+                CapabilityFactory.getCapabilities()
+        );
 
         String executionType = ConfigManager.getExecutionType();
 
-        if (executionType.equalsIgnoreCase(Constants.EXECUTION_TYPE_MOBILE_WEB)) {
+        if (executionType.equalsIgnoreCase(Constants.EXECUTION_TYPE_MOBILE_WEB))
             driverInstance.get(Constants.DEV_URL);
-        }
 
         return driverInstance;
     }
