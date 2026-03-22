@@ -4,8 +4,10 @@ import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
 import factory.DriverFactory;
-import org.testng.*;
-import pages.web.auth.LoginPageWeb;
+import org.testng.IConfigurationListener;
+import org.testng.ITestContext;
+import org.testng.ITestListener;
+import org.testng.ITestResult;
 import utils.ExtentReportManager;
 import utils.ReportManager;
 import utils.ScreenshotUtils;
@@ -27,30 +29,12 @@ public class TestListener implements ITestListener, IConfigurationListener {
     }
 
     @Override
-    public void onTestStart(ITestResult result) {
-        String testName = this.getDescription(result.getMethod());
-        ExtentTest extentTest = extent.createTest(testName);
-        ReportManager.setTest(extentTest);
-
-        String[] groups = result.getMethod()
-                                .getGroups();
-        for (String group : groups) {
-            extentTest.assignCategory(group);
-        }
-
-        logger.info("========================================");
-        logger.info(">> Group : " + groups.toString());
-        logger.info(">> Test Name: " + testName);
-        logger.info("========================================");
-    }
-
-    @Override
     public void onTestSuccess(ITestResult result) {
         logger.info(">> Status  : PASSED");
         ReportManager.getTest()
                      .log(
                              Status.PASS,
-                             "Test Case '" + this.getDescription(result.getMethod()) + "' has Passed."
+                             "Test Case '" + ReportManager.getDescription(result.getMethod()) + "' has Passed."
                      );
     }
 
@@ -70,7 +54,7 @@ public class TestListener implements ITestListener, IConfigurationListener {
         ReportManager.getTest()
                      .log(
                              Status.SKIP,
-                             "Test Case '" + this.getDescription(result.getMethod()) + "' has Skipped."
+                             "Test Case '" + ReportManager.getDescription(result.getMethod()) + "' has Skipped."
                      );
     }
 
@@ -82,18 +66,10 @@ public class TestListener implements ITestListener, IConfigurationListener {
     // </editor-fold>
 
     // <editor-fold desc="Private Methods">
-    private String getDescription(ITestNGMethod method) {
-        String description = method.getDescription();
-        if (description == null || description.isEmpty())
-            description = method.getMethodName();
-
-        return description;
-    }
-
     private void handleFailure(ITestResult result) {
         logger.info(">> Status  : FAILED");
         ExtentTest test = ReportManager.getTest();
-        String testCase = this.getDescription(result.getMethod());
+        String testCase = ReportManager.getDescription(result.getMethod());
 
         // Log the actual exception/assertion message
         Throwable throwable = result.getThrowable();

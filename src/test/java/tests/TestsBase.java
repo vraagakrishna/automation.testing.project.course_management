@@ -17,8 +17,10 @@ import pages.interfaces.dashboard.AdminDashboardPage;
 import pages.interfaces.dashboard.DashboardPage;
 import services.AppiumServiceManager;
 import utils.LoggingManager;
+import utils.ReportManager;
 import utils.SoftAssertManager;
 
+import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.util.logging.Logger;
 
@@ -49,7 +51,9 @@ public class TestsBase {
     }
 
     @BeforeMethod
-    public void setUp() throws MalformedURLException {
+    public void setUp(Method method, ITestResult result) throws MalformedURLException {
+        ReportManager.startTest(result);
+
         logger.info("Setting up the driver");
 
         driver = DriverFactory.initDriver();
