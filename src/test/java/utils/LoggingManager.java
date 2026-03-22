@@ -26,6 +26,7 @@ public class LoggingManager {
         // Custom formatter
         Formatter oneLineFormatter = new Formatter() {
             private final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
             @Override
             public String format(LogRecord record) {
                 String time = sdf.format(new Date(record.getMillis()));
