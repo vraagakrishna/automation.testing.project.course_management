@@ -4,6 +4,10 @@ import common.Constants;
 
 public class ConfigManager {
 
+    public static String getAppiumServerUrl() {
+        return System.getProperty("APPIUM_SERVER_URL", System.getenv("APPIUM_SERVER_URL"));
+    }
+
     public static String getPlatformName() {
         return System.getProperty("PLATFORM_NAME", Constants.PLATFORM_ANDROID);
     }

@@ -6,15 +6,21 @@ import io.appium.java_client.AppiumDriver;
 import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeSuite;
 import pages.interfaces.HomePage;
 import pages.interfaces.NavigationBar;
 import pages.interfaces.admin.CourseManagementPage;
 import pages.interfaces.auth.LoginPage;
 import pages.interfaces.dashboard.AdminDashboardPage;
 import pages.interfaces.dashboard.DashboardPage;
+import services.AppiumServiceManager;
+import utils.LoggingManager;
+import utils.ReportManager;
 import utils.SoftAssertManager;
 
+import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.util.logging.Logger;
 
@@ -39,8 +45,15 @@ public class TestsBase {
     // </editor-fold>
 
     // <editor-fold desc="Public Methods">
+    @BeforeSuite
+    public void setupSuite() {
+        LoggingManager.configureLogging();
+    }
+
     @BeforeMethod
-    public void setUp() throws MalformedURLException {
+    public void setUp(Method method, ITestResult result) throws MalformedURLException {
+        ReportManager.startTest(result);
+
         logger.info("Setting up the driver");
 
         driver = DriverFactory.initDriver();
@@ -75,6 +88,11 @@ public class TestsBase {
             DriverFactory.quitDriver();
             driver = null;
         }
+    }
+
+    @AfterSuite
+    public void stopAppium() {
+        AppiumServiceManager.stopService();
     }
     // </editor-fold>
 
