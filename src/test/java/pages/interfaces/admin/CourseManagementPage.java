@@ -1,11 +1,23 @@
 package pages.interfaces.admin;
 
+import models.Course;
+
 public interface CourseManagementPage {
 
     void verifyCourseManagementPageIsDisplayed();
 
     void clickAddCourseBtn();
 
-    void clickCancelCourseBtn();
+    void verifyBlankCourseFormIsDisplayed();
+
+    void addCourse(Course course);
+
+    void cancelCourse(Course course);
+
+    void validateCourseTitleErrorMessage(String expectedMessage);
+
+    void validateCourseDescriptionErrorMessage(String expectedMessage);
+
+    void verifyAlertMessage(String expectedMessage);
 
 }

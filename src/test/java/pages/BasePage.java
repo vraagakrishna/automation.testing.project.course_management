@@ -39,9 +39,9 @@ public class BasePage {
                 .until(visibilityOfElementLocated(by));
     }
 
-    protected WebElement getElementOrThrow(By by, String elementName) {
+    protected void getElementOrThrow(By by, String elementName) {
         try {
-            return getElement(by);
+            getElement(by);
         } catch (TimeoutException ex) {
             throw new TimeoutException(elementName + " not displayed", ex);
         }
@@ -127,6 +127,21 @@ public class BasePage {
         }
 
         return popupText;
+    }
+
+    protected String getSelectedOptionInDropdown(By by) {
+        return new Select(getElement(by)).getFirstSelectedOption()
+                                         .getText();
+    }
+
+    protected void selectByVisibleText(By by, String visibleText) {
+        new Select(getElement(by)).selectByVisibleText(visibleText);
+    }
+
+    protected String getValidationMessage(By by) {
+        WebElement element = getElement(by);
+        return driver.executeScript("return arguments[0].validationMessage;", element)
+                     .toString();
     }
     // </editor-fold>
 
