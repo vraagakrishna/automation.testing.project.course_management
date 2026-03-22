@@ -6,6 +6,7 @@ import io.appium.java_client.AppiumDriver;
 import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import pages.interfaces.HomePage;
@@ -14,6 +15,7 @@ import pages.interfaces.admin.CourseManagementPage;
 import pages.interfaces.auth.LoginPage;
 import pages.interfaces.dashboard.AdminDashboardPage;
 import pages.interfaces.dashboard.DashboardPage;
+import services.AppiumServiceManager;
 import utils.LoggingManager;
 import utils.SoftAssertManager;
 
@@ -82,6 +84,11 @@ public class TestsBase {
             DriverFactory.quitDriver();
             driver = null;
         }
+    }
+
+    @AfterSuite
+    public void stopAppium() {
+        AppiumServiceManager.stopService();
     }
     // </editor-fold>
 

@@ -46,8 +46,6 @@ public class DriverFactory {
             driverInstance.quit();
             driver.remove();
         }
-
-        AppiumServiceManager.stopService();
     }
     // </editor-fold>
 
