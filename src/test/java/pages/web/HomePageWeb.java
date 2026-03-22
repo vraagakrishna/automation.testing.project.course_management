@@ -5,11 +5,11 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import pages.BasePage;
-import pages.interfaces.HomePage;
+import pages.interfaces.IHomePage;
 
 import java.util.logging.Logger;
 
-public class HomePageWeb extends BasePage implements HomePage {
+public class HomePageWeb extends BasePage implements IHomePage {
 
     // <editor-fold desc="Class Fields / Constants">
     private static final Logger logger = Logger.getLogger(HomePageWeb.class.getName());

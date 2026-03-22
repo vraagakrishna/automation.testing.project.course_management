@@ -7,7 +7,7 @@ import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import pages.BasePage;
-import pages.interfaces.admin.CourseManagementPage;
+import pages.interfaces.admin.ICourseManagementPage;
 import utils.ReportManager;
 import utils.ScreenshotUtils;
 
@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
 
-public class CourseManagementPageWeb extends BasePage implements CourseManagementPage {
+public class CourseManagementPageWeb extends BasePage implements ICourseManagementPage {
 
     // <editor-fold desc="Class Fields / Constants">
     private static final Logger logger = Logger.getLogger(CourseManagementPageWeb.class.getName());

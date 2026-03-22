@@ -3,11 +3,11 @@ package pages.web;
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
 import pages.BasePage;
-import pages.interfaces.NavigationBar;
+import pages.interfaces.INavigationBar;
 
 import java.util.logging.Logger;
 
-public class NavigationBarWeb extends BasePage implements NavigationBar {
+public class NavigationBarWeb extends BasePage implements INavigationBar {
 
     // <editor-fold desc="Class Fields / Constants">
     private static final Logger logger = Logger.getLogger(NavigationBarWeb.class.getName());

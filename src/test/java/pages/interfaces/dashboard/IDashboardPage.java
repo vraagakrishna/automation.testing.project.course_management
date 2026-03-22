@@ -1,6 +1,6 @@
 package pages.interfaces.dashboard;
 
-public interface DashboardPage {
+public interface IDashboardPage {
 
     void verifyDashboardPageIsDisplayed();
 

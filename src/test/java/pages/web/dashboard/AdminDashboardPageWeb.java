@@ -4,11 +4,11 @@ import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import pages.BasePage;
-import pages.interfaces.dashboard.AdminDashboardPage;
+import pages.interfaces.dashboard.IAdminDashboardPage;
 
 import java.util.logging.Logger;
 
-public class AdminDashboardPageWeb extends BasePage implements AdminDashboardPage {
+public class AdminDashboardPageWeb extends BasePage implements IAdminDashboardPage {
 
     // <editor-fold desc="Class Fields / Constants">
     private static final Logger logger = Logger.getLogger(AdminDashboardPageWeb.class.getName());

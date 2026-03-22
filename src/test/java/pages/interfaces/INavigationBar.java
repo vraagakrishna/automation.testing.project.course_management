@@ -1,6 +1,6 @@
 package pages.interfaces;
 
-public interface NavigationBar {
+public interface INavigationBar {
 
     void goToLoginPage();
 

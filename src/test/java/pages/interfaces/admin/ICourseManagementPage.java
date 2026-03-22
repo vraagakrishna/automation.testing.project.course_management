@@ -2,7 +2,7 @@ package pages.interfaces.admin;
 
 import models.Course;
 
-public interface CourseManagementPage {
+public interface ICourseManagementPage {
 
     void verifyCourseManagementPageIsDisplayed();
 

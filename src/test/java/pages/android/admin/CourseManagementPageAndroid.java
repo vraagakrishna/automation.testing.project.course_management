@@ -4,11 +4,11 @@ import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import pages.BasePage;
-import pages.interfaces.admin.CourseManagementPage;
+import pages.interfaces.admin.ICourseManagementPage;
 
 import java.util.logging.Logger;
 
-public class CourseManagementPageAndroid extends BasePage implements CourseManagementPage {
+public class CourseManagementPageAndroid extends BasePage implements ICourseManagementPage {
 
     // <editor-fold desc="Class Fields / Constants">
     private static final Logger logger = Logger.getLogger(CourseManagementPageAndroid.class.getName());

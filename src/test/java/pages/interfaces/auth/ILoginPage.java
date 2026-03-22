@@ -1,6 +1,6 @@
 package pages.interfaces.auth;
 
-public interface LoginPage {
+public interface ILoginPage {
 
     void verifyLoginPageIsDisplayed();
 
