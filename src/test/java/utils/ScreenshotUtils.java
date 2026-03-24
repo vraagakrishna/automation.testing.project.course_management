@@ -20,6 +20,8 @@ public class ScreenshotUtils {
 
     // <editor-fold desc="Public Methods">
     public static void captureAndAttach(WebDriver driver, String label) {
+        if (driver == null) return;
+
         String timestamp = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(new Date());
         String path = takeScreenshot(driver, label.replace(" ", "_") + "_" + timestamp);
         ReportManager.getTest()

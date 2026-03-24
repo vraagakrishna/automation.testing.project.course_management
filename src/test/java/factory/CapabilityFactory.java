@@ -7,6 +7,8 @@ import org.openqa.selenium.MutableCapabilities;
 import utils.ApkDownloader;
 import utils.ConfigManager;
 
+import java.io.File;
+
 public class CapabilityFactory {
 
     public static MutableCapabilities getCapabilities() {
@@ -27,7 +29,7 @@ public class CapabilityFactory {
             } else if (executionType.equalsIgnoreCase(Constants.EXECUTION_TYPE_NATIVE_APP)) {
                 ApkDownloader.downloadApk(appUrl, appPath);
 
-                options.setApp(appPath);
+                options.setApp(System.getProperty("user.dir") + File.separator + appPath);
             } else {
                 throw new RuntimeException("Unsupported execution type for " + platform + ": " + executionType);
             }

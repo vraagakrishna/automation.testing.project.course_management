@@ -9,12 +9,12 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
-import pages.interfaces.HomePage;
-import pages.interfaces.NavigationBar;
-import pages.interfaces.admin.CourseManagementPage;
-import pages.interfaces.auth.LoginPage;
-import pages.interfaces.dashboard.AdminDashboardPage;
-import pages.interfaces.dashboard.DashboardPage;
+import pages.interfaces.IHomePage;
+import pages.interfaces.INavigationBar;
+import pages.interfaces.admin.ICourseManagementPage;
+import pages.interfaces.auth.ILoginPage;
+import pages.interfaces.dashboard.IAdminDashboardPage;
+import pages.interfaces.dashboard.IDashboardPage;
 import services.AppiumServiceManager;
 import utils.LoggingManager;
 import utils.ReportManager;
@@ -31,17 +31,17 @@ public class TestsBase {
 
     protected AppiumDriver driver;
 
-    protected HomePage homePage;
+    protected IHomePage homePage;
 
-    protected NavigationBar navigationBar;
+    protected INavigationBar navigationBar;
 
-    protected LoginPage loginPage;
+    protected ILoginPage loginPage;
 
-    protected DashboardPage dashboardPage;
+    protected IDashboardPage dashboardPage;
 
-    protected AdminDashboardPage adminDashboardPage;
+    protected IAdminDashboardPage adminDashboardPage;
 
-    protected CourseManagementPage courseManagementPage;
+    protected ICourseManagementPage courseManagementPage;
     // </editor-fold>
 
     // <editor-fold desc="Public Methods">

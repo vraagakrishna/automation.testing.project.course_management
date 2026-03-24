@@ -1,6 +1,6 @@
 package pages.interfaces;
 
-public interface HomePage {
+public interface IHomePage {
 
     void verifyHomePageIsDisplayed();
 

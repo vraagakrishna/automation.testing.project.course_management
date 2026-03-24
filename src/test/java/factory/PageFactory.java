@@ -8,12 +8,12 @@ import pages.android.admin.CourseManagementPageAndroid;
 import pages.android.auth.LoginPageAndroid;
 import pages.android.dashboard.AdminDashboardPageAndroid;
 import pages.android.dashboard.DashboardPageAndroid;
-import pages.interfaces.HomePage;
-import pages.interfaces.NavigationBar;
-import pages.interfaces.admin.CourseManagementPage;
-import pages.interfaces.auth.LoginPage;
-import pages.interfaces.dashboard.AdminDashboardPage;
-import pages.interfaces.dashboard.DashboardPage;
+import pages.interfaces.IHomePage;
+import pages.interfaces.INavigationBar;
+import pages.interfaces.admin.ICourseManagementPage;
+import pages.interfaces.auth.ILoginPage;
+import pages.interfaces.dashboard.IAdminDashboardPage;
+import pages.interfaces.dashboard.IDashboardPage;
 import pages.web.HomePageWeb;
 import pages.web.NavigationBarWeb;
 import pages.web.admin.CourseManagementPageWeb;
@@ -24,7 +24,7 @@ import utils.ConfigManager;
 
 public class PageFactory {
 
-    public static HomePage getHomePage(AppiumDriver driver) {
+    public static IHomePage getHomePage(AppiumDriver driver) {
         String platformName = ConfigManager.getPlatformName();
         String executionType = ConfigManager.getExecutionType();
 
@@ -37,7 +37,7 @@ public class PageFactory {
         throw new RuntimeException("Unsupported platform: " + platformName);
     }
 
-    public static NavigationBar getNavigationBar(AppiumDriver driver) {
+    public static INavigationBar getNavigationBar(AppiumDriver driver) {
         String platformName = ConfigManager.getPlatformName();
         String executionType = ConfigManager.getExecutionType();
 
@@ -50,7 +50,7 @@ public class PageFactory {
         throw new RuntimeException("Unsupported platform: " + platformName);
     }
 
-    public static LoginPage getLoginPage(AppiumDriver driver) {
+    public static ILoginPage getLoginPage(AppiumDriver driver) {
         String platformName = ConfigManager.getPlatformName();
         String executionType = ConfigManager.getExecutionType();
 
@@ -63,7 +63,7 @@ public class PageFactory {
         throw new RuntimeException("Unsupported platform: " + platformName);
     }
 
-    public static DashboardPage getDashboardPage(AppiumDriver driver) {
+    public static IDashboardPage getDashboardPage(AppiumDriver driver) {
         String platformName = ConfigManager.getPlatformName();
         String executionType = ConfigManager.getExecutionType();
 
@@ -76,7 +76,7 @@ public class PageFactory {
         throw new RuntimeException("Unsupported platform: " + platformName);
     }
 
-    public static AdminDashboardPage getAdminDashboardPage(AppiumDriver driver) {
+    public static IAdminDashboardPage getAdminDashboardPage(AppiumDriver driver) {
         String platformName = ConfigManager.getPlatformName();
         String executionType = ConfigManager.getExecutionType();
 
@@ -89,7 +89,7 @@ public class PageFactory {
         throw new RuntimeException("Unsupported platform: " + platformName);
     }
 
-    public static CourseManagementPage getCourseManagementPage(AppiumDriver driver) {
+    public static ICourseManagementPage getCourseManagementPage(AppiumDriver driver) {
         String platformName = ConfigManager.getPlatformName();
         String executionType = ConfigManager.getExecutionType();
 

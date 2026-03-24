@@ -1,6 +1,6 @@
 package pages.interfaces.dashboard;
 
-public interface AdminDashboardPage {
+public interface IAdminDashboardPage {
 
     void verifyAdminDashboardIsDisplayed();
 

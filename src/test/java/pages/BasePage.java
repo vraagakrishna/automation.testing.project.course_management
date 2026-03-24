@@ -1,5 +1,6 @@
 package pages;
 
+import io.appium.java_client.AppiumBy;
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
@@ -9,8 +10,15 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 import utils.AlertUtils;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.StringReader;
 import java.time.Duration;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -39,9 +47,9 @@ public class BasePage {
                 .until(visibilityOfElementLocated(by));
     }
 
-    protected WebElement getElementOrThrow(By by, String elementName) {
+    protected void getElementOrThrow(By by, String elementName) {
         try {
-            return getElement(by);
+            getElement(by);
         } catch (TimeoutException ex) {
             throw new TimeoutException(elementName + " not displayed", ex);
         }
@@ -127,6 +135,125 @@ public class BasePage {
         }
 
         return popupText;
+    }
+
+    protected String getSelectedOptionInDropdown(By by) {
+        return new Select(getElement(by)).getFirstSelectedOption()
+                                         .getText();
+    }
+
+    protected String getSelectedOptionInDropdown(String label) {
+        String source = driver.getPageSource()
+                              .toLowerCase();
+        label = label.toLowerCase();
+
+        Pattern pattern = Pattern.compile("content-desc=\"([^\"]*)\"");
+        Matcher matcher = pattern.matcher(source);
+
+        while (matcher.find()) {
+            String contentDesc = matcher.group(1);
+
+            // normalise encoded newline
+            contentDesc = contentDesc.replace("&#10;", "\n");
+
+            String[] parts = contentDesc.split("\n");
+
+            if (parts.length == 2 && parts[0].equals(label))
+                return parts[1].trim();
+        }
+
+        return null;
+    }
+
+    protected void selectByVisibleText(By by, String visibleText) {
+        new Select(getElement(by)).selectByVisibleText(visibleText);
+    }
+
+    protected void setDropdownValue(String label, String value) {
+        // Click the dropdown button itself
+        driver.findElement(
+                      AppiumBy.androidUIAutomator(
+                              "new UiSelector().className(\"android.widget.Button\").descriptionContains(\""
+                                      + capitalize(label) + "\")"
+                      )
+              )
+              .click();
+
+        // Wait for the option buttons to appear
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement option = wait.until(d -> {
+            List<WebElement> elems = driver.findElements(
+                    AppiumBy.androidUIAutomator(
+                            "new UiSelector().className(\"android.widget.Button\").description(\"" + value + "\")"
+                    )
+            );
+            return elems.isEmpty() ? null : elems.get(0);
+        });
+
+        // Click the option
+        option.click();
+    }
+
+    protected String getValidationMessage(By by) {
+        WebElement element = getElement(by);
+        return driver.executeScript("return arguments[0].validationMessage;", element)
+                     .toString();
+    }
+
+    protected Document getSourceXml() {
+        try {
+            String source = driver.getPageSource();
+            DocumentBuilder builder = DocumentBuilderFactory.newInstance()
+                                                            .newDocumentBuilder();
+            return builder.parse(new InputSource(new StringReader(source)));
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to parse page source", e);
+        }
+    }
+
+    protected Element findCheckbox(Document doc) {
+        NodeList nodes = doc.getElementsByTagName("android.widget.CheckBox");
+
+        if (nodes.getLength() > 0)
+            return (Element) nodes.item(0);
+
+        return null;
+    }
+
+    protected void validateErrorMessage(By inputField, String expectedMessage) {
+        // Find the input field first
+        WebElement inputElement = driver.findElement(inputField);
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+
+        // Look for any child element with a content-desc inside the EditText
+        WebElement errorElement = wait.until(d -> {
+            List<WebElement> children = inputElement.findElements(
+                    AppiumBy.xpath(".//*")  // all descendants
+            );
+            for (WebElement e : children) {
+                String desc = e.getAttribute("content-desc");
+                if (desc != null && desc.contains(expectedMessage)) {
+                    return e;
+                }
+            }
+            return null;
+        });
+
+        String actualMessage = errorElement.getAttribute("content-desc");
+        Assert.assertTrue(
+                actualMessage.contains(expectedMessage),
+                "Expected message: " + expectedMessage + ", but actual message: " + actualMessage
+        );
+    }
+    // </editor-fold>
+
+    // <editor-fold desc="Private Methods">
+    private String capitalize(String str) {
+        if (str == null || str.isEmpty()) return str;
+        return str.substring(0, 1)
+                  .toUpperCase() + str.substring(1)
+                                      .toLowerCase();
     }
     // </editor-fold>
 
