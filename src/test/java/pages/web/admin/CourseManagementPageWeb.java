@@ -120,7 +120,8 @@ public class CourseManagementPageWeb extends BasePage implements ICourseManageme
     }
 
     @Override
-    public void validateCourseTitleErrorMessage(String expectedMessage) {
+    public void validateCourseTitleErrorMessage() {
+        String expectedMessage = "fill";
         String actualMessage = getValidationMessage(courseTitleField);
         Assert.assertTrue(
                 actualMessage.contains(expectedMessage),
@@ -129,7 +130,8 @@ public class CourseManagementPageWeb extends BasePage implements ICourseManageme
     }
 
     @Override
-    public void validateCourseDescriptionErrorMessage(String expectedMessage) {
+    public void validateCourseDescriptionErrorMessage() {
+        String expectedMessage = "fill";
         String actualMessage = getValidationMessage(courseDescriptionField);
         Assert.assertTrue(
                 actualMessage.contains(expectedMessage),
@@ -258,7 +260,8 @@ public class CourseManagementPageWeb extends BasePage implements ICourseManageme
                                                 .isEmpty())
             this.enterCourseLevel(course.getLevel());
 
-        this.enterCoursePrice(String.format("%.0f", course.getPrice()));
+        if (course.getPrice() != 0)
+            this.enterCoursePrice(String.format("%.0f", course.getPrice()));
 
         if (course.getThumbnailUrl() != null && !course.getThumbnailUrl()
                                                        .isEmpty())

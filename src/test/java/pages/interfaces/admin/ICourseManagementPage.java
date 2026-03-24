@@ -14,9 +14,9 @@ public interface ICourseManagementPage {
 
     void cancelCourse(Course course);
 
-    void validateCourseTitleErrorMessage(String expectedMessage);
+    void validateCourseTitleErrorMessage();
 
-    void validateCourseDescriptionErrorMessage(String expectedMessage);
+    void validateCourseDescriptionErrorMessage();
 
     void verifyAlertMessage(String expectedMessage);
 
