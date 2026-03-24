@@ -23,7 +23,7 @@ public class CourseDataGenerator {
 
     public static String longDescription() {
         return faker.lorem()
-                    .characters(2000);
+                    .characters(5000);
     }
 
     public static String randomDuration() {
