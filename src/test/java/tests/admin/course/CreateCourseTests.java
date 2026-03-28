@@ -116,7 +116,7 @@ public class CreateCourseTests extends TestsBase {
     }
 
     @Test(description = "Submit Level Beginner", groups = "2. Create Course Negative Tests", priority = 8)
-    public void submitLevelBegineer() {
+    public void submitLevelBeginner() {
         Course course = new Course();
         course.setTitle(CourseDataGenerator.randomCourseName());
         course.setDescription(CourseDataGenerator.randomDescription());
