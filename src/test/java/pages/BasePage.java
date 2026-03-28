@@ -3,6 +3,7 @@ package pages;
 import io.appium.java_client.AppiumBy;
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.FluentWait;
@@ -32,6 +33,8 @@ public class BasePage {
     protected final AppiumDriver driver;
 
     protected final AlertUtils alertUtils;
+
+    private final By body = By.tagName("body");
     // </editor-fold>
 
     // <editor-fold desc="Ctor">
@@ -55,9 +58,20 @@ public class BasePage {
         }
     }
 
+    protected void scrollToViewThenClickButton(By by) {
+        WebElement element = this.getElement(by);
+        scrollIntoView(element);
+        clickButton(element);
+    }
+
     protected void clickButton(By by) {
         this.getElement(by)
             .click();
+    }
+
+    protected void clickButton(WebElement element) {
+        ((JavascriptExecutor) driver)
+                .executeScript("arguments[0].click();", element);
     }
 
     protected void verifyIfTextDisplayed(By by, String expectedMessage) {
@@ -70,11 +84,13 @@ public class BasePage {
         );
     }
 
-    protected void verifyIfTextDisplayedAnywhere(String expectedMessage) {
-        boolean messageVisible = driver.findElements(By.xpath("//*[contains(text(), '" + expectedMessage + "')]"))
-                                       .size() > 0;
-
-        Assert.assertTrue(messageVisible, "Expected message not found on login page: " + expectedMessage);
+    protected boolean verifyIfTextDisplayedAnywhere(String expectedMessage) {
+        try {
+            return driver.findElements(By.xpath("//*[contains(text(), '" + expectedMessage + "')]"))
+                         .size() > 0;
+        } catch (Exception ex) {
+            return false;
+        }
     }
 
     protected void enterKeys(By by, Object keys) {
@@ -165,8 +181,32 @@ public class BasePage {
         return null;
     }
 
-    protected void selectByVisibleText(By by, String visibleText) {
-        new Select(getElement(by)).selectByVisibleText(visibleText);
+    protected boolean selectByVisibleText(By by, String visibleText) {
+        WebElement element = getElement(by);
+        scrollIntoView(element);
+        element.click();
+
+        List<WebElement> options = element.findElements(By.tagName("option"));
+
+        for (WebElement option : options) {
+            String text = option.getText()
+                                .trim();
+
+            if (text.equals(visibleText)) {
+                option.click();
+
+                driver.findElement(body)
+                      .click();
+
+                return true;
+            }
+        }
+
+        // Close dropdown if option not found
+        driver.findElement(body)
+              .click();
+
+        return false;
     }
 
     protected void setDropdownValue(String label, String value) {
@@ -245,6 +285,16 @@ public class BasePage {
                 actualMessage.contains(expectedMessage),
                 "Expected message: " + expectedMessage + ", but actual message: " + actualMessage
         );
+    }
+
+    protected void scrollIntoView(WebElement element) {
+        ((JavascriptExecutor) driver)
+                .executeScript("arguments[0].scrollIntoView({block:'center'});", element);
+    }
+
+    protected void closeKeyboardIfOpen() {
+        ((JavascriptExecutor) driver)
+                .executeScript("document.activeElement.blur()");
     }
     // </editor-fold>
 

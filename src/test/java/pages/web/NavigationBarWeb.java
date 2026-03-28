@@ -23,7 +23,11 @@ public class NavigationBarWeb extends BasePage implements INavigationBar {
 
     private final By adminNavBurgerBtn = By.xpath("//button[@class='admin-burger-btn']");
 
+    private final By overviewNavBtn = By.xpath("//nav//button[contains(text(), 'Overview')]");
+
     private final By coursesNavBtn = By.xpath("//nav//button[contains(text(), 'Courses')]");
+
+    private final By enrollmentsNavBtn = By.xpath("//nav//button[contains(text(), 'Enrollments')]");
 
     private final By backToWebsiteBtn = By.xpath(
             "//div[contains(@class, 'admin-sidebar-footer')]//button[contains(., 'Back to Website')]");
@@ -71,6 +75,18 @@ public class NavigationBarWeb extends BasePage implements INavigationBar {
         this.clickAdminNavBurger();
         this.clickButton(coursesNavBtn);
     }
+
+    @Override
+    public void clickOverviewBtn() {
+        this.clickAdminNavBurger();
+        this.clickButton(overviewNavBtn);
+    }
+
+    @Override
+    public void clickEnrollmentsBtn() {
+        this.clickAdminNavBurger();
+        this.clickButton(enrollmentsNavBtn);
+    }
     // </editor-fold>
 
     // <editor-fold desc="Private Methods">
@@ -79,7 +95,7 @@ public class NavigationBarWeb extends BasePage implements INavigationBar {
     }
 
     private void clickAdminNavBurger() {
-        this.clickButton(adminNavBurgerBtn);
+        this.scrollToViewThenClickButton(adminNavBurgerBtn);
     }
     // </editor-fold>
 

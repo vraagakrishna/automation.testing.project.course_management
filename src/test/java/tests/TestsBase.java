@@ -12,6 +12,7 @@ import org.testng.annotations.BeforeSuite;
 import pages.interfaces.IHomePage;
 import pages.interfaces.INavigationBar;
 import pages.interfaces.admin.ICourseManagementPage;
+import pages.interfaces.admin.IEnrollmentsManagementPage;
 import pages.interfaces.auth.ILoginPage;
 import pages.interfaces.dashboard.IAdminDashboardPage;
 import pages.interfaces.dashboard.IDashboardPage;
@@ -42,6 +43,8 @@ public class TestsBase {
     protected IAdminDashboardPage adminDashboardPage;
 
     protected ICourseManagementPage courseManagementPage;
+
+    protected IEnrollmentsManagementPage enrollmentsManagementPage;
     // </editor-fold>
 
     // <editor-fold desc="Public Methods">
@@ -66,6 +69,7 @@ public class TestsBase {
         this.dashboardPage = PageFactory.getDashboardPage(driver);
         this.adminDashboardPage = PageFactory.getAdminDashboardPage(driver);
         this.courseManagementPage = PageFactory.getCourseManagementPage(driver);
+        this.enrollmentsManagementPage = PageFactory.getEnrollmentsManagementPage(driver);
 
         SoftAssertManager.getSoftAssert();
 
