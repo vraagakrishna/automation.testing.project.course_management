@@ -22,6 +22,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.StringReader;
 import java.time.Duration;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -213,14 +214,14 @@ public class BasePage {
         // Click the dropdown button itself
         driver.findElement(
                       AppiumBy.androidUIAutomator(
-                              "new UiSelector().className(\"android.widget.Button\").descriptionContains(\""
-                                      + capitalize(label) + "\")"
-                      )
+                              "new UiSelector().className(\"android.widget.Button\")." +
+                                      "descriptionContains(\"" + capitalize(label) + "\")")
               )
               .click();
 
         // Wait for the option buttons to appear
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
         WebElement option = wait.until(d -> {
             List<WebElement> elems = driver.findElements(
                     AppiumBy.androidUIAutomator(
@@ -295,6 +296,17 @@ public class BasePage {
     protected void closeKeyboardIfOpen() {
         ((JavascriptExecutor) driver)
                 .executeScript("document.activeElement.blur()");
+    }
+
+    protected void closeKeyboardIfOpenAndroid() {
+        try {
+            boolean keyboardOpen = (Boolean) driver.executeScript("mobile: isKeyboardShown");
+
+            if (keyboardOpen)
+                driver.executeScript("mobile: pressKey", Map.of("keycode", 4));
+        } catch (Exception ignored) {
+            // keyboard was not open
+        }
     }
     // </editor-fold>
 
