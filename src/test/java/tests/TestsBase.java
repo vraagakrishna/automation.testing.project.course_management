@@ -80,18 +80,26 @@ public class TestsBase {
     public void tearDownTest(ITestResult result) {
         logger.info("Tearing down...");
 
+        AssertionError softAssertError = null;
+
         try {
-            SoftAssertManager.getSoftAssert();
+            SoftAssertManager.getSoftAssert()
+                             .assertAll();
         } catch (AssertionError ex) {
-            Assert.fail(ex.getMessage());
+            softAssertError = ex;  // store it instead of failing immediately
         } finally {
             SoftAssertManager.remove();
         }
 
         if (driver != null) {
+            logger.info("Quitting driver...");
             DriverFactory.quitDriver();
             driver = null;
         }
+
+        // Fail AFTER cleanup
+        if (softAssertError != null)
+            Assert.fail(softAssertError.getMessage());
     }
 
     @AfterSuite
