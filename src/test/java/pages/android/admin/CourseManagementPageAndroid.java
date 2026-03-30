@@ -12,7 +12,7 @@ import org.testng.Assert;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
-import pages.BasePage;
+import pages.android.BasePageAndroid;
 import pages.interfaces.admin.ICourseManagementPage;
 import utils.ReportManager;
 import utils.ScreenshotUtils;
@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
 
-public class CourseManagementPageAndroid extends BasePage implements ICourseManagementPage {
+public class CourseManagementPageAndroid extends BasePageAndroid implements ICourseManagementPage {
 
     // <editor-fold desc="Class Fields / Constants">
     private static final Logger logger = Logger.getLogger(CourseManagementPageAndroid.class.getName());
@@ -291,12 +291,12 @@ public class CourseManagementPageAndroid extends BasePage implements ICourseMana
     }
 
     private void clickCreateCourseBtn() {
-        closeKeyboardIfOpenAndroid();
+        closeKeyboardIfOpen();
         clickButton(createCourseBtn);
     }
 
     private void clickCancelCourseBtn() {
-        closeKeyboardIfOpenAndroid();
+        closeKeyboardIfOpen();
         clickButton(clickCancelCourseBtn);
     }
     // </editor-fold>

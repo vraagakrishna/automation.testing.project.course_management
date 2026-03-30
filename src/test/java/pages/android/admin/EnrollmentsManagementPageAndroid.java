@@ -5,7 +5,7 @@ import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
-import pages.BasePage;
+import pages.android.BasePageAndroid;
 import pages.interfaces.admin.IEnrollmentsManagementPage;
 import utils.ReportManager;
 import utils.SoftAssertManager;
@@ -13,7 +13,7 @@ import utils.SoftAssertManager;
 import java.util.List;
 import java.util.logging.Logger;
 
-public class EnrollmentsManagementPageAndroid extends BasePage implements IEnrollmentsManagementPage {
+public class EnrollmentsManagementPageAndroid extends BasePageAndroid implements IEnrollmentsManagementPage {
 
     // <editor-fold desc="Class Fields / Constants">
     private static final Logger logger = Logger.getLogger(EnrollmentsManagementPageAndroid.class.getName());
@@ -164,7 +164,7 @@ public class EnrollmentsManagementPageAndroid extends BasePage implements IEnrol
     private void searchEmail(String email) {
         logger.info("Search for email: " + email);
         enterKeys(emailField, email);
-        closeKeyboardIfOpenAndroid();
+        closeKeyboardIfOpen();
     }
 
     private boolean searchCourse(String courseName) {

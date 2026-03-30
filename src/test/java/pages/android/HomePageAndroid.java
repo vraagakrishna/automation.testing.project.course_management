@@ -4,12 +4,11 @@ import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
-import pages.BasePage;
 import pages.interfaces.IHomePage;
 
 import java.util.logging.Logger;
 
-public class HomePageAndroid extends BasePage implements IHomePage {
+public class HomePageAndroid extends BasePageAndroid implements IHomePage {
 
     // <editor-fold desc="Class Fields / Constants">
     private static final Logger logger = Logger.getLogger(HomePageAndroid.class.getName());
