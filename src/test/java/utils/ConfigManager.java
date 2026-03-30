@@ -2,6 +2,8 @@ package utils;
 
 import common.Constants;
 
+import java.io.File;
+
 public class ConfigManager {
 
     public static String getAppiumServerUrl() {
@@ -21,7 +23,8 @@ public class ConfigManager {
     }
 
     public static String getAppPath() {
-        return System.getProperty("APP_PATH", "target/app/app-qa-release.apk");
+        return System.getProperty(
+                "APP_PATH", "target" + File.separator + "app" + File.separator + "app-qa-release.apk");
     }
 
     public static String getAppUrl() {
@@ -38,6 +41,10 @@ public class ConfigManager {
 
     public static String getAdminPassword() {
         return System.getProperty("ADMIN_PASSWORD", System.getenv("ADMIN_PASSWORD"));
+    }
+
+    public static String getUserEmail() {
+        return System.getProperty("USER_EMAIL", System.getenv("USER_EMAIL"));
     }
 
 }

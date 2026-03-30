@@ -12,4 +12,8 @@ public interface INavigationBar {
 
     void clickCoursesBtn();
 
+    void clickOverviewBtn();
+
+    void clickEnrollmentsBtn();
+
 }

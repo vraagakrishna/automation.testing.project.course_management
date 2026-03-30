@@ -25,8 +25,8 @@ public class ApkDownloader {
                 parentDir.mkdirs();
             }
 
-            if (apkFile.exists()) {
-                logger.info("APK already exists. Skipping download.");
+            if (apkFile.exists() && apkFile.length() > 1_000_000) {
+                logger.info("Valid APK already exists. Skipping download.");
                 return;
             }
 
@@ -35,7 +35,16 @@ public class ApkDownloader {
                 Files.copy(in, apkFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
             }
 
-            logger.info("APK downloaded successfully.");
+            logger.info("Validating APK size...");
+            long fileSize = apkFile.length();
+
+            if (fileSize < 1_000_000) {  // 1 MB threshold
+                throw new RuntimeException(
+                        "Downloaded APK appears invalid. File size is only " + fileSize + " bytes."
+                );
+            }
+
+            logger.info("APK downloaded successfully. Size: " + fileSize + " bytes");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

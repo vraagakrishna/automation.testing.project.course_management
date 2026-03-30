@@ -8,7 +8,10 @@ public class CourseDataGenerator {
 
     public static String randomCourseName() {
         return faker.educator()
-                    .course();
+                    .course() +
+                " at " +
+                faker.educator()
+                     .university();
     }
 
     public static String longCourseName() {

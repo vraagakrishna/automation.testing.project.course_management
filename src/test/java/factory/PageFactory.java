@@ -5,18 +5,21 @@ import io.appium.java_client.AppiumDriver;
 import pages.android.HomePageAndroid;
 import pages.android.NavigationBarAndroid;
 import pages.android.admin.CourseManagementPageAndroid;
+import pages.android.admin.EnrollmentsManagementPageAndroid;
 import pages.android.auth.LoginPageAndroid;
 import pages.android.dashboard.AdminDashboardPageAndroid;
 import pages.android.dashboard.DashboardPageAndroid;
 import pages.interfaces.IHomePage;
 import pages.interfaces.INavigationBar;
 import pages.interfaces.admin.ICourseManagementPage;
+import pages.interfaces.admin.IEnrollmentsManagementPage;
 import pages.interfaces.auth.ILoginPage;
 import pages.interfaces.dashboard.IAdminDashboardPage;
 import pages.interfaces.dashboard.IDashboardPage;
 import pages.web.HomePageWeb;
 import pages.web.NavigationBarWeb;
 import pages.web.admin.CourseManagementPageWeb;
+import pages.web.admin.EnrollmentsManagementPageWeb;
 import pages.web.auth.LoginPageWeb;
 import pages.web.dashboard.AdminDashboardPageWeb;
 import pages.web.dashboard.DashboardPageWeb;
@@ -98,6 +101,19 @@ public class PageFactory {
 
         if (platformName.equalsIgnoreCase(Constants.PLATFORM_ANDROID))
             return new CourseManagementPageAndroid(driver);
+
+        throw new RuntimeException("Unsupported platform: " + platformName);
+    }
+
+    public static IEnrollmentsManagementPage getEnrollmentsManagementPage(AppiumDriver driver) {
+        String platformName = ConfigManager.getPlatformName();
+        String executionType = ConfigManager.getExecutionType();
+
+        if (executionType.equalsIgnoreCase(Constants.EXECUTION_TYPE_MOBILE_WEB))
+            return new EnrollmentsManagementPageWeb(driver);
+
+        if (platformName.equalsIgnoreCase(Constants.PLATFORM_ANDROID))
+            return new EnrollmentsManagementPageAndroid(driver);
 
         throw new RuntimeException("Unsupported platform: " + platformName);
     }

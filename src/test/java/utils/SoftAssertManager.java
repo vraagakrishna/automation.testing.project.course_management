@@ -7,9 +7,6 @@ public class SoftAssertManager {
     private static final ThreadLocal<SoftAssert> softAssertThread = ThreadLocal.withInitial(SoftAssert::new);
 
     public static SoftAssert getSoftAssert() {
-        if (softAssertThread.get() == null) {
-            softAssertThread.set(new SoftAssert());
-        }
         return softAssertThread.get();
     }
 

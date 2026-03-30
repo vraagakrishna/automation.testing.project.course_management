@@ -18,7 +18,10 @@ import utils.ReportManager;
 import utils.ScreenshotUtils;
 
 import java.time.Duration;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 import java.util.logging.Logger;
 
 public class CourseManagementPageAndroid extends BasePage implements ICourseManagementPage {
@@ -228,10 +231,12 @@ public class CourseManagementPageAndroid extends BasePage implements ICourseMana
                                                       .isEmpty()) this.enterCourseDescription(course.getDescription());
 
         if (course.getDuration() != null && !course.getDuration()
-                                                   .isEmpty()) this.enterCourseDuration(course.getDuration());
+                                                   .isEmpty())
+            this.enterCourseDuration(course.getDuration());
 
         if (course.getLevel() != null && !course.getLevel()
-                                                .isEmpty()) this.enterCourseLevel(course.getLevel());
+                                                .isEmpty())
+            this.enterCourseLevel(course.getLevel());
 
         if (course.getPrice() != 0)
             this.enterCoursePrice(String.format("%.0f", course.getPrice()));
@@ -241,7 +246,8 @@ public class CourseManagementPageAndroid extends BasePage implements ICourseMana
             this.enterCourseThumbnailUrl(course.getThumbnailUrl());
 
         if (course.getMeetingUrl() != null && !course.getMeetingUrl()
-                                                     .isEmpty()) this.enterCourseMeetingUrl(course.getMeetingUrl());
+                                                     .isEmpty())
+            this.enterCourseMeetingUrl(course.getMeetingUrl());
 
         this.publishCourse(course.isPublished());
     }
@@ -259,7 +265,7 @@ public class CourseManagementPageAndroid extends BasePage implements ICourseMana
     }
 
     private void enterCourseLevel(String courseLevel) {
-        this.setDropdownValue("level", courseLevel);
+        this.setDropdownValue("Level", courseLevel);
     }
 
     private void enterCoursePrice(String coursePrice) {
@@ -285,12 +291,12 @@ public class CourseManagementPageAndroid extends BasePage implements ICourseMana
     }
 
     private void clickCreateCourseBtn() {
-        driver.executeScript("mobile: performEditorAction", Map.of("action", "done"));
+        closeKeyboardIfOpenAndroid();
         clickButton(createCourseBtn);
     }
 
     private void clickCancelCourseBtn() {
-        driver.executeScript("mobile: performEditorAction", Map.of("action", "done"));
+        closeKeyboardIfOpenAndroid();
         clickButton(clickCancelCourseBtn);
     }
     // </editor-fold>
