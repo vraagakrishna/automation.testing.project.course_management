@@ -1,5 +1,6 @@
 package pages.android;
 
+import io.appium.java_client.AppiumBy;
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
 import pages.BasePage;
@@ -20,9 +21,13 @@ public class NavigationBarAndroid extends BasePage implements INavigationBar {
 
     private final By adminPanelBtn = By.xpath("//android.widget.Button[@content-desc=\"Admin Panel\"]");
 
-    private final By adminNavBurgerBtn = By.xpath("//android.widget.ScrollView/android.view.View[1]");
+    private final By adminNavBurgerBtn = AppiumBy.androidUIAutomator("new UiSelector().clickable(true).instance(0)");
+
+    private final By overviewNavBtn = By.xpath("//android.widget.Button[@content-desc=\"Overview\"]");
 
     private final By coursesNavBtn = By.xpath("//android.widget.Button[@content-desc=\"Courses\"]");
+
+    private final By enrollmentsNavBtn = By.xpath("//android.widget.Button[@content-desc=\"Enrollments\"]");
 
     private final By backToWebsiteBtn = By.xpath("//android.widget.Button[@content-desc=\"Back to Home\"]");
     // </editor-fold>
@@ -63,6 +68,18 @@ public class NavigationBarAndroid extends BasePage implements INavigationBar {
     public void clickCoursesBtn() {
         this.clickAdminNavBurger();
         this.clickButton(coursesNavBtn);
+    }
+
+    @Override
+    public void clickOverviewBtn() {
+        this.clickAdminNavBurger();
+        this.clickButton(overviewNavBtn);
+    }
+
+    @Override
+    public void clickEnrollmentsBtn() {
+        this.clickAdminNavBurger();
+        this.clickButton(enrollmentsNavBtn);
     }
     // </editor-fold>
 

@@ -18,7 +18,10 @@ import utils.ReportManager;
 import utils.ScreenshotUtils;
 
 import java.time.Duration;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 import java.util.logging.Logger;
 
 public class CourseManagementPageAndroid extends BasePage implements ICourseManagementPage {
@@ -262,7 +265,7 @@ public class CourseManagementPageAndroid extends BasePage implements ICourseMana
     }
 
     private void enterCourseLevel(String courseLevel) {
-        this.setDropdownValue("level", courseLevel);
+        this.setDropdownValue("Level", courseLevel);
     }
 
     private void enterCoursePrice(String coursePrice) {

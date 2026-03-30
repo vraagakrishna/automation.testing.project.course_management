@@ -210,29 +210,43 @@ public class BasePage {
         return false;
     }
 
-    protected void setDropdownValue(String label, String value) {
+    protected boolean setDropdownValue(String label, String value) {
         // Click the dropdown button itself
         driver.findElement(
                       AppiumBy.androidUIAutomator(
                               "new UiSelector().className(\"android.widget.Button\")." +
-                                      "descriptionContains(\"" + capitalize(label) + "\")")
+                                      "descriptionContains(\"" + label + "\")")
               )
               .click();
 
-        // Wait for the option buttons to appear
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement option = null;
 
-        WebElement option = wait.until(d -> {
-            List<WebElement> elems = driver.findElements(
-                    AppiumBy.androidUIAutomator(
-                            "new UiSelector().className(\"android.widget.Button\").description(\"" + value + "\")"
-                    )
-            );
-            return elems.isEmpty() ? null : elems.get(0);
-        });
+        try {
+            // Wait for the option buttons to appear
+            option = new WebDriverWait(driver, Duration.ofSeconds(10)).until(d -> {
+                List<WebElement> elems = driver.findElements(
+                        AppiumBy.androidUIAutomator(
+                                "new UiSelector().className(\"android.widget.Button\").description(\"" + value + "\")"
+                        )
+                );
+                return elems.isEmpty() ? null : elems.get(0);
+            });
+        } catch (TimeoutException ex) {
+            // nothing to do
+        }
+
+        if (option == null) {
+            // Close dropdown
+            driver.navigate()
+                  .back();
+
+            return false;
+        }
 
         // Click the option
         option.click();
+
+        return true;
     }
 
     protected String getValidationMessage(By by) {
@@ -307,15 +321,6 @@ public class BasePage {
         } catch (Exception ignored) {
             // keyboard was not open
         }
-    }
-    // </editor-fold>
-
-    // <editor-fold desc="Private Methods">
-    private String capitalize(String str) {
-        if (str == null || str.isEmpty()) return str;
-        return str.substring(0, 1)
-                  .toUpperCase() + str.substring(1)
-                                      .toLowerCase();
     }
     // </editor-fold>
 

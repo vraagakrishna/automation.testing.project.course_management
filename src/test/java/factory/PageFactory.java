@@ -5,6 +5,7 @@ import io.appium.java_client.AppiumDriver;
 import pages.android.HomePageAndroid;
 import pages.android.NavigationBarAndroid;
 import pages.android.admin.CourseManagementPageAndroid;
+import pages.android.admin.EnrollmentsManagementPageAndroid;
 import pages.android.auth.LoginPageAndroid;
 import pages.android.dashboard.AdminDashboardPageAndroid;
 import pages.android.dashboard.DashboardPageAndroid;
@@ -110,6 +111,9 @@ public class PageFactory {
 
         if (executionType.equalsIgnoreCase(Constants.EXECUTION_TYPE_MOBILE_WEB))
             return new EnrollmentsManagementPageWeb(driver);
+
+        if (platformName.equalsIgnoreCase(Constants.PLATFORM_ANDROID))
+            return new EnrollmentsManagementPageAndroid(driver);
 
         throw new RuntimeException("Unsupported platform: " + platformName);
     }
