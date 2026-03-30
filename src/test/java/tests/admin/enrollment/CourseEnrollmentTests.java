@@ -76,12 +76,12 @@ public class CourseEnrollmentTests extends TestsBase {
     // </editor-fold>
 
     // <editor-fold desc="Public Methods">
-    @Test(description = "Enroll user to Unpublished Course", groups = "2. Enrollment Tests")
+    @Test(description = "Enroll user to Unpublished Course", groups = "5. Enrollment Tests")
     public void enrollUserToUnpublishedCourse() {
         enrollUserToCourse(false);
     }
 
-    @Test(description = "Enroll user to Published Course", groups = "2. Enrollment Tests")
+    @Test(description = "Enroll user to Published Course", groups = "5. Enrollment Tests")
     public void enrollUserToPublishedCourse() {
         enrollUserToCourse(true);
     }
