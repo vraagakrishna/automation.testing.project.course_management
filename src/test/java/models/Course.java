@@ -9,9 +9,9 @@ public class Course {
 
     private String duration;
 
-    private String level;
+    private String level = "Beginner";
 
-    private float price;
+    private Float price;
 
     private String thumbnailUrl;
 
@@ -53,11 +53,11 @@ public class Course {
         this.level = level;
     }
 
-    public float getPrice() {
+    public Float getPrice() {
         return price;
     }
 
-    public void setPrice(float price) {
+    public void setPrice(Float price) {
         this.price = price;
     }
 

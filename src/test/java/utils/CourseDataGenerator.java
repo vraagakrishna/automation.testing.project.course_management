@@ -39,9 +39,9 @@ public class CourseDataGenerator {
                     .numberBetween(1, 100) + " hours";
     }
 
-    public static long largePrice() {
-        return faker.number()
-                    .randomNumber(8, true);
+    public static Float largePrice() {
+        return (float) faker.number()
+                            .randomNumber(8, true);
     }
 
     public static String validThumbnailUrl() {
