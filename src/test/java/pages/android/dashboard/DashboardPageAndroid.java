@@ -2,13 +2,13 @@ package pages.android.dashboard;
 
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
-import pages.BasePage;
+import pages.android.BasePageAndroid;
 import pages.interfaces.dashboard.IDashboardPage;
 import utils.SoftAssertManager;
 
 import java.util.logging.Logger;
 
-public class DashboardPageAndroid extends BasePage implements IDashboardPage {
+public class DashboardPageAndroid extends BasePageAndroid implements IDashboardPage {
 
     // <editor-fold desc="Class Fields / Constants">
     private static final Logger logger = Logger.getLogger(DashboardPageAndroid.class.getName());

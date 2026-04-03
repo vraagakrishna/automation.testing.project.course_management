@@ -4,14 +4,14 @@ import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
-import pages.BasePage;
+import pages.android.BasePageAndroid;
 import pages.interfaces.auth.ILoginPage;
 import pages.web.auth.LoginPageWeb;
 import utils.ReportManager;
 
 import java.util.logging.Logger;
 
-public class LoginPageAndroid extends BasePage implements ILoginPage {
+public class LoginPageAndroid extends BasePageAndroid implements ILoginPage {
 
     // <editor-fold desc="Class Fields / Constants">
     private static final Logger logger = Logger.getLogger(LoginPageWeb.class.getName());

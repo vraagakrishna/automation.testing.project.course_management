@@ -3,12 +3,12 @@ package pages.web.dashboard;
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
-import pages.BasePage;
 import pages.interfaces.dashboard.IDashboardPage;
+import pages.web.BasePageWeb;
 
 import java.util.logging.Logger;
 
-public class DashboardPageWeb extends BasePage implements IDashboardPage {
+public class DashboardPageWeb extends BasePageWeb implements IDashboardPage {
 
     // <editor-fold desc="Class Fields / Constants">
     private static final Logger logger = Logger.getLogger(DashboardPageWeb.class.getName());
