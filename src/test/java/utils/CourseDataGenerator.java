@@ -48,6 +48,13 @@ public class CourseDataGenerator {
         );
     }
 
+    public static BigDecimal validPrice() {
+        return BigDecimal.valueOf(
+                faker.number()
+                     .numberBetween(100, 1000)
+        );
+    }
+
     public static String validThumbnailUrl() {
         return faker.internet()
                     .image();

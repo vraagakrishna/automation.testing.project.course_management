@@ -187,7 +187,18 @@ public class CreateCourseTests extends TestsBase {
         courseManagementPage.verifyAlertMessage("fail");
     }
 
-    @Test(description = "Submit Invalid Thumbnail URL", groups = "4. Create Course Negative Tests", priority = 12)
+    @Test(description = "Submit Normal Price", groups = "4. Create Course Negative Tests", priority = 12)
+    public void submitNormalPrice() {
+        Course course = new Course();
+        course.setTitle(CourseDataGenerator.randomCourseName());
+        course.setDescription(CourseDataGenerator.randomDescription());
+        course.setPrice(CourseDataGenerator.validPrice());
+        courseManagementPage.addCourse(course);
+
+        courseManagementPage.verifyAlertMessage("created");
+    }
+
+    @Test(description = "Submit Invalid Thumbnail URL", groups = "4. Create Course Negative Tests", priority = 13)
     public void submitInvalidThumbnailUrl() {
         Course course = new Course();
         course.setTitle(CourseDataGenerator.randomCourseName());
@@ -198,7 +209,7 @@ public class CreateCourseTests extends TestsBase {
         courseManagementPage.verifyAlertMessage("fail");
     }
 
-    @Test(description = "Submit Valid Thumbnail URL", groups = "4. Create Course Negative Tests", priority = 13)
+    @Test(description = "Submit Valid Thumbnail URL", groups = "4. Create Course Negative Tests", priority = 14)
     public void submitValidThumbnailUrl() {
         String url = CourseDataGenerator.validThumbnailUrl();
 
@@ -211,7 +222,7 @@ public class CreateCourseTests extends TestsBase {
         courseManagementPage.verifyAlertMessage("created");
     }
 
-    @Test(description = "Submit Invalid Meeting URL", groups = "4. Create Course Negative Tests", priority = 14)
+    @Test(description = "Submit Invalid Meeting URL", groups = "4. Create Course Negative Tests", priority = 15)
     public void submitInvalidMeetingUrl() {
         Course course = new Course();
         course.setTitle(CourseDataGenerator.randomCourseName());
@@ -222,7 +233,7 @@ public class CreateCourseTests extends TestsBase {
         courseManagementPage.verifyAlertMessage("fail");
     }
 
-    @Test(description = "Submit Valid Teams URL", groups = "4. Create Course Negative Tests", priority = 15)
+    @Test(description = "Submit Valid Teams URL", groups = "4. Create Course Negative Tests", priority = 16)
     public void submitValidTeamsUrl() {
         Course course = new Course();
         course.setTitle(CourseDataGenerator.randomCourseName());
@@ -233,7 +244,7 @@ public class CreateCourseTests extends TestsBase {
         courseManagementPage.verifyAlertMessage("created");
     }
 
-    @Test(description = "Submit Unpublished Course", groups = "4. Create Course Negative Tests", priority = 16)
+    @Test(description = "Submit Unpublished Course", groups = "4. Create Course Negative Tests", priority = 17)
     public void submitUnpublishedCourse() {
         Course course = new Course();
         course.setTitle(CourseDataGenerator.randomCourseName());
@@ -244,7 +255,7 @@ public class CreateCourseTests extends TestsBase {
         courseManagementPage.verifyAlertMessage("created");
     }
 
-    @Test(description = "Submit Published Course", groups = "4. Create Course Negative Tests", priority = 17)
+    @Test(description = "Submit Published Course", groups = "4. Create Course Negative Tests", priority = 18)
     public void submitPublishedCourse() {
         Course course = new Course();
         course.setTitle(CourseDataGenerator.randomCourseName());
@@ -255,7 +266,7 @@ public class CreateCourseTests extends TestsBase {
         courseManagementPage.verifyAlertMessage("created");
     }
 
-    @Test(description = "Cancel Course Creation", groups = "4. Create Course Negative Tests", priority = 18)
+    @Test(description = "Cancel Course Creation", groups = "4. Create Course Negative Tests", priority = 19)
     public void cancelCourseCreation() {
         Course course = new Course();
         course.setTitle(CourseDataGenerator.randomCourseName());
