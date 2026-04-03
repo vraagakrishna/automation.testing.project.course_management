@@ -238,7 +238,7 @@ public class CourseManagementPageAndroid extends BasePageAndroid implements ICou
                                                 .isEmpty())
             this.enterCourseLevel(course.getLevel());
 
-        if (course.getPrice() != 0)
+        if (course.getPrice() != null)
             this.enterCoursePrice(String.format("%.0f", course.getPrice()));
 
         if (course.getThumbnailUrl() != null && !course.getThumbnailUrl()

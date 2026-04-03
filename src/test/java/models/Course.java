@@ -1,5 +1,7 @@
 package models;
 
+import java.math.BigDecimal;
+
 public class Course {
 
     // <editor-fold desc="Class Fields / Constants">
@@ -11,7 +13,7 @@ public class Course {
 
     private String level = "Beginner";
 
-    private Float price;
+    private BigDecimal price;
 
     private String thumbnailUrl;
 
@@ -53,11 +55,11 @@ public class Course {
         this.level = level;
     }
 
-    public Float getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(Float price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 

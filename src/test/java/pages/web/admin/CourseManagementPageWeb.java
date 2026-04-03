@@ -11,6 +11,7 @@ import pages.web.BasePageWeb;
 import utils.ReportManager;
 import utils.ScreenshotUtils;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
