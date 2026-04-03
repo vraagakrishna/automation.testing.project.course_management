@@ -20,9 +20,6 @@ public class EnrollmentsManagementPageAndroid extends BasePageAndroid implements
 
     private final By emailField = AppiumBy.xpath("//android.widget.EditText[@hint='Search by email...']");
 
-    private final By coursesDropdown = By.xpath(
-            "//select[option[contains(text(),'All Courses')]]");  // TODO: UPDATE this
-
     private final By completeBtn = AppiumBy.xpath(".//android.view.View[@content-desc='Complete']");
 
     private final By completeEnrollmentCompleteBtn = AppiumBy.xpath(
