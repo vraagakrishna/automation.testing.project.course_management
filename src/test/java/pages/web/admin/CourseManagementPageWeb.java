@@ -244,31 +244,25 @@ public class CourseManagementPageWeb extends BasePageWeb implements ICourseManag
     }
 
     private void populateCourseData(Course course) {
-        if (course.getTitle() != null && !course.getTitle()
-                                                .isEmpty())
+        if (course.getTitle() != null)
             this.enterCourseTitle(course.getTitle());
 
-        if (course.getDescription() != null && !course.getDescription()
-                                                      .isEmpty())
+        if (course.getDescription() != null)
             this.enterCourseDescription(course.getDescription());
 
-        if (course.getDuration() != null && !course.getDuration()
-                                                   .isEmpty())
+        if (course.getDuration() != null)
             this.enterCourseDuration(course.getDuration());
 
-        if (course.getLevel() != null && !course.getLevel()
-                                                .isEmpty())
+        if (course.getLevel() != null)
             this.enterCourseLevel(course.getLevel());
 
-        if (course.getPrice() != 0)
+        if (course.getPrice() != null)
             this.enterCoursePrice(String.format("%.0f", course.getPrice()));
 
-        if (course.getThumbnailUrl() != null && !course.getThumbnailUrl()
-                                                       .isEmpty())
+        if (course.getThumbnailUrl() != null)
             this.enterCourseThumbnailUrl(course.getThumbnailUrl());
 
-        if (course.getMeetingUrl() != null && !course.getMeetingUrl()
-                                                     .isEmpty())
+        if (course.getMeetingUrl() != null)
             this.enterCourseMeetingUrl(course.getMeetingUrl());
 
         this.publishCourse(course.isPublished());
