@@ -4,17 +4,17 @@ import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
 import factory.DriverFactory;
-import org.testng.IConfigurationListener;
-import org.testng.ITestContext;
-import org.testng.ITestListener;
-import org.testng.ITestResult;
+import org.testng.*;
 import utils.ExtentReportManager;
 import utils.ReportManager;
 import utils.ScreenshotUtils;
+import utils.SoftAssertManager;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.logging.Logger;
 
-public class TestListener implements ITestListener, IConfigurationListener {
+public class TestListener implements ITestListener, IConfigurationListener, IInvokedMethodListener {
 
     // <editor-fold desc="Class Fields / Constants">
     private static final Logger logger = Logger.getLogger(TestListener.class.getName());
@@ -26,6 +26,38 @@ public class TestListener implements ITestListener, IConfigurationListener {
     @Override
     public void onStart(ITestContext context) {
         extent = ExtentReportManager.extentReportSetup();
+    }
+
+    @Override
+    public void afterInvocation(IInvokedMethod method, ITestResult result) {
+        // Only apply to test methods (not @Before/@After)
+        if (!method.isTestMethod()) {
+            return;
+        }
+
+        try {
+            // This will FAIL the test if soft asserts failed
+            SoftAssertManager.getSoftAssert()
+                             .assertAll();
+        } catch (AssertionError softEx) {
+            Throwable existing = result.getThrowable();
+
+            if (existing != null) {
+                // Keep original failure
+                // Attach soft assert with its own stack
+                existing.addSuppressed(softEx);
+
+                result.setThrowable(existing);
+            }
+            else {
+                // Only soft assert failed
+                result.setThrowable(softEx);
+            }
+
+            result.setStatus(ITestResult.FAILURE);
+        } finally {
+            SoftAssertManager.remove();
+        }
     }
 
     @Override
@@ -75,13 +107,39 @@ public class TestListener implements ITestListener, IConfigurationListener {
         Throwable throwable = result.getThrowable();
         if (throwable != null) {
             test.log(Status.FAIL, "Test Case '" + testCase + "' has Failed.");
-            test.log(Status.FAIL, "Reason: " + throwable.getMessage());
 
-            // If you also want the stacktrace:
+            // Hard Assertion
+            logger.info("Hard Assert Failure:\n" + getStackTraceWithoutSuppressed(throwable));
+
+            test.log(Status.FAIL, "Hard Assert Failure: ");
+            test.log(Status.FAIL, "Reason: " + throwable.getMessage());
             test.log(Status.FAIL, throwable);
+
+            Throwable[] suppressed = throwable.getSuppressed();
+            if (suppressed.length > 0) {
+                test.log(Status.FAIL, "Soft Assert Failures:");
+
+                for (Throwable soft : suppressed) {
+                    logger.info("Soft Assert Failure:\n" + getStackTraceWithoutSuppressed(soft));
+                    test.log(Status.FAIL, "Reason: " + soft.getMessage());
+                    test.log(Status.FAIL, soft);
+                }
+            }
+
         }
 
         ScreenshotUtils.captureAndAttach(DriverFactory.getDriver(), "'" + testCase + "' failed");
+    }
+
+    private String getStackTraceWithoutSuppressed(Throwable t) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(t).append("\n");
+
+        for (StackTraceElement element : t.getStackTrace()) {
+            sb.append("\tat ").append(element).append("\n");
+        }
+
+        return sb.toString();
     }
     // </editor-fold>
 
