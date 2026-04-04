@@ -172,6 +172,11 @@ public class BasePageAndroid extends BasePage {
             // keyboard was not open
         }
     }
+
+    @Override
+    protected String getElementText(WebElement element) {
+        return element.getAttribute("text");
+    }
     // </editor-fold>
 
 }

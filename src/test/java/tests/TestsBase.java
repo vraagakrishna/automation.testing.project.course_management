@@ -2,7 +2,6 @@ package tests;
 
 import factory.DriverFactory;
 import io.appium.java_client.AppiumDriver;
-import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
@@ -50,26 +49,11 @@ public class TestsBase {
     public void tearDownTest(ITestResult result) {
         logger.info("Tearing down...");
 
-        AssertionError softAssertError = null;
-
-        try {
-            SoftAssertManager.getSoftAssert()
-                             .assertAll();
-        } catch (AssertionError ex) {
-            softAssertError = ex;  // store it instead of failing immediately
-        } finally {
-            SoftAssertManager.remove();
-        }
-
         if (driver != null) {
             logger.info("Quitting driver...");
             DriverFactory.quitDriver();
             driver = null;
         }
-
-        // Fail AFTER cleanup
-        if (softAssertError != null)
-            Assert.fail(softAssertError.getMessage());
     }
 
     @AfterSuite

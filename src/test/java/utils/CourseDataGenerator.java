@@ -2,6 +2,8 @@ package utils;
 
 import com.github.javafaker.Faker;
 
+import java.math.BigDecimal;
+
 public class CourseDataGenerator {
 
     private static final Faker faker = new Faker();
@@ -39,9 +41,18 @@ public class CourseDataGenerator {
                     .numberBetween(1, 100) + " hours";
     }
 
-    public static long largePrice() {
-        return faker.number()
-                    .randomNumber(8, true);
+    public static BigDecimal largePrice() {
+        return BigDecimal.valueOf(
+                faker.number()
+                     .randomNumber(8, true)
+        );
+    }
+
+    public static BigDecimal validPrice() {
+        return BigDecimal.valueOf(
+                faker.number()
+                     .numberBetween(100, 1000)
+        );
     }
 
     public static String validThumbnailUrl() {

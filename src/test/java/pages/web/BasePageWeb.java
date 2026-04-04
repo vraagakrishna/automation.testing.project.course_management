@@ -16,7 +16,6 @@ public class BasePageWeb extends BasePage {
     private final By body = By.tagName("body");
     // </editor-fold>
 
-
     // <editor-fold desc="Ctor">
     public BasePageWeb(AppiumDriver driver) {
         super(driver);
@@ -95,6 +94,38 @@ public class BasePageWeb extends BasePage {
 
     protected void closeKeyboardIfOpen() {
         ((JavascriptExecutor) driver).executeScript("document.activeElement.blur()");
+    }
+
+    protected boolean verifyIfTextDisplayedInElement(WebElement element, String expectedMessage) {
+        try {
+            return element.findElements(
+                                  By.xpath(".//*[contains(text(), '" + expectedMessage + "')]")
+                          )
+                          .size() > 0;
+        } catch (Exception ex) {
+            return false;
+        }
+    }
+
+    protected String extractBackgroundUrl(String style) {
+        if (style == null || !style.contains("url(")) {
+            return null;
+        }
+
+        return style
+                .substring(style.indexOf("url(") + 4, style.indexOf(")", style.indexOf("url(")))
+                .replace("\"", "")
+                .trim();
+    }
+
+    @Override
+    protected String getElementText(WebElement element) {
+        String tagName = element.getTagName();
+
+        if ("textarea".equalsIgnoreCase(tagName))
+            return element.getText();
+        else
+            return element.getAttribute("value");
     }
     // </editor-fold>
 

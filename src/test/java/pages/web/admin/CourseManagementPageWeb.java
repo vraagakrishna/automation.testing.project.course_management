@@ -3,18 +3,19 @@ package pages.web.admin;
 import io.appium.java_client.AppiumDriver;
 import models.Course;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
 import pages.interfaces.admin.ICourseManagementPage;
 import pages.web.BasePageWeb;
 import utils.ReportManager;
 import utils.ScreenshotUtils;
+import utils.SoftAssertManager;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.math.BigDecimal;
+import java.util.*;
 import java.util.logging.Logger;
 
 public class CourseManagementPageWeb extends BasePageWeb implements ICourseManagementPage {
@@ -51,6 +52,8 @@ public class CourseManagementPageWeb extends BasePageWeb implements ICourseManag
     private final By coursePublishedCheckboxField = By.xpath("//input[@type='checkbox']");
 
     private final By createCourseBtn = By.xpath("//button[normalize-space()='Create Course']");
+
+    private final By saveCourseBtn = By.xpath("//button[contains(., \"Update Course\") and @type=\"submit\"]");
 
     private final By clickCancelCourseBtn = By.xpath("//button[normalize-space()='Cancel']");
     // </editor-fold>
@@ -105,6 +108,45 @@ public class CourseManagementPageWeb extends BasePageWeb implements ICourseManag
     }
 
     @Override
+    public WebElement validateCourseIsDisplayed(Course course) {
+        try {
+            logger.info("Verifying course is displayed: " + course.getTitle());
+            WebElement courseCardElement = findCourse(course);
+            scrollIntoView(courseCardElement);
+
+            try {
+                validateCourseContent(courseCardElement, course);
+                return courseCardElement;
+            } catch (AssertionError | NoSuchElementException ex) {
+                logger.info("Course content is incorrect!");
+                ScreenshotUtils.captureAndAttach(driver, "Course content is incorrect!");
+                return null;
+            }
+        } catch (Exception ex) {
+            logger.info("Course did not exist after creation!");
+            SoftAssertManager.getSoftAssert()
+                             .assertTrue(false, "Course should exist after creation!");
+            ScreenshotUtils.captureAndAttach(driver, "Course should exist after creation!");
+            return null;
+        }
+    }
+
+    @Override
+    public void editCourse(WebElement courseElement, Course course) {
+        logger.info("Editing course " + course.toString());
+        ReportManager.getTest()
+                     .info("Edit course: " + course);
+
+        clickCourseEditBtn(courseElement);
+
+        populateCourseData(course);
+
+        ScreenshotUtils.captureAndAttach(driver, "Edited Course");
+
+        this.clickSaveCourseBtn();
+    }
+
+    @Override
     public void cancelCourse(Course course) {
         logger.info("Adding course " + course.toString());
         ReportManager.getTest()
@@ -113,6 +155,19 @@ public class CourseManagementPageWeb extends BasePageWeb implements ICourseManag
         this.clearAddCourseForm();
 
         populateCourseData(course);
+
+        this.clickCancelCourseBtn();
+
+        ScreenshotUtils.captureAndAttach(driver, "After clicking Cancel button");
+    }
+
+    @Override
+    public void cancelEditCourse(WebElement courseElement, Course course) {
+        logger.info("Editing course " + course.toString());
+        ReportManager.getTest()
+                     .info("Edit course: " + course);
+
+        clickCourseEditBtn(courseElement);
 
         this.clickCancelCourseBtn();
 
@@ -244,31 +299,25 @@ public class CourseManagementPageWeb extends BasePageWeb implements ICourseManag
     }
 
     private void populateCourseData(Course course) {
-        if (course.getTitle() != null && !course.getTitle()
-                                                .isEmpty())
+        if (course.getTitle() != null)
             this.enterCourseTitle(course.getTitle());
 
-        if (course.getDescription() != null && !course.getDescription()
-                                                      .isEmpty())
+        if (course.getDescription() != null)
             this.enterCourseDescription(course.getDescription());
 
-        if (course.getDuration() != null && !course.getDuration()
-                                                   .isEmpty())
+        if (course.getDuration() != null)
             this.enterCourseDuration(course.getDuration());
 
-        if (course.getLevel() != null && !course.getLevel()
-                                                .isEmpty())
+        if (course.getLevel() != null)
             this.enterCourseLevel(course.getLevel());
 
-        if (course.getPrice() != 0)
+        if (course.getPrice() != null)
             this.enterCoursePrice(String.format("%.0f", course.getPrice()));
 
-        if (course.getThumbnailUrl() != null && !course.getThumbnailUrl()
-                                                       .isEmpty())
+        if (course.getThumbnailUrl() != null)
             this.enterCourseThumbnailUrl(course.getThumbnailUrl());
 
-        if (course.getMeetingUrl() != null && !course.getMeetingUrl()
-                                                     .isEmpty())
+        if (course.getMeetingUrl() != null)
             this.enterCourseMeetingUrl(course.getMeetingUrl());
 
         this.publishCourse(course.isPublished());
@@ -313,11 +362,217 @@ public class CourseManagementPageWeb extends BasePageWeb implements ICourseManag
     }
 
     private void clickCreateCourseBtn() {
+        closeKeyboardIfOpen();
         clickButton(createCourseBtn);
+    }
+
+    private void clickSaveCourseBtn() {
+        closeKeyboardIfOpen();
+        clickButton(saveCourseBtn);
     }
 
     private void clickCancelCourseBtn() {
         clickButton(clickCancelCourseBtn);
+    }
+
+    private WebElement findCourse(Course course) {
+        return getElement(
+                By.xpath(
+                        "//div[contains(@class,'courses-grid')]" +
+                                "//h3[normalize-space()='" + course.getTitle() + "']/ancestor::div[2]"
+                )
+        );
+    }
+
+    private void validateCourseContent(WebElement courseCardElement, Course course) {
+        // Validate description
+        logger.info("Validating description");
+        WebElement description = courseCardElement.findElement(By.tagName("p"));
+        String actualDescription = description.getText()
+                                              .trim();
+        Assert.assertEquals(
+                actualDescription,
+                course.getDescription(),
+                "Expected description: " + course.getDescription() + ", but actual description: " + actualDescription
+        );
+
+
+        SoftAssert softAssert = SoftAssertManager.getSoftAssert();
+
+
+        logger.info("Validating level and duration");
+        try {
+            List<WebElement> badges = courseCardElement.findElements(
+                    By.xpath("./div[2]/div[1]/span")
+            );
+
+            // normalise text (avoid repeated getText calls)
+            List<String> badgeTexts = badges.stream()
+                                            .map(e -> e.getText()
+                                                       .trim())
+                                            .toList();
+
+
+            // Validate level
+            logger.info("Validating level");
+            if (badgeTexts.isEmpty()) {
+                softAssert.assertTrue(
+                        false,
+                        "Expected course level: " + course.getLevel() + ", but no badges found"
+                );
+            } else {
+                String actualLevel = badgeTexts.get(0);
+                softAssert.assertTrue(
+                        actualLevel.equalsIgnoreCase(course.getLevel()),
+                        "Expected course level: " + course.getLevel() + ", but actual course level: " + actualLevel
+                );
+            }
+
+
+            // Validate duration
+            logger.info("Validating duration");
+            String expectedDuration = course.getDuration();
+            if (expectedDuration != null && !expectedDuration.isBlank()) {
+                if (badgeTexts.size() < 2) {
+                    softAssert.assertTrue(
+                            false,
+                            "Expected course duration: " + expectedDuration + ", but duration badge not found"
+                    );
+                } else {
+                    String actualDuration = badgeTexts.get(1);
+
+                    softAssert.assertTrue(
+                            actualDuration.toLowerCase()
+                                          .contains(expectedDuration.toLowerCase()),
+                            "Expected course duration: " + expectedDuration + ", but actual course duration: " + actualDuration
+                    );
+                }
+            } else {
+                logger.info("Duration not provided in expected data -> skipping validation");
+            }
+        } catch (NoSuchElementException ex) {
+            softAssert.assertTrue(
+                    false,
+                    "Expected course level " + course.getLevel() + ", duration: " + course.getLevel() + ", but got none"
+            );
+        }
+
+
+        // Validate price
+        logger.info("Validating price");
+        try {
+            BigDecimal expectedCoursePrice = course.getPrice();
+
+            List<WebElement> priceElements = courseCardElement.findElements(
+                    By.xpath(".//span[contains(text(),'R')]")
+            );
+
+            // price not provided or price = 0
+            if (expectedCoursePrice == null || expectedCoursePrice.compareTo(BigDecimal.valueOf(0f)) == 0) {
+                if (priceElements.isEmpty()) {
+                    String errorMsg = expectedCoursePrice == null
+                            ? "No price provided -> price not displayed (correct)"
+                            : "Expected price 'Free' or 'R0.00', but got nothing";
+                    logger.info(errorMsg);
+                } else {
+                    String actual = priceElements.get(0)
+                                                 .getText()
+                                                 .trim();
+
+                    softAssert.assertTrue(
+                            actual.equalsIgnoreCase("Free") || actual.equalsIgnoreCase("R0.00"),
+                            "Expected no price or 'Free', but got: " + actual
+                    );
+                }
+            } else {
+                if (priceElements.isEmpty()) {
+                    softAssert.assertTrue(
+                            false,
+                            "Expected price: " + expectedCoursePrice + ", but nothing displayed"
+                    );
+                } else {
+                    String actual = priceElements.get(0)
+                                                 .getText()
+                                                 .trim();
+
+                    String expectedCoursePriceFormatted = "R" + String.format(
+                            Locale.ENGLISH, "%.2f", expectedCoursePrice
+                    );
+
+                    softAssert.assertEquals(
+                            actual,
+                            expectedCoursePriceFormatted,
+                            "Expected course price: " + expectedCoursePriceFormatted + ", but actual course price: " + actual
+                    );
+                }
+            }
+        } catch (NoSuchElementException ex) {
+            softAssert.assertTrue(
+                    false,
+                    "Expected course price: " + course.getPrice() + ", but got none"
+            );
+        }
+
+
+        // Validate thumbnail
+        logger.info("Validating thumbnail");
+        try {
+            WebElement thumbnail = courseCardElement.findElement(By.xpath("./div[1]"));
+            String thumbnailStyle = thumbnail.getAttribute("style");
+
+            String expectedUrl = course.getThumbnailUrl();
+            String actualUrl = extractBackgroundUrl(thumbnailStyle);
+
+            // No thumbnail expected
+            if (expectedUrl == null || expectedUrl.isBlank()) {
+                // Should not contain url(...)
+                softAssert.assertTrue(
+                        actualUrl == null,
+                        "Expected default thumbnail (no URL), but found: " + actualUrl
+                );
+            }
+
+            // Thumbnail expected
+            else {
+                softAssert.assertTrue(
+                        actualUrl != null,
+                        "Expected course thumbnail URL: " + expectedUrl + ", but no URL found in style"
+                );
+
+                softAssert.assertEquals(
+                        actualUrl,
+                        expectedUrl,
+                        "Expected course thumbnail URL: " + expectedUrl + ", but actual course thumbnail url found: " + actualUrl
+                );
+            }
+        } catch (NoSuchElementException ex) {
+            softAssert.assertTrue(
+                    false,
+                    "Course thumbnail is not found"
+            );
+        }
+
+
+        // Validate Published or Draft
+        logger.info("Validating Published or Draft");
+        if (course.isPublished()) {
+            boolean publishedTextVisible = verifyIfTextDisplayedInElement(courseCardElement, "Published");
+            softAssert.assertTrue(
+                    publishedTextVisible,
+                    "Course should be published but 'Published' label not found"
+            );
+        } else {
+            boolean draftTextVisible = verifyIfTextDisplayedInElement(courseCardElement, "Draft");
+            softAssert.assertTrue(
+                    draftTextVisible,
+                    "Course should be draft but 'Draft' label not found"
+            );
+        }
+    }
+
+    private void clickCourseEditBtn(WebElement courseElement) {
+        WebElement editButton = courseElement.findElement(By.xpath(".//button[1]"));
+        clickButton(editButton);
     }
     // </editor-fold>
 

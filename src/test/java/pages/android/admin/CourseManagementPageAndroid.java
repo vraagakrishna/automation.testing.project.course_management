@@ -4,11 +4,13 @@ import io.appium.java_client.AppiumBy;
 import io.appium.java_client.AppiumDriver;
 import models.Course;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
 import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -16,12 +18,11 @@ import pages.android.BasePageAndroid;
 import pages.interfaces.admin.ICourseManagementPage;
 import utils.ReportManager;
 import utils.ScreenshotUtils;
+import utils.SoftAssertManager;
 
+import java.math.BigDecimal;
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.logging.Logger;
 
 public class CourseManagementPageAndroid extends BasePageAndroid implements ICourseManagementPage {
@@ -50,6 +51,8 @@ public class CourseManagementPageAndroid extends BasePageAndroid implements ICou
     private final By coursePublishedCheckboxField = AppiumBy.className("android.widget.CheckBox");
 
     private final By createCourseBtn = By.xpath("//android.widget.Button[@content-desc=\"Create Course\"]");
+
+    private final By saveCourseBtn = By.xpath("//android.widget.Button[@content-desc=\"Save Changes\"]");
 
     private final By clickCancelCourseBtn = By.xpath("//android.widget.Button[@content-desc=\"Cancel\"]");
     // </editor-fold>
@@ -100,6 +103,45 @@ public class CourseManagementPageAndroid extends BasePageAndroid implements ICou
     }
 
     @Override
+    public WebElement validateCourseIsDisplayed(Course course) {
+        try {
+            logger.info("Verifying course is displayed: " + course.getTitle());
+            WebElement courseCardElement = findCourse(course);
+            //scrollIntoView(courseCardElement);
+
+            try {
+                validateCourseContent(courseCardElement, course);
+                return courseCardElement;
+            } catch (AssertionError | NoSuchElementException ex) {
+                logger.info("Course content is incorrect!");
+                ScreenshotUtils.captureAndAttach(driver, "Course content is incorrect!");
+                return null;
+            }
+        } catch (Exception ex) {
+            logger.info("Course did not exist after creation!");
+            SoftAssertManager.getSoftAssert()
+                             .assertTrue(false, "Course should exist after creation!");
+            ScreenshotUtils.captureAndAttach(driver, "Course should exist after creation!");
+            return null;
+        }
+    }
+
+    @Override
+    public void editCourse(WebElement courseElement, Course course) {
+        logger.info("Editing course " + course.toString());
+        ReportManager.getTest()
+                     .info("Edit course: " + course);
+
+        clickCourseEditBtn(courseElement);
+
+        populateCourseData(course);
+
+        ScreenshotUtils.captureAndAttach(driver, "Edited Course");
+
+        this.clickSaveCourseBtn();
+    }
+
+    @Override
     public void cancelCourse(Course course) {
         logger.info("Adding course " + course.toString());
         ReportManager.getTest()
@@ -108,6 +150,19 @@ public class CourseManagementPageAndroid extends BasePageAndroid implements ICou
         this.clearAddCourseForm();
 
         populateCourseData(course);
+
+        this.clickCancelCourseBtn();
+
+        ScreenshotUtils.captureAndAttach(driver, "After clicking Cancel button");
+    }
+
+    @Override
+    public void cancelEditCourse(WebElement courseElement, Course course) {
+        logger.info("Editing course " + course.toString());
+        ReportManager.getTest()
+                     .info("Edit course: " + course);
+
+        clickCourseEditBtn(courseElement);
 
         this.clickCancelCourseBtn();
 
@@ -224,29 +279,25 @@ public class CourseManagementPageAndroid extends BasePageAndroid implements ICou
     }
 
     private void populateCourseData(Course course) {
-        if (course.getTitle() != null && !course.getTitle()
-                                                .isEmpty()) this.enterCourseTitle(course.getTitle());
+        if (course.getTitle() != null)
+            this.enterCourseTitle(course.getTitle());
 
-        if (course.getDescription() != null && !course.getDescription()
-                                                      .isEmpty()) this.enterCourseDescription(course.getDescription());
+        if (course.getDescription() != null)
+            this.enterCourseDescription(course.getDescription());
 
-        if (course.getDuration() != null && !course.getDuration()
-                                                   .isEmpty())
+        if (course.getDuration() != null)
             this.enterCourseDuration(course.getDuration());
 
-        if (course.getLevel() != null && !course.getLevel()
-                                                .isEmpty())
+        if (course.getLevel() != null)
             this.enterCourseLevel(course.getLevel());
 
-        if (course.getPrice() != 0)
+        if (course.getPrice() != null)
             this.enterCoursePrice(String.format("%.0f", course.getPrice()));
 
-        if (course.getThumbnailUrl() != null && !course.getThumbnailUrl()
-                                                       .isEmpty())
+        if (course.getThumbnailUrl() != null)
             this.enterCourseThumbnailUrl(course.getThumbnailUrl());
 
-        if (course.getMeetingUrl() != null && !course.getMeetingUrl()
-                                                     .isEmpty())
+        if (course.getMeetingUrl() != null)
             this.enterCourseMeetingUrl(course.getMeetingUrl());
 
         this.publishCourse(course.isPublished());
@@ -295,9 +346,130 @@ public class CourseManagementPageAndroid extends BasePageAndroid implements ICou
         clickButton(createCourseBtn);
     }
 
+    private void clickSaveCourseBtn() {
+        closeKeyboardIfOpen();
+        clickButton(saveCourseBtn);
+    }
+
     private void clickCancelCourseBtn() {
         closeKeyboardIfOpen();
         clickButton(clickCancelCourseBtn);
+    }
+
+    private WebElement findCourse(Course course) {
+        return getElement(
+                By.xpath(
+                        "//android.view.View[contains(@content-desc,'" + course.getTitle() + "')]"
+                )
+        );
+    }
+
+    private void validateCourseContent(WebElement courseCardElement, Course course) {
+        String contentDesc = courseCardElement.getAttribute("content-desc");
+        logger.info("Full content-desc: " + contentDesc);
+
+        // Split lines
+        String[] lines = contentDesc.split("\\n");
+
+        // Validate description
+        logger.info("Validating description");
+        String actualDescription = lines[2].trim();
+        Assert.assertEquals(
+                actualDescription,
+                course.getDescription(),
+                "Expected description: " + course.getDescription() + ", but actual description: " + actualDescription
+        );
+
+        SoftAssert softAssert = SoftAssertManager.getSoftAssert();
+
+
+        logger.info("Validate level");
+        try {
+            String actualLevel = lines[3].trim();
+            softAssert.assertEquals(
+                    actualLevel,
+                    course.getLevel(),
+                    "Expected level: " + course.getLevel() + ", but actual level: " + actualLevel
+            );
+        } catch (NoSuchElementException ex) {
+            softAssert.assertTrue(
+                    false,
+                    "Expected course level " + course.getLevel() + ", level: " + course.getLevel() + ", but got none"
+            );
+        }
+
+
+        logger.info("Validate duration");
+        try {
+            String actualDuration = lines[4].trim();
+            actualDuration = actualDuration.equals("-") ? null : actualDuration;  // replacing "-" to empty string
+            softAssert.assertEquals(
+                    actualDuration,
+                    course.getDuration(),
+                    "Expected duration: " + course.getDuration() + ", but actual duration: " + actualDuration
+            );
+        } catch (NoSuchElementException ex) {
+            softAssert.assertTrue(
+                    false,
+                    "Expected course duration " + course.getDuration() + ", duration: " + course.getDuration() + ", but got none"
+            );
+        }
+
+
+        logger.info("Validate price");
+        try {
+            BigDecimal expectedCoursePrice = course.getPrice();
+            String actualPrice = lines[5].trim();
+
+            // price not provided or price = 0
+            if (expectedCoursePrice == null || expectedCoursePrice.compareTo(BigDecimal.valueOf(0)) == 0) {
+                softAssert.assertTrue(
+                        actualPrice.equalsIgnoreCase("Free") || actualPrice.equalsIgnoreCase("R 0.00"),
+                        "Expected no price or 'Free', but got: " + actualPrice
+                );
+            } else {
+                String expectedCoursePriceFormatted = "R " + String.format(
+                        Locale.ENGLISH, "%.2f", course.getPrice()
+                );
+
+                softAssert.assertEquals(
+                        actualPrice,
+                        expectedCoursePriceFormatted,
+                        "Expected price: " + expectedCoursePriceFormatted + ", but actual price: " + actualPrice
+                );
+            }
+        } catch (NoSuchElementException ex) {
+            softAssert.assertTrue(
+                    false,
+                    "Expected course price " + course.getPrice() + ", price: " + course.getPrice() + ", but got none"
+            );
+        }
+
+
+        // Validate Published or Draft
+        logger.info("Validating Published or Draft");
+        if (course.isPublished()) {
+            boolean publishedTextVisible = lines[1].trim()
+                                                   .equals("Published");
+            softAssert.assertTrue(
+                    publishedTextVisible,
+                    "Course should be published but 'Published' label not found"
+            );
+        } else {
+            boolean draftTextVisible = lines[1].trim()
+                                               .equals("Draft");
+            softAssert.assertTrue(
+                    draftTextVisible,
+                    "Course should be draft but 'Draft' label not found"
+            );
+        }
+    }
+
+    private void clickCourseEditBtn(WebElement courseElement) {
+        WebElement editButton = courseElement.findElement(
+                By.xpath(".//android.widget.Button[@content-desc='Edit']")
+        );
+        editButton.click();
     }
     // </editor-fold>
 

@@ -47,9 +47,19 @@ public class BasePage {
 
     protected void enterKeys(By by, Object keys) {
         WebElement element = this.getElement(by);
+
+        String currentText = getElementText(element);
+
+        if (currentText != null && currentText.equals(keys.toString()))
+            return;
+
         element.click();
         element.clear();
         element.sendKeys((CharSequence) keys);
+    }
+
+    protected String getElementText(WebElement element) {
+        return null;
     }
     // </editor-fold>
 
