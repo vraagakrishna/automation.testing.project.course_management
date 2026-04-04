@@ -442,7 +442,8 @@ public class CourseManagementPageWeb extends BasePageWeb implements ICourseManag
                     String actualDuration = badgeTexts.get(1);
 
                     softAssert.assertTrue(
-                            actualDuration.toLowerCase().contains(expectedDuration.toLowerCase()),
+                            actualDuration.toLowerCase()
+                                          .contains(expectedDuration.toLowerCase()),
                             "Expected course duration: " + expectedDuration + ", but actual course duration: " + actualDuration
                     );
                 }

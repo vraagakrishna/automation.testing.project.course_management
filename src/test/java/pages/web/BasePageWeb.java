@@ -99,8 +99,9 @@ public class BasePageWeb extends BasePage {
     protected boolean verifyIfTextDisplayedInElement(WebElement element, String expectedMessage) {
         try {
             return element.findElements(
-                    By.xpath(".//*[contains(text(), '" + expectedMessage + "')]")
-            ).size() > 0;
+                                  By.xpath(".//*[contains(text(), '" + expectedMessage + "')]")
+                          )
+                          .size() > 0;
         } catch (Exception ex) {
             return false;
         }

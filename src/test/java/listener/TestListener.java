@@ -10,8 +10,6 @@ import utils.ReportManager;
 import utils.ScreenshotUtils;
 import utils.SoftAssertManager;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.util.logging.Logger;
 
 public class TestListener implements ITestListener, IConfigurationListener, IInvokedMethodListener {
@@ -48,8 +46,7 @@ public class TestListener implements ITestListener, IConfigurationListener, IInv
                 existing.addSuppressed(softEx);
 
                 result.setThrowable(existing);
-            }
-            else {
+            } else {
                 // Only soft assert failed
                 result.setThrowable(softEx);
             }
@@ -133,10 +130,13 @@ public class TestListener implements ITestListener, IConfigurationListener, IInv
 
     private String getStackTraceWithoutSuppressed(Throwable t) {
         StringBuilder sb = new StringBuilder();
-        sb.append(t).append("\n");
+        sb.append(t)
+          .append("\n");
 
         for (StackTraceElement element : t.getStackTrace()) {
-            sb.append("\tat ").append(element).append("\n");
+            sb.append("\tat ")
+              .append(element)
+              .append("\n");
         }
 
         return sb.toString();
