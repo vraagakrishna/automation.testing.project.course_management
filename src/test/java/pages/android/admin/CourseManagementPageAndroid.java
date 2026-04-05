@@ -107,7 +107,7 @@ public class CourseManagementPageAndroid extends BasePageAndroid implements ICou
         try {
             logger.info("Verifying course is displayed: " + course.getTitle());
             WebElement courseCardElement = findCourse(course);
-            //scrollIntoView(courseCardElement);
+            ScreenshotUtils.captureAndAttach(driver, "Course content");
 
             try {
                 validateCourseContent(courseCardElement, course);
@@ -123,6 +123,20 @@ public class CourseManagementPageAndroid extends BasePageAndroid implements ICou
                              .assertTrue(false, "Course should exist after creation!");
             ScreenshotUtils.captureAndAttach(driver, "Course should exist after creation!");
             return null;
+        }
+    }
+
+    @Override
+    public void validateCourseIsNotDisplayed(Course course) {
+        try {
+            logger.info("Verifying course is not displayed: " + course.getTitle());
+            findCourse(course);
+            ScreenshotUtils.captureAndAttach(driver, "Course content");
+
+            SoftAssertManager.getSoftAssert()
+                             .assertTrue(false, "Course should not exist after deletion!");
+        } catch (Exception ex) {
+            // ignored
         }
     }
 
@@ -154,6 +168,20 @@ public class CourseManagementPageAndroid extends BasePageAndroid implements ICou
         this.clickCancelCourseBtn();
 
         ScreenshotUtils.captureAndAttach(driver, "After clicking Cancel button");
+    }
+
+    @Override
+    public void deleteCourse(WebElement courseElement) {
+        logger.info("Deleting course");
+        ReportManager.getTest()
+                     .info("Deleting course");
+
+        clickCourseDeleteBtn(courseElement);
+
+        deleteCourseUsingPopup();
+        verifyAlertMessage("deleted");
+
+        ScreenshotUtils.captureAndAttach(driver, "After clicking Delete button");
     }
 
     @Override
@@ -470,6 +498,19 @@ public class CourseManagementPageAndroid extends BasePageAndroid implements ICou
                 By.xpath(".//android.widget.Button[@content-desc='Edit']")
         );
         editButton.click();
+    }
+
+    private void clickCourseDeleteBtn(WebElement courseElement) {
+        WebElement editButton = courseElement.findElement(
+                By.xpath(".//android.widget.Button[@content-desc='Delete']")
+        );
+        editButton.click();
+    }
+
+    protected void deleteCourseUsingPopup() {
+        WebElement deleteBtn = driver.findElement(AppiumBy.accessibilityId("Delete"));
+
+        deleteBtn.click();
     }
     // </editor-fold>
 

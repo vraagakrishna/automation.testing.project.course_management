@@ -15,9 +15,13 @@ public interface ICourseManagementPage {
 
     WebElement validateCourseIsDisplayed(Course course);
 
+    void validateCourseIsNotDisplayed(Course course);
+
     void editCourse(WebElement courseElement, Course editedCourse);
 
     void cancelCourse(Course course);
+
+    void deleteCourse(WebElement courseElement);
 
     void cancelEditCourse(WebElement courseElement, Course course);
 
