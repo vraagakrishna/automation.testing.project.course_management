@@ -81,21 +81,12 @@ public class EditCourseTests extends TestsBase {
         course.setTitle(CourseDataGenerator.randomCourseName());
         course.setDescription(CourseDataGenerator.randomDescription());
 
-        courseManagementPage.addCourse(course);
-
-        courseManagementPage.verifyAlertMessage("created");
-
-        WebElement courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-
-        if (courseElement == null) {
-            navigationBar.clickOverviewBtn();
-
-            adminDashboardPage.navigateToManageCourses();
-
-            courseManagementPage.verifyCourseManagementPageIsDisplayed();
-
-            courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-        }
+        WebElement courseElement = addCourseAndGetCourse(
+                course,
+                courseManagementPage,
+                navigationBar,
+                adminDashboardPage
+        );
 
         if (courseElement == null) {
             return;
@@ -119,21 +110,12 @@ public class EditCourseTests extends TestsBase {
         course.setTitle(CourseDataGenerator.randomCourseName());
         course.setDescription(CourseDataGenerator.randomDescription());
 
-        courseManagementPage.addCourse(course);
-
-        courseManagementPage.verifyAlertMessage("created");
-
-        WebElement courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-
-        if (courseElement == null) {
-            navigationBar.clickOverviewBtn();
-
-            adminDashboardPage.navigateToManageCourses();
-
-            courseManagementPage.verifyCourseManagementPageIsDisplayed();
-
-            courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-        }
+        WebElement courseElement = addCourseAndGetCourse(
+                course,
+                courseManagementPage,
+                navigationBar,
+                adminDashboardPage
+        );
 
         if (courseElement == null) {
             return;
@@ -156,21 +138,12 @@ public class EditCourseTests extends TestsBase {
         course.setTitle(CourseDataGenerator.randomCourseName());
         course.setDescription(CourseDataGenerator.randomDescription());
 
-        courseManagementPage.addCourse(course);
-
-        courseManagementPage.verifyAlertMessage("created");
-
-        WebElement courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-
-        if (courseElement == null) {
-            navigationBar.clickOverviewBtn();
-
-            adminDashboardPage.navigateToManageCourses();
-
-            courseManagementPage.verifyCourseManagementPageIsDisplayed();
-
-            courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-        }
+        WebElement courseElement = addCourseAndGetCourse(
+                course,
+                courseManagementPage,
+                navigationBar,
+                adminDashboardPage
+        );
 
         if (courseElement == null) {
             return;
@@ -193,21 +166,12 @@ public class EditCourseTests extends TestsBase {
         course.setTitle(CourseDataGenerator.randomCourseName());
         course.setDescription(CourseDataGenerator.randomDescription());
 
-        courseManagementPage.addCourse(course);
-
-        courseManagementPage.verifyAlertMessage("created");
-
-        WebElement courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-
-        if (courseElement == null) {
-            navigationBar.clickOverviewBtn();
-
-            adminDashboardPage.navigateToManageCourses();
-
-            courseManagementPage.verifyCourseManagementPageIsDisplayed();
-
-            courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-        }
+        WebElement courseElement = addCourseAndGetCourse(
+                course,
+                courseManagementPage,
+                navigationBar,
+                adminDashboardPage
+        );
 
         if (courseElement == null) {
             return;
@@ -233,21 +197,12 @@ public class EditCourseTests extends TestsBase {
         course.setTitle(CourseDataGenerator.randomCourseName());
         course.setDescription(CourseDataGenerator.randomDescription());
 
-        courseManagementPage.addCourse(course);
-
-        courseManagementPage.verifyAlertMessage("created");
-
-        WebElement courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-
-        if (courseElement == null) {
-            navigationBar.clickOverviewBtn();
-
-            adminDashboardPage.navigateToManageCourses();
-
-            courseManagementPage.verifyCourseManagementPageIsDisplayed();
-
-            courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-        }
+        WebElement courseElement = addCourseAndGetCourse(
+                course,
+                courseManagementPage,
+                navigationBar,
+                adminDashboardPage
+        );
 
         if (courseElement == null) {
             return;
@@ -268,21 +223,12 @@ public class EditCourseTests extends TestsBase {
         course.setTitle(CourseDataGenerator.randomCourseName());
         course.setDescription(CourseDataGenerator.randomDescription());
 
-        courseManagementPage.addCourse(course);
-
-        courseManagementPage.verifyAlertMessage("created");
-
-        WebElement courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-
-        if (courseElement == null) {
-            navigationBar.clickOverviewBtn();
-
-            adminDashboardPage.navigateToManageCourses();
-
-            courseManagementPage.verifyCourseManagementPageIsDisplayed();
-
-            courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-        }
+        WebElement courseElement = addCourseAndGetCourse(
+                course,
+                courseManagementPage,
+                navigationBar,
+                adminDashboardPage
+        );
 
         if (courseElement == null) {
             return;
@@ -303,21 +249,12 @@ public class EditCourseTests extends TestsBase {
         course.setTitle(CourseDataGenerator.randomCourseName());
         course.setDescription(CourseDataGenerator.randomDescription());
 
-        courseManagementPage.addCourse(course);
-
-        courseManagementPage.verifyAlertMessage("created");
-
-        WebElement courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-
-        if (courseElement == null) {
-            navigationBar.clickOverviewBtn();
-
-            adminDashboardPage.navigateToManageCourses();
-
-            courseManagementPage.verifyCourseManagementPageIsDisplayed();
-
-            courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-        }
+        WebElement courseElement = addCourseAndGetCourse(
+                course,
+                courseManagementPage,
+                navigationBar,
+                adminDashboardPage
+        );
 
         if (courseElement == null) {
             return;
@@ -338,21 +275,12 @@ public class EditCourseTests extends TestsBase {
         course.setTitle(CourseDataGenerator.randomCourseName());
         course.setDescription(CourseDataGenerator.randomDescription());
 
-        courseManagementPage.addCourse(course);
-
-        courseManagementPage.verifyAlertMessage("created");
-
-        WebElement courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-
-        if (courseElement == null) {
-            navigationBar.clickOverviewBtn();
-
-            adminDashboardPage.navigateToManageCourses();
-
-            courseManagementPage.verifyCourseManagementPageIsDisplayed();
-
-            courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-        }
+        WebElement courseElement = addCourseAndGetCourse(
+                course,
+                courseManagementPage,
+                navigationBar,
+                adminDashboardPage
+        );
 
         if (courseElement == null) {
             return;
@@ -373,21 +301,12 @@ public class EditCourseTests extends TestsBase {
         course.setTitle(CourseDataGenerator.randomCourseName());
         course.setDescription(CourseDataGenerator.randomDescription());
 
-        courseManagementPage.addCourse(course);
-
-        courseManagementPage.verifyAlertMessage("created");
-
-        WebElement courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-
-        if (courseElement == null) {
-            navigationBar.clickOverviewBtn();
-
-            adminDashboardPage.navigateToManageCourses();
-
-            courseManagementPage.verifyCourseManagementPageIsDisplayed();
-
-            courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-        }
+        WebElement courseElement = addCourseAndGetCourse(
+                course,
+                courseManagementPage,
+                navigationBar,
+                adminDashboardPage
+        );
 
         if (courseElement == null) {
             return;
@@ -408,21 +327,12 @@ public class EditCourseTests extends TestsBase {
         course.setTitle(CourseDataGenerator.randomCourseName());
         course.setDescription(CourseDataGenerator.randomDescription());
 
-        courseManagementPage.addCourse(course);
-
-        courseManagementPage.verifyAlertMessage("created");
-
-        WebElement courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-
-        if (courseElement == null) {
-            navigationBar.clickOverviewBtn();
-
-            adminDashboardPage.navigateToManageCourses();
-
-            courseManagementPage.verifyCourseManagementPageIsDisplayed();
-
-            courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-        }
+        WebElement courseElement = addCourseAndGetCourse(
+                course,
+                courseManagementPage,
+                navigationBar,
+                adminDashboardPage
+        );
 
         if (courseElement == null) {
             return;
@@ -443,21 +353,12 @@ public class EditCourseTests extends TestsBase {
         course.setTitle(CourseDataGenerator.randomCourseName());
         course.setDescription(CourseDataGenerator.randomDescription());
 
-        courseManagementPage.addCourse(course);
-
-        courseManagementPage.verifyAlertMessage("created");
-
-        WebElement courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-
-        if (courseElement == null) {
-            navigationBar.clickOverviewBtn();
-
-            adminDashboardPage.navigateToManageCourses();
-
-            courseManagementPage.verifyCourseManagementPageIsDisplayed();
-
-            courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-        }
+        WebElement courseElement = addCourseAndGetCourse(
+                course,
+                courseManagementPage,
+                navigationBar,
+                adminDashboardPage
+        );
 
         if (courseElement == null) {
             return;
@@ -478,21 +379,12 @@ public class EditCourseTests extends TestsBase {
         course.setTitle(CourseDataGenerator.randomCourseName());
         course.setDescription(CourseDataGenerator.randomDescription());
 
-        courseManagementPage.addCourse(course);
-
-        courseManagementPage.verifyAlertMessage("created");
-
-        WebElement courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-
-        if (courseElement == null) {
-            navigationBar.clickOverviewBtn();
-
-            adminDashboardPage.navigateToManageCourses();
-
-            courseManagementPage.verifyCourseManagementPageIsDisplayed();
-
-            courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-        }
+        WebElement courseElement = addCourseAndGetCourse(
+                course,
+                courseManagementPage,
+                navigationBar,
+                adminDashboardPage
+        );
 
         if (courseElement == null) {
             return;
@@ -513,21 +405,12 @@ public class EditCourseTests extends TestsBase {
         course.setTitle(CourseDataGenerator.randomCourseName());
         course.setDescription(CourseDataGenerator.randomDescription());
 
-        courseManagementPage.addCourse(course);
-
-        courseManagementPage.verifyAlertMessage("created");
-
-        WebElement courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-
-        if (courseElement == null) {
-            navigationBar.clickOverviewBtn();
-
-            adminDashboardPage.navigateToManageCourses();
-
-            courseManagementPage.verifyCourseManagementPageIsDisplayed();
-
-            courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-        }
+        WebElement courseElement = addCourseAndGetCourse(
+                course,
+                courseManagementPage,
+                navigationBar,
+                adminDashboardPage
+        );
 
         if (courseElement == null) {
             return;
@@ -548,21 +431,12 @@ public class EditCourseTests extends TestsBase {
         course.setTitle(CourseDataGenerator.randomCourseName());
         course.setDescription(CourseDataGenerator.randomDescription());
 
-        courseManagementPage.addCourse(course);
-
-        courseManagementPage.verifyAlertMessage("created");
-
-        WebElement courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-
-        if (courseElement == null) {
-            navigationBar.clickOverviewBtn();
-
-            adminDashboardPage.navigateToManageCourses();
-
-            courseManagementPage.verifyCourseManagementPageIsDisplayed();
-
-            courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-        }
+        WebElement courseElement = addCourseAndGetCourse(
+                course,
+                courseManagementPage,
+                navigationBar,
+                adminDashboardPage
+        );
 
         if (courseElement == null) {
             return;
@@ -583,21 +457,12 @@ public class EditCourseTests extends TestsBase {
         course.setTitle(CourseDataGenerator.randomCourseName());
         course.setDescription(CourseDataGenerator.randomDescription());
 
-        courseManagementPage.addCourse(course);
-
-        courseManagementPage.verifyAlertMessage("created");
-
-        WebElement courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-
-        if (courseElement == null) {
-            navigationBar.clickOverviewBtn();
-
-            adminDashboardPage.navigateToManageCourses();
-
-            courseManagementPage.verifyCourseManagementPageIsDisplayed();
-
-            courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-        }
+        WebElement courseElement = addCourseAndGetCourse(
+                course,
+                courseManagementPage,
+                navigationBar,
+                adminDashboardPage
+        );
 
         if (courseElement == null) {
             return;
@@ -618,21 +483,12 @@ public class EditCourseTests extends TestsBase {
         course.setTitle(CourseDataGenerator.randomCourseName());
         course.setDescription(CourseDataGenerator.randomDescription());
 
-        courseManagementPage.addCourse(course);
-
-        courseManagementPage.verifyAlertMessage("created");
-
-        WebElement courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-
-        if (courseElement == null) {
-            navigationBar.clickOverviewBtn();
-
-            adminDashboardPage.navigateToManageCourses();
-
-            courseManagementPage.verifyCourseManagementPageIsDisplayed();
-
-            courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-        }
+        WebElement courseElement = addCourseAndGetCourse(
+                course,
+                courseManagementPage,
+                navigationBar,
+                adminDashboardPage
+        );
 
         if (courseElement == null) {
             return;
@@ -653,21 +509,12 @@ public class EditCourseTests extends TestsBase {
         course.setTitle(CourseDataGenerator.randomCourseName());
         course.setDescription(CourseDataGenerator.randomDescription());
 
-        courseManagementPage.addCourse(course);
-
-        courseManagementPage.verifyAlertMessage("created");
-
-        WebElement courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-
-        if (courseElement == null) {
-            navigationBar.clickOverviewBtn();
-
-            adminDashboardPage.navigateToManageCourses();
-
-            courseManagementPage.verifyCourseManagementPageIsDisplayed();
-
-            courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-        }
+        WebElement courseElement = addCourseAndGetCourse(
+                course,
+                courseManagementPage,
+                navigationBar,
+                adminDashboardPage
+        );
 
         if (courseElement == null) {
             return;
@@ -688,21 +535,12 @@ public class EditCourseTests extends TestsBase {
         course.setTitle(CourseDataGenerator.randomCourseName());
         course.setDescription(CourseDataGenerator.randomDescription());
 
-        courseManagementPage.addCourse(course);
-
-        courseManagementPage.verifyAlertMessage("created");
-
-        WebElement courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-
-        if (courseElement == null) {
-            navigationBar.clickOverviewBtn();
-
-            adminDashboardPage.navigateToManageCourses();
-
-            courseManagementPage.verifyCourseManagementPageIsDisplayed();
-
-            courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-        }
+        WebElement courseElement = addCourseAndGetCourse(
+                course,
+                courseManagementPage,
+                navigationBar,
+                adminDashboardPage
+        );
 
         if (courseElement == null) {
             return;
@@ -726,21 +564,12 @@ public class EditCourseTests extends TestsBase {
         course.setDescription(CourseDataGenerator.randomDescription());
         course.setPublished(true);
 
-        courseManagementPage.addCourse(course);
-
-        courseManagementPage.verifyAlertMessage("created");
-
-        WebElement courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-
-        if (courseElement == null) {
-            navigationBar.clickOverviewBtn();
-
-            adminDashboardPage.navigateToManageCourses();
-
-            courseManagementPage.verifyCourseManagementPageIsDisplayed();
-
-            courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-        }
+        WebElement courseElement = addCourseAndGetCourse(
+                course,
+                courseManagementPage,
+                navigationBar,
+                adminDashboardPage
+        );
 
         if (courseElement == null) {
             return;
@@ -762,21 +591,12 @@ public class EditCourseTests extends TestsBase {
         course.setDescription(CourseDataGenerator.randomDescription());
         course.setPublished(true);
 
-        courseManagementPage.addCourse(course);
-
-        courseManagementPage.verifyAlertMessage("created");
-
-        WebElement courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-
-        if (courseElement == null) {
-            navigationBar.clickOverviewBtn();
-
-            adminDashboardPage.navigateToManageCourses();
-
-            courseManagementPage.verifyCourseManagementPageIsDisplayed();
-
-            courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-        }
+        WebElement courseElement = addCourseAndGetCourse(
+                course,
+                courseManagementPage,
+                navigationBar,
+                adminDashboardPage
+        );
 
         if (courseElement == null) {
             return;
@@ -798,21 +618,12 @@ public class EditCourseTests extends TestsBase {
         course.setDescription(CourseDataGenerator.randomDescription());
         course.setPublished(true);
 
-        courseManagementPage.addCourse(course);
-
-        courseManagementPage.verifyAlertMessage("created");
-
-        WebElement courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-
-        if (courseElement == null) {
-            navigationBar.clickOverviewBtn();
-
-            adminDashboardPage.navigateToManageCourses();
-
-            courseManagementPage.verifyCourseManagementPageIsDisplayed();
-
-            courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-        }
+        WebElement courseElement = addCourseAndGetCourse(
+                course,
+                courseManagementPage,
+                navigationBar,
+                adminDashboardPage
+        );
 
         if (courseElement == null) {
             return;
@@ -834,21 +645,12 @@ public class EditCourseTests extends TestsBase {
         course.setDescription(CourseDataGenerator.randomDescription());
         course.setPublished(true);
 
-        courseManagementPage.addCourse(course);
-
-        courseManagementPage.verifyAlertMessage("created");
-
-        WebElement courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-
-        if (courseElement == null) {
-            navigationBar.clickOverviewBtn();
-
-            adminDashboardPage.navigateToManageCourses();
-
-            courseManagementPage.verifyCourseManagementPageIsDisplayed();
-
-            courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-        }
+        WebElement courseElement = addCourseAndGetCourse(
+                course,
+                courseManagementPage,
+                navigationBar,
+                adminDashboardPage
+        );
 
         if (courseElement == null) {
             return;
@@ -870,21 +672,12 @@ public class EditCourseTests extends TestsBase {
         course.setDescription(CourseDataGenerator.randomDescription());
         course.setPublished(true);
 
-        courseManagementPage.addCourse(course);
-
-        courseManagementPage.verifyAlertMessage("created");
-
-        WebElement courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-
-        if (courseElement == null) {
-            navigationBar.clickOverviewBtn();
-
-            adminDashboardPage.navigateToManageCourses();
-
-            courseManagementPage.verifyCourseManagementPageIsDisplayed();
-
-            courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-        }
+        WebElement courseElement = addCourseAndGetCourse(
+                course,
+                courseManagementPage,
+                navigationBar,
+                adminDashboardPage
+        );
 
         if (courseElement == null) {
             return;
@@ -906,21 +699,12 @@ public class EditCourseTests extends TestsBase {
         course.setDescription(CourseDataGenerator.randomDescription());
         course.setPublished(true);
 
-        courseManagementPage.addCourse(course);
-
-        courseManagementPage.verifyAlertMessage("created");
-
-        WebElement courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-
-        if (courseElement == null) {
-            navigationBar.clickOverviewBtn();
-
-            adminDashboardPage.navigateToManageCourses();
-
-            courseManagementPage.verifyCourseManagementPageIsDisplayed();
-
-            courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-        }
+        WebElement courseElement = addCourseAndGetCourse(
+                course,
+                courseManagementPage,
+                navigationBar,
+                adminDashboardPage
+        );
 
         if (courseElement == null) {
             return;
@@ -942,21 +726,12 @@ public class EditCourseTests extends TestsBase {
         course.setDescription(CourseDataGenerator.randomDescription());
         course.setPublished(true);
 
-        courseManagementPage.addCourse(course);
-
-        courseManagementPage.verifyAlertMessage("created");
-
-        WebElement courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-
-        if (courseElement == null) {
-            navigationBar.clickOverviewBtn();
-
-            adminDashboardPage.navigateToManageCourses();
-
-            courseManagementPage.verifyCourseManagementPageIsDisplayed();
-
-            courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-        }
+        WebElement courseElement = addCourseAndGetCourse(
+                course,
+                courseManagementPage,
+                navigationBar,
+                adminDashboardPage
+        );
 
         if (courseElement == null) {
             return;
@@ -978,21 +753,12 @@ public class EditCourseTests extends TestsBase {
         course.setDescription(CourseDataGenerator.randomDescription());
         course.setPublished(true);
 
-        courseManagementPage.addCourse(course);
-
-        courseManagementPage.verifyAlertMessage("created");
-
-        WebElement courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-
-        if (courseElement == null) {
-            navigationBar.clickOverviewBtn();
-
-            adminDashboardPage.navigateToManageCourses();
-
-            courseManagementPage.verifyCourseManagementPageIsDisplayed();
-
-            courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-        }
+        WebElement courseElement = addCourseAndGetCourse(
+                course,
+                courseManagementPage,
+                navigationBar,
+                adminDashboardPage
+        );
 
         if (courseElement == null) {
             return;
@@ -1014,21 +780,12 @@ public class EditCourseTests extends TestsBase {
         course.setDescription(CourseDataGenerator.randomDescription());
         course.setPublished(true);
 
-        courseManagementPage.addCourse(course);
-
-        courseManagementPage.verifyAlertMessage("created");
-
-        WebElement courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-
-        if (courseElement == null) {
-            navigationBar.clickOverviewBtn();
-
-            adminDashboardPage.navigateToManageCourses();
-
-            courseManagementPage.verifyCourseManagementPageIsDisplayed();
-
-            courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-        }
+        WebElement courseElement = addCourseAndGetCourse(
+                course,
+                courseManagementPage,
+                navigationBar,
+                adminDashboardPage
+        );
 
         if (courseElement == null) {
             return;
@@ -1050,21 +807,12 @@ public class EditCourseTests extends TestsBase {
         course.setDescription(CourseDataGenerator.randomDescription());
         course.setPublished(true);
 
-        courseManagementPage.addCourse(course);
-
-        courseManagementPage.verifyAlertMessage("created");
-
-        WebElement courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-
-        if (courseElement == null) {
-            navigationBar.clickOverviewBtn();
-
-            adminDashboardPage.navigateToManageCourses();
-
-            courseManagementPage.verifyCourseManagementPageIsDisplayed();
-
-            courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-        }
+        WebElement courseElement = addCourseAndGetCourse(
+                course,
+                courseManagementPage,
+                navigationBar,
+                adminDashboardPage
+        );
 
         if (courseElement == null) {
             return;
@@ -1086,21 +834,12 @@ public class EditCourseTests extends TestsBase {
         course.setDescription(CourseDataGenerator.randomDescription());
         course.setPublished(true);
 
-        courseManagementPage.addCourse(course);
-
-        courseManagementPage.verifyAlertMessage("created");
-
-        WebElement courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-
-        if (courseElement == null) {
-            navigationBar.clickOverviewBtn();
-
-            adminDashboardPage.navigateToManageCourses();
-
-            courseManagementPage.verifyCourseManagementPageIsDisplayed();
-
-            courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-        }
+        WebElement courseElement = addCourseAndGetCourse(
+                course,
+                courseManagementPage,
+                navigationBar,
+                adminDashboardPage
+        );
 
         if (courseElement == null) {
             return;
@@ -1122,21 +861,12 @@ public class EditCourseTests extends TestsBase {
         course.setDescription(CourseDataGenerator.randomDescription());
         course.setPublished(true);
 
-        courseManagementPage.addCourse(course);
-
-        courseManagementPage.verifyAlertMessage("created");
-
-        WebElement courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-
-        if (courseElement == null) {
-            navigationBar.clickOverviewBtn();
-
-            adminDashboardPage.navigateToManageCourses();
-
-            courseManagementPage.verifyCourseManagementPageIsDisplayed();
-
-            courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-        }
+        WebElement courseElement = addCourseAndGetCourse(
+                course,
+                courseManagementPage,
+                navigationBar,
+                adminDashboardPage
+        );
 
         if (courseElement == null) {
             return;
@@ -1158,21 +888,12 @@ public class EditCourseTests extends TestsBase {
         course.setDescription(CourseDataGenerator.randomDescription());
         course.setPublished(true);
 
-        courseManagementPage.addCourse(course);
-
-        courseManagementPage.verifyAlertMessage("created");
-
-        WebElement courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-
-        if (courseElement == null) {
-            navigationBar.clickOverviewBtn();
-
-            adminDashboardPage.navigateToManageCourses();
-
-            courseManagementPage.verifyCourseManagementPageIsDisplayed();
-
-            courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-        }
+        WebElement courseElement = addCourseAndGetCourse(
+                course,
+                courseManagementPage,
+                navigationBar,
+                adminDashboardPage
+        );
 
         if (courseElement == null) {
             return;
@@ -1201,21 +922,12 @@ public class EditCourseTests extends TestsBase {
         course.setMeetingUrl(CourseDataGenerator.validTeamsLink());
         course.setPublished(false);
 
-        courseManagementPage.addCourse(course);
-
-        courseManagementPage.verifyAlertMessage("created");
-
-        WebElement courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-
-        if (courseElement == null) {
-            navigationBar.clickOverviewBtn();
-
-            adminDashboardPage.navigateToManageCourses();
-
-            courseManagementPage.verifyCourseManagementPageIsDisplayed();
-
-            courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-        }
+        WebElement courseElement = addCourseAndGetCourse(
+                course,
+                courseManagementPage,
+                navigationBar,
+                adminDashboardPage
+        );
 
         if (courseElement == null) {
             return;
@@ -1242,21 +954,12 @@ public class EditCourseTests extends TestsBase {
         course.setMeetingUrl(CourseDataGenerator.validTeamsLink());
         course.setPublished(false);
 
-        courseManagementPage.addCourse(course);
-
-        courseManagementPage.verifyAlertMessage("created");
-
-        WebElement courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-
-        if (courseElement == null) {
-            navigationBar.clickOverviewBtn();
-
-            adminDashboardPage.navigateToManageCourses();
-
-            courseManagementPage.verifyCourseManagementPageIsDisplayed();
-
-            courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-        }
+        WebElement courseElement = addCourseAndGetCourse(
+                course,
+                courseManagementPage,
+                navigationBar,
+                adminDashboardPage
+        );
 
         if (courseElement == null) {
             return;
@@ -1283,21 +986,12 @@ public class EditCourseTests extends TestsBase {
         course.setMeetingUrl(CourseDataGenerator.validTeamsLink());
         course.setPublished(false);
 
-        courseManagementPage.addCourse(course);
-
-        courseManagementPage.verifyAlertMessage("created");
-
-        WebElement courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-
-        if (courseElement == null) {
-            navigationBar.clickOverviewBtn();
-
-            adminDashboardPage.navigateToManageCourses();
-
-            courseManagementPage.verifyCourseManagementPageIsDisplayed();
-
-            courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-        }
+        WebElement courseElement = addCourseAndGetCourse(
+                course,
+                courseManagementPage,
+                navigationBar,
+                adminDashboardPage
+        );
 
         if (courseElement == null) {
             return;
@@ -1324,21 +1018,12 @@ public class EditCourseTests extends TestsBase {
         course.setMeetingUrl(CourseDataGenerator.validTeamsLink());
         course.setPublished(false);
 
-        courseManagementPage.addCourse(course);
-
-        courseManagementPage.verifyAlertMessage("created");
-
-        WebElement courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-
-        if (courseElement == null) {
-            navigationBar.clickOverviewBtn();
-
-            adminDashboardPage.navigateToManageCourses();
-
-            courseManagementPage.verifyCourseManagementPageIsDisplayed();
-
-            courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-        }
+        WebElement courseElement = addCourseAndGetCourse(
+                course,
+                courseManagementPage,
+                navigationBar,
+                adminDashboardPage
+        );
 
         if (courseElement == null) {
             return;
@@ -1365,21 +1050,12 @@ public class EditCourseTests extends TestsBase {
         course.setMeetingUrl(CourseDataGenerator.validTeamsLink());
         course.setPublished(false);
 
-        courseManagementPage.addCourse(course);
-
-        courseManagementPage.verifyAlertMessage("created");
-
-        WebElement courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-
-        if (courseElement == null) {
-            navigationBar.clickOverviewBtn();
-
-            adminDashboardPage.navigateToManageCourses();
-
-            courseManagementPage.verifyCourseManagementPageIsDisplayed();
-
-            courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-        }
+        WebElement courseElement = addCourseAndGetCourse(
+                course,
+                courseManagementPage,
+                navigationBar,
+                adminDashboardPage
+        );
 
         if (courseElement == null) {
             return;
@@ -1406,21 +1082,12 @@ public class EditCourseTests extends TestsBase {
         course.setMeetingUrl(CourseDataGenerator.validTeamsLink());
         course.setPublished(false);
 
-        courseManagementPage.addCourse(course);
-
-        courseManagementPage.verifyAlertMessage("created");
-
-        WebElement courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-
-        if (courseElement == null) {
-            navigationBar.clickOverviewBtn();
-
-            adminDashboardPage.navigateToManageCourses();
-
-            courseManagementPage.verifyCourseManagementPageIsDisplayed();
-
-            courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-        }
+        WebElement courseElement = addCourseAndGetCourse(
+                course,
+                courseManagementPage,
+                navigationBar,
+                adminDashboardPage
+        );
 
         if (courseElement == null) {
             return;
@@ -1447,21 +1114,12 @@ public class EditCourseTests extends TestsBase {
         course.setMeetingUrl(CourseDataGenerator.validTeamsLink());
         course.setPublished(false);
 
-        courseManagementPage.addCourse(course);
-
-        courseManagementPage.verifyAlertMessage("created");
-
-        WebElement courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-
-        if (courseElement == null) {
-            navigationBar.clickOverviewBtn();
-
-            adminDashboardPage.navigateToManageCourses();
-
-            courseManagementPage.verifyCourseManagementPageIsDisplayed();
-
-            courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-        }
+        WebElement courseElement = addCourseAndGetCourse(
+                course,
+                courseManagementPage,
+                navigationBar,
+                adminDashboardPage
+        );
 
         if (courseElement == null) {
             return;
@@ -1488,21 +1146,12 @@ public class EditCourseTests extends TestsBase {
         course.setMeetingUrl(CourseDataGenerator.validTeamsLink());
         course.setPublished(false);
 
-        courseManagementPage.addCourse(course);
-
-        courseManagementPage.verifyAlertMessage("created");
-
-        WebElement courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-
-        if (courseElement == null) {
-            navigationBar.clickOverviewBtn();
-
-            adminDashboardPage.navigateToManageCourses();
-
-            courseManagementPage.verifyCourseManagementPageIsDisplayed();
-
-            courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-        }
+        WebElement courseElement = addCourseAndGetCourse(
+                course,
+                courseManagementPage,
+                navigationBar,
+                adminDashboardPage
+        );
 
         if (courseElement == null) {
             return;
@@ -1531,21 +1180,12 @@ public class EditCourseTests extends TestsBase {
         course.setMeetingUrl(CourseDataGenerator.validTeamsLink());
         course.setPublished(true);
 
-        courseManagementPage.addCourse(course);
-
-        courseManagementPage.verifyAlertMessage("created");
-
-        WebElement courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-
-        if (courseElement == null) {
-            navigationBar.clickOverviewBtn();
-
-            adminDashboardPage.navigateToManageCourses();
-
-            courseManagementPage.verifyCourseManagementPageIsDisplayed();
-
-            courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-        }
+        WebElement courseElement = addCourseAndGetCourse(
+                course,
+                courseManagementPage,
+                navigationBar,
+                adminDashboardPage
+        );
 
         if (courseElement == null) {
             return;
@@ -1572,21 +1212,12 @@ public class EditCourseTests extends TestsBase {
         course.setMeetingUrl(CourseDataGenerator.validTeamsLink());
         course.setPublished(true);
 
-        courseManagementPage.addCourse(course);
-
-        courseManagementPage.verifyAlertMessage("created");
-
-        WebElement courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-
-        if (courseElement == null) {
-            navigationBar.clickOverviewBtn();
-
-            adminDashboardPage.navigateToManageCourses();
-
-            courseManagementPage.verifyCourseManagementPageIsDisplayed();
-
-            courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-        }
+        WebElement courseElement = addCourseAndGetCourse(
+                course,
+                courseManagementPage,
+                navigationBar,
+                adminDashboardPage
+        );
 
         if (courseElement == null) {
             return;
@@ -1613,21 +1244,12 @@ public class EditCourseTests extends TestsBase {
         course.setMeetingUrl(CourseDataGenerator.validTeamsLink());
         course.setPublished(true);
 
-        courseManagementPage.addCourse(course);
-
-        courseManagementPage.verifyAlertMessage("created");
-
-        WebElement courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-
-        if (courseElement == null) {
-            navigationBar.clickOverviewBtn();
-
-            adminDashboardPage.navigateToManageCourses();
-
-            courseManagementPage.verifyCourseManagementPageIsDisplayed();
-
-            courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-        }
+        WebElement courseElement = addCourseAndGetCourse(
+                course,
+                courseManagementPage,
+                navigationBar,
+                adminDashboardPage
+        );
 
         if (courseElement == null) {
             return;
@@ -1654,21 +1276,12 @@ public class EditCourseTests extends TestsBase {
         course.setMeetingUrl(CourseDataGenerator.validTeamsLink());
         course.setPublished(true);
 
-        courseManagementPage.addCourse(course);
-
-        courseManagementPage.verifyAlertMessage("created");
-
-        WebElement courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-
-        if (courseElement == null) {
-            navigationBar.clickOverviewBtn();
-
-            adminDashboardPage.navigateToManageCourses();
-
-            courseManagementPage.verifyCourseManagementPageIsDisplayed();
-
-            courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-        }
+        WebElement courseElement = addCourseAndGetCourse(
+                course,
+                courseManagementPage,
+                navigationBar,
+                adminDashboardPage
+        );
 
         if (courseElement == null) {
             return;
@@ -1695,21 +1308,12 @@ public class EditCourseTests extends TestsBase {
         course.setMeetingUrl(CourseDataGenerator.validTeamsLink());
         course.setPublished(true);
 
-        courseManagementPage.addCourse(course);
-
-        courseManagementPage.verifyAlertMessage("created");
-
-        WebElement courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-
-        if (courseElement == null) {
-            navigationBar.clickOverviewBtn();
-
-            adminDashboardPage.navigateToManageCourses();
-
-            courseManagementPage.verifyCourseManagementPageIsDisplayed();
-
-            courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-        }
+        WebElement courseElement = addCourseAndGetCourse(
+                course,
+                courseManagementPage,
+                navigationBar,
+                adminDashboardPage
+        );
 
         if (courseElement == null) {
             return;
@@ -1736,21 +1340,12 @@ public class EditCourseTests extends TestsBase {
         course.setMeetingUrl(CourseDataGenerator.validTeamsLink());
         course.setPublished(true);
 
-        courseManagementPage.addCourse(course);
-
-        courseManagementPage.verifyAlertMessage("created");
-
-        WebElement courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-
-        if (courseElement == null) {
-            navigationBar.clickOverviewBtn();
-
-            adminDashboardPage.navigateToManageCourses();
-
-            courseManagementPage.verifyCourseManagementPageIsDisplayed();
-
-            courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-        }
+        WebElement courseElement = addCourseAndGetCourse(
+                course,
+                courseManagementPage,
+                navigationBar,
+                adminDashboardPage
+        );
 
         if (courseElement == null) {
             return;
@@ -1777,21 +1372,12 @@ public class EditCourseTests extends TestsBase {
         course.setMeetingUrl(CourseDataGenerator.validTeamsLink());
         course.setPublished(true);
 
-        courseManagementPage.addCourse(course);
-
-        courseManagementPage.verifyAlertMessage("created");
-
-        WebElement courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-
-        if (courseElement == null) {
-            navigationBar.clickOverviewBtn();
-
-            adminDashboardPage.navigateToManageCourses();
-
-            courseManagementPage.verifyCourseManagementPageIsDisplayed();
-
-            courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-        }
+        WebElement courseElement = addCourseAndGetCourse(
+                course,
+                courseManagementPage,
+                navigationBar,
+                adminDashboardPage
+        );
 
         if (courseElement == null) {
             return;
@@ -1818,21 +1404,12 @@ public class EditCourseTests extends TestsBase {
         course.setMeetingUrl(CourseDataGenerator.validTeamsLink());
         course.setPublished(true);
 
-        courseManagementPage.addCourse(course);
-
-        courseManagementPage.verifyAlertMessage("created");
-
-        WebElement courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-
-        if (courseElement == null) {
-            navigationBar.clickOverviewBtn();
-
-            adminDashboardPage.navigateToManageCourses();
-
-            courseManagementPage.verifyCourseManagementPageIsDisplayed();
-
-            courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-        }
+        WebElement courseElement = addCourseAndGetCourse(
+                course,
+                courseManagementPage,
+                navigationBar,
+                adminDashboardPage
+        );
 
         if (courseElement == null) {
             return;

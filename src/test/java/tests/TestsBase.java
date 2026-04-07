@@ -2,6 +2,7 @@ package tests;
 
 import factory.DriverFactory;
 import io.appium.java_client.AppiumDriver;
+import models.Course;
 import org.openqa.selenium.WebElement;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
@@ -10,6 +11,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import pages.interfaces.INavigationBar;
 import pages.interfaces.admin.ICourseManagementPage;
+import pages.interfaces.admin.IEnrollmentsManagementPage;
 import pages.interfaces.dashboard.IAdminDashboardPage;
 import services.AppiumServiceManager;
 import utils.ConfigManager;
@@ -106,6 +108,80 @@ public class TestsBase {
                 });
 
         ConfigManager.courses.clear();
+    }
+
+    protected WebElement getCourse(
+            Course course,
+            ICourseManagementPage courseManagementPage,
+            INavigationBar navigationBar,
+            IAdminDashboardPage adminDashboardPage
+    ) {
+        WebElement courseElement = courseManagementPage.validateCourseIsDisplayed(course);
+
+        if (courseElement == null) {
+            navigationBar.clickOverviewBtn();
+
+            adminDashboardPage.navigateToManageCourses();
+
+            courseManagementPage.verifyCourseManagementPageIsDisplayed();
+
+            courseElement = courseManagementPage.validateCourseIsDisplayed(course);
+        }
+
+        return courseElement;
+    }
+
+    protected WebElement addCourseAndGetCourse(
+            Course course,
+            ICourseManagementPage courseManagementPage,
+            INavigationBar navigationBar,
+            IAdminDashboardPage adminDashboardPage
+    ) {
+        courseManagementPage.addCourse(course);
+
+        courseManagementPage.verifyAlertMessage("created");
+
+        return getCourse(
+                course,
+                courseManagementPage,
+                navigationBar,
+                adminDashboardPage
+        );
+    }
+
+    protected void enrollUserToCourse(
+            Course course,
+            ICourseManagementPage courseManagementPage,
+            INavigationBar navigationBar,
+            IEnrollmentsManagementPage enrollmentsManagementPage,
+            IAdminDashboardPage adminDashboardPage
+    ) {
+
+        WebElement courseElement = addCourseAndGetCourse(
+                course,
+                courseManagementPage,
+                navigationBar,
+                adminDashboardPage
+        );
+
+        if (courseElement == null) {
+            return;
+        }
+
+        navigationBar.clickEnrollmentsBtn();
+
+        enrollmentsManagementPage.clickEnroll(
+                course.getTitle(),
+                ConfigManager.getUserEmail(),
+                "Enrolling user to " + (course.isPublished() ? "Published" : "Unpublished") + " course",
+                course.isPublished()
+        );
+
+        enrollmentsManagementPage.searchForEnrollment(
+                course.getTitle(),
+                ConfigManager.getUserEmail(),
+                course.isPublished()
+        );
     }
     // </editor-fold>
 

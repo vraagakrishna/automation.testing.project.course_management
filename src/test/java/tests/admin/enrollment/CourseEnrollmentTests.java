@@ -2,7 +2,6 @@ package tests.admin.enrollment;
 
 import factory.PageFactory;
 import models.Course;
-import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 import pages.interfaces.IHomePage;
 import pages.interfaces.INavigationBar;
@@ -93,7 +92,13 @@ public class CourseEnrollmentTests extends TestsBase {
         course.setDescription(CourseDataGenerator.randomDescription());
         course.setPublished(false);
 
-        enrollUserToCourse(course);
+        enrollUserToCourse(
+                course,
+                courseManagementPage,
+                navigationBar,
+                enrollmentsManagementPage,
+                adminDashboardPage
+        );
     }
 
     @Test(description = "Enroll user to Published Course", groups = "5. Enrollment Tests")
@@ -103,45 +108,12 @@ public class CourseEnrollmentTests extends TestsBase {
         course.setDescription(CourseDataGenerator.randomDescription());
         course.setPublished(true);
 
-        enrollUserToCourse(course);
-    }
-    // </editor-fold>
-
-    // <editor-fold desc="Private Methods">
-    private void enrollUserToCourse(Course course) {
-        courseManagementPage.addCourse(course);
-
-        courseManagementPage.verifyAlertMessage("created");
-
-        WebElement courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-
-        if (courseElement == null) {
-            navigationBar.clickOverviewBtn();
-
-            adminDashboardPage.navigateToManageCourses();
-
-            courseManagementPage.verifyCourseManagementPageIsDisplayed();
-
-            courseElement = courseManagementPage.validateCourseIsDisplayed(course);
-        }
-
-        if (courseElement == null) {
-            return;
-        }
-
-        navigationBar.clickEnrollmentsBtn();
-
-        enrollmentsManagementPage.clickEnroll(
-                course.getTitle(),
-                ConfigManager.getUserEmail(),
-                "Enrolling user to " + (course.isPublished() ? "Published" : "Unpublished") + " course",
-                course.isPublished()
-        );
-
-        enrollmentsManagementPage.searchForEnrollment(
-                course.getTitle(),
-                ConfigManager.getUserEmail(),
-                course.isPublished()
+        enrollUserToCourse(
+                course,
+                courseManagementPage,
+                navigationBar,
+                enrollmentsManagementPage,
+                adminDashboardPage
         );
     }
     // </editor-fold>
