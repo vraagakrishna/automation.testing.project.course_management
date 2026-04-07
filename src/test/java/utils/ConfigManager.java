@@ -52,4 +52,8 @@ public class ConfigManager {
         return System.getProperty("USER_EMAIL", System.getenv("USER_EMAIL"));
     }
 
+    public static String getUserPassword() {
+        return System.getProperty("USER_PASSWORD", System.getenv("USER_PASSWORD"));
+    }
+
 }
