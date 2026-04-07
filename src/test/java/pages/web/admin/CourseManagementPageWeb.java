@@ -10,10 +10,7 @@ import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 import pages.interfaces.admin.ICourseManagementPage;
 import pages.web.BasePageWeb;
-import utils.AlertUtils;
-import utils.ReportManager;
-import utils.ScreenshotUtils;
-import utils.SoftAssertManager;
+import utils.*;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -99,6 +96,8 @@ public class CourseManagementPageWeb extends BasePageWeb implements ICourseManag
         ReportManager.getTest()
                      .info("Add course: " + course);
 
+        ConfigManager.courses.add(course);
+
         this.clearAddCourseForm();
 
         populateCourseData(course);
@@ -134,6 +133,17 @@ public class CourseManagementPageWeb extends BasePageWeb implements ICourseManag
     }
 
     @Override
+    public WebElement validateCourseIsDisplayedAndNoAssertion(Course course) {
+        try {
+            logger.info("Verifying course is displayed: " + course.getTitle());
+            return findCourse(course);
+        } catch (Exception ex) {
+            logger.info("Course did not exist");
+            return null;
+        }
+    }
+
+    @Override
     public void validateCourseIsNotDisplayed(Course course) {
         try {
             logger.info("Verifying course is not displayed: " + course.getTitle());
@@ -153,6 +163,8 @@ public class CourseManagementPageWeb extends BasePageWeb implements ICourseManag
         logger.info("Editing course " + course.toString());
         ReportManager.getTest()
                      .info("Edit course: " + course);
+
+        ConfigManager.courses.add(course);
 
         clickCourseEditBtn(courseElement);
 
@@ -176,6 +188,12 @@ public class CourseManagementPageWeb extends BasePageWeb implements ICourseManag
         this.clickCancelCourseBtn();
 
         ScreenshotUtils.captureAndAttach(driver, "After clicking Cancel button");
+    }
+
+    @Override
+    public void clickCancelCourseBtn() {
+        logger.info("Clicking Cancel button");
+        clickButton(clickCancelCourseBtn);
     }
 
     @Override
@@ -406,10 +424,6 @@ public class CourseManagementPageWeb extends BasePageWeb implements ICourseManag
     private void clickSaveCourseBtn() {
         closeKeyboardIfOpen();
         clickButton(saveCourseBtn);
-    }
-
-    private void clickCancelCourseBtn() {
-        clickButton(clickCancelCourseBtn);
     }
 
     private WebElement findCourse(Course course) {

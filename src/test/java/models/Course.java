@@ -22,6 +22,23 @@ public class Course {
     private boolean published;
     // </editor-fold>
 
+    // <editor-fold desc="Ctor">
+    public Course() {
+
+    }
+
+    public Course(Course other) {
+        this.title = other.title;
+        this.description = other.description;
+        this.duration = other.duration;
+        this.level = other.level;
+        this.price = other.price;
+        this.thumbnailUrl = other.thumbnailUrl;
+        this.meetingUrl = other.meetingUrl;
+        this.published = other.published;
+    }
+    // </editor-fold>
+
     // <editor-fold desc="Getters and Setters">
     public String getTitle() {
         return title;

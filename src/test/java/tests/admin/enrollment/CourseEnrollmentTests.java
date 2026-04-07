@@ -73,6 +73,15 @@ public class CourseEnrollmentTests extends TestsBase {
 
         courseManagementPage.verifyBlankCourseFormIsDisplayed();
     }
+
+    @Override
+    protected void cleanUpPage() {
+        cleanUpCourse(
+                navigationBar,
+                adminDashboardPage,
+                courseManagementPage
+        );
+    }
     // </editor-fold>
 
     // <editor-fold desc="Public Methods">

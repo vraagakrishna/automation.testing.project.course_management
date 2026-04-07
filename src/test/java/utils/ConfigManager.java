@@ -1,10 +1,15 @@
 package utils;
 
 import common.Constants;
+import models.Course;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ConfigManager {
+
+    public static List<Course> courses = new ArrayList<>();
 
     public static String getAppiumServerUrl() {
         return System.getProperty("APPIUM_SERVER_URL", System.getenv("APPIUM_SERVER_URL"));

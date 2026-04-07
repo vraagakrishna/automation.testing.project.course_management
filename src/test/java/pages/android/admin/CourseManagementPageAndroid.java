@@ -16,6 +16,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import pages.android.BasePageAndroid;
 import pages.interfaces.admin.ICourseManagementPage;
+import utils.ConfigManager;
 import utils.ReportManager;
 import utils.ScreenshotUtils;
 import utils.SoftAssertManager;
@@ -93,6 +94,8 @@ public class CourseManagementPageAndroid extends BasePageAndroid implements ICou
         ReportManager.getTest()
                      .info("Add course: " + course);
 
+        ConfigManager.courses.add(course);
+
         this.clearAddCourseForm();
 
         populateCourseData(course);
@@ -127,6 +130,17 @@ public class CourseManagementPageAndroid extends BasePageAndroid implements ICou
     }
 
     @Override
+    public WebElement validateCourseIsDisplayedAndNoAssertion(Course course) {
+        try {
+            logger.info("Verifying course is displayed: " + course.getTitle());
+            return findCourse(course);
+        } catch (Exception ex) {
+            logger.info("Course does not exist");
+            return null;
+        }
+    }
+
+    @Override
     public void validateCourseIsNotDisplayed(Course course) {
         try {
             logger.info("Verifying course is not displayed: " + course.getTitle());
@@ -145,6 +159,8 @@ public class CourseManagementPageAndroid extends BasePageAndroid implements ICou
         logger.info("Editing course " + course.toString());
         ReportManager.getTest()
                      .info("Edit course: " + course);
+
+        ConfigManager.courses.add(course);
 
         clickCourseEditBtn(courseElement);
 
@@ -168,6 +184,13 @@ public class CourseManagementPageAndroid extends BasePageAndroid implements ICou
         this.clickCancelCourseBtn();
 
         ScreenshotUtils.captureAndAttach(driver, "After clicking Cancel button");
+    }
+
+    @Override
+    public void clickCancelCourseBtn() {
+        logger.info("Clicking Cancel button");
+        closeKeyboardIfOpen();
+        clickButton(clickCancelCourseBtn);
     }
 
     @Override
@@ -377,11 +400,6 @@ public class CourseManagementPageAndroid extends BasePageAndroid implements ICou
     private void clickSaveCourseBtn() {
         closeKeyboardIfOpen();
         clickButton(saveCourseBtn);
-    }
-
-    private void clickCancelCourseBtn() {
-        closeKeyboardIfOpen();
-        clickButton(clickCancelCourseBtn);
     }
 
     private WebElement findCourse(Course course) {

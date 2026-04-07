@@ -61,6 +61,15 @@ public class CreateCourseTests extends TestsBase {
 
         courseManagementPage.verifyBlankCourseFormIsDisplayed();
     }
+
+    @Override
+    protected void cleanUpPage() {
+        cleanUpCourse(
+                navigationBar,
+                adminDashboardPage,
+                courseManagementPage
+        );
+    }
     // </editor-fold>
 
     // <editor-fold desc="Public Methods">
@@ -70,6 +79,8 @@ public class CreateCourseTests extends TestsBase {
         courseManagementPage.addCourse(course);
 
         courseManagementPage.validateCourseTitleErrorMessage();
+
+        courseManagementPage.clickCancelCourseBtn();  // Going back to Course Page
     }
 
     @Test(description = "Submit Title Only", groups = "4. Create Course Negative Tests", priority = 1)
@@ -79,6 +90,8 @@ public class CreateCourseTests extends TestsBase {
         courseManagementPage.addCourse(course);
 
         courseManagementPage.validateCourseDescriptionErrorMessage();
+
+        courseManagementPage.clickCancelCourseBtn();  // Going back to Course Page
     }
 
     @Test(description = "Submit Description Only", groups = "4. Create Course Negative Tests", priority = 2)
@@ -88,6 +101,8 @@ public class CreateCourseTests extends TestsBase {
         courseManagementPage.addCourse(course);
 
         courseManagementPage.validateCourseTitleErrorMessage();
+
+        courseManagementPage.clickCancelCourseBtn();  // Going back to Course Page
     }
 
     @Test(description = "Submit Long Course Title", groups = "4. Create Course Negative Tests", priority = 3)

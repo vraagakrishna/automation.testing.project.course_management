@@ -62,6 +62,15 @@ public class EditCourseTests extends TestsBase {
 
         courseManagementPage.verifyBlankCourseFormIsDisplayed();
     }
+
+    @Override
+    protected void cleanUpPage() {
+        cleanUpCourse(
+                navigationBar,
+                adminDashboardPage,
+                courseManagementPage
+        );
+    }
     // </editor-fold>
 
     // <editor-fold desc="Public Methods">
@@ -93,12 +102,15 @@ public class EditCourseTests extends TestsBase {
         }
 
         // Edit course
-        course.setTitle("");
-        course.setDescription("");
+        Course editedCourse = new Course(course);
+        editedCourse.setTitle("");
+        editedCourse.setDescription("");
 
-        courseManagementPage.editCourse(courseElement, course);
+        courseManagementPage.editCourse(courseElement, editedCourse);
 
         courseManagementPage.validateCourseTitleErrorMessage();
+
+        courseManagementPage.clickCancelCourseBtn();  // Going back to Course Page
     }
 
     @Test(description = "Submit Title Only", groups = "6. Edit Course Tests", priority = 1)
@@ -128,11 +140,14 @@ public class EditCourseTests extends TestsBase {
         }
 
         // edit course
-        course.setDescription("");
+        Course editedCourse = new Course(course);
+        editedCourse.setDescription("");
 
-        courseManagementPage.editCourse(courseElement, course);
+        courseManagementPage.editCourse(courseElement, editedCourse);
 
         courseManagementPage.validateCourseDescriptionErrorMessage();
+
+        courseManagementPage.clickCancelCourseBtn();  // Going back to Course Page
     }
 
     @Test(description = "Submit Description Only", groups = "6. Edit Course Tests", priority = 2)
@@ -162,11 +177,14 @@ public class EditCourseTests extends TestsBase {
         }
 
         // Edit course
-        course.setTitle("");
+        Course editedCourse = new Course(course);
+        editedCourse.setTitle("");
 
-        courseManagementPage.editCourse(courseElement, course);
+        courseManagementPage.editCourse(courseElement, editedCourse);
 
         courseManagementPage.validateCourseTitleErrorMessage();
+
+        courseManagementPage.clickCancelCourseBtn();  // Going back to Course Page
     }
 
     @Test(description = "Cancel Course Editing", groups = "6. Edit Course Tests", priority = 3)
@@ -205,6 +223,8 @@ public class EditCourseTests extends TestsBase {
         // validate Add Form is blank
         courseManagementPage.clickAddCourseBtn();
         courseManagementPage.verifyBlankCourseFormIsDisplayed();
+
+        courseManagementPage.clickCancelCourseBtn();  // Going back to Course Page
     }
 
     @Test(description = "Delete Course", groups = "6. Edit Course Tests", priority = 4)
@@ -269,9 +289,10 @@ public class EditCourseTests extends TestsBase {
         }
 
         // Edit course
-        course.setTitle(CourseDataGenerator.longCourseName());
+        Course editedCourse = new Course(course);
+        editedCourse.setTitle(CourseDataGenerator.longCourseName());
 
-        courseManagementPage.editCourse(courseElement, course);
+        courseManagementPage.editCourse(courseElement, editedCourse);
 
         courseManagementPage.verifyAlertMessage("fail");
     }
@@ -303,9 +324,10 @@ public class EditCourseTests extends TestsBase {
         }
 
         // Edit course
-        course.setDescription(CourseDataGenerator.longDescription());
+        Course editedCourse = new Course(course);
+        editedCourse.setDescription(CourseDataGenerator.longDescription());
 
-        courseManagementPage.editCourse(courseElement, course);
+        courseManagementPage.editCourse(courseElement, editedCourse);
 
         courseManagementPage.verifyAlertMessage("updated");
     }
@@ -337,9 +359,10 @@ public class EditCourseTests extends TestsBase {
         }
 
         // Edit course
-        course.setDuration("ABC@#$%");
+        Course editedCourse = new Course(course);
+        editedCourse.setDuration("ABC@#$%");
 
-        courseManagementPage.editCourse(courseElement, course);
+        courseManagementPage.editCourse(courseElement, editedCourse);
 
         courseManagementPage.verifyAlertMessage("fail");
     }
@@ -371,9 +394,10 @@ public class EditCourseTests extends TestsBase {
         }
 
         // Edit course
-        course.setDuration(CourseDataGenerator.randomDuration());
+        Course editedCourse = new Course(course);
+        editedCourse.setDuration(CourseDataGenerator.randomDuration());
 
-        courseManagementPage.editCourse(courseElement, course);
+        courseManagementPage.editCourse(courseElement, editedCourse);
 
         courseManagementPage.verifyAlertMessage("updated");
     }
@@ -405,9 +429,10 @@ public class EditCourseTests extends TestsBase {
         }
 
         // Edit course
-        course.setDuration(CourseDataGenerator.validDuration());
+        Course editedCourse = new Course(course);
+        editedCourse.setDuration(CourseDataGenerator.validDuration());
 
-        courseManagementPage.editCourse(courseElement, course);
+        courseManagementPage.editCourse(courseElement, editedCourse);
 
         courseManagementPage.verifyAlertMessage("updated");
     }
@@ -439,9 +464,10 @@ public class EditCourseTests extends TestsBase {
         }
 
         // Edit course
-        course.setLevel("Beginner");
+        Course editedCourse = new Course(course);
+        editedCourse.setLevel("Beginner");
 
-        courseManagementPage.editCourse(courseElement, course);
+        courseManagementPage.editCourse(courseElement, editedCourse);
 
         courseManagementPage.verifyAlertMessage("updated");
     }
@@ -473,9 +499,10 @@ public class EditCourseTests extends TestsBase {
         }
 
         // Edit course
-        course.setLevel("Intermediate");
+        Course editedCourse = new Course(course);
+        editedCourse.setLevel("Intermediate");
 
-        courseManagementPage.editCourse(courseElement, course);
+        courseManagementPage.editCourse(courseElement, editedCourse);
 
         courseManagementPage.verifyAlertMessage("updated");
     }
@@ -507,9 +534,10 @@ public class EditCourseTests extends TestsBase {
         }
 
         // Edit course
-        course.setLevel("Advanced");
+        Course editedCourse = new Course(course);
+        editedCourse.setLevel("Advanced");
 
-        courseManagementPage.editCourse(courseElement, course);
+        courseManagementPage.editCourse(courseElement, editedCourse);
 
         courseManagementPage.verifyAlertMessage("updated");
     }
@@ -541,9 +569,10 @@ public class EditCourseTests extends TestsBase {
         }
 
         // Edit course
-        course.setPrice(CourseDataGenerator.largePrice());
+        Course editedCourse = new Course(course);
+        editedCourse.setPrice(CourseDataGenerator.largePrice());
 
-        courseManagementPage.editCourse(courseElement, course);
+        courseManagementPage.editCourse(courseElement, editedCourse);
 
         courseManagementPage.verifyAlertMessage("fail");
     }
@@ -575,9 +604,10 @@ public class EditCourseTests extends TestsBase {
         }
 
         // Edit course
-        course.setThumbnailUrl(CourseDataGenerator.invalidUrl());
+        Course editedCourse = new Course(course);
+        editedCourse.setThumbnailUrl(CourseDataGenerator.invalidUrl());
 
-        courseManagementPage.editCourse(courseElement, course);
+        courseManagementPage.editCourse(courseElement, editedCourse);
 
         courseManagementPage.verifyAlertMessage("fail");
     }
@@ -609,9 +639,10 @@ public class EditCourseTests extends TestsBase {
         }
 
         // Edit course
-        course.setThumbnailUrl(CourseDataGenerator.validThumbnailUrl());
+        Course editedCourse = new Course(course);
+        editedCourse.setThumbnailUrl(CourseDataGenerator.validThumbnailUrl());
 
-        courseManagementPage.editCourse(courseElement, course);
+        courseManagementPage.editCourse(courseElement, editedCourse);
 
         courseManagementPage.verifyAlertMessage("updated");
     }
@@ -643,9 +674,10 @@ public class EditCourseTests extends TestsBase {
         }
 
         // Edit course
-        course.setMeetingUrl(CourseDataGenerator.invalidUrl());
+        Course editedCourse = new Course(course);
+        editedCourse.setMeetingUrl(CourseDataGenerator.invalidUrl());
 
-        courseManagementPage.editCourse(courseElement, course);
+        courseManagementPage.editCourse(courseElement, editedCourse);
 
         courseManagementPage.verifyAlertMessage("fail");
     }
@@ -677,9 +709,10 @@ public class EditCourseTests extends TestsBase {
         }
 
         // Edit course
-        course.setMeetingUrl(CourseDataGenerator.validTeamsLink());
+        Course editedCourse = new Course(course);
+        editedCourse.setMeetingUrl(CourseDataGenerator.validTeamsLink());
 
-        courseManagementPage.editCourse(courseElement, course);
+        courseManagementPage.editCourse(courseElement, editedCourse);
 
         courseManagementPage.verifyAlertMessage("updated");
     }
@@ -714,9 +747,10 @@ public class EditCourseTests extends TestsBase {
         }
 
         // Edit course
-        course.setTitle(CourseDataGenerator.longCourseName());
+        Course editedCourse = new Course(course);
+        editedCourse.setTitle(CourseDataGenerator.longCourseName());
 
-        courseManagementPage.editCourse(courseElement, course);
+        courseManagementPage.editCourse(courseElement, editedCourse);
 
         courseManagementPage.verifyAlertMessage("fail");
     }
@@ -749,9 +783,10 @@ public class EditCourseTests extends TestsBase {
         }
 
         // Edit course
-        course.setDescription(CourseDataGenerator.longDescription());
+        Course editedCourse = new Course(course);
+        editedCourse.setDescription(CourseDataGenerator.longDescription());
 
-        courseManagementPage.editCourse(courseElement, course);
+        courseManagementPage.editCourse(courseElement, editedCourse);
 
         courseManagementPage.verifyAlertMessage("updated");
     }
@@ -784,9 +819,10 @@ public class EditCourseTests extends TestsBase {
         }
 
         // Edit course
-        course.setDuration("ABC@#$%");
+        Course editedCourse = new Course(course);
+        editedCourse.setDuration("ABC@#$%");
 
-        courseManagementPage.editCourse(courseElement, course);
+        courseManagementPage.editCourse(courseElement, editedCourse);
 
         courseManagementPage.verifyAlertMessage("fail");
     }
@@ -819,9 +855,10 @@ public class EditCourseTests extends TestsBase {
         }
 
         // Edit course
-        course.setDuration(CourseDataGenerator.randomDuration());
+        Course editedCourse = new Course(course);
+        editedCourse.setDuration(CourseDataGenerator.randomDuration());
 
-        courseManagementPage.editCourse(courseElement, course);
+        courseManagementPage.editCourse(courseElement, editedCourse);
 
         courseManagementPage.verifyAlertMessage("updated");
     }
@@ -854,9 +891,10 @@ public class EditCourseTests extends TestsBase {
         }
 
         // Edit course
-        course.setDuration(CourseDataGenerator.validDuration());
+        Course editedCourse = new Course(course);
+        editedCourse.setDuration(CourseDataGenerator.validDuration());
 
-        courseManagementPage.editCourse(courseElement, course);
+        courseManagementPage.editCourse(courseElement, editedCourse);
 
         courseManagementPage.verifyAlertMessage("updated");
     }
@@ -889,9 +927,10 @@ public class EditCourseTests extends TestsBase {
         }
 
         // Edit course
-        course.setLevel("Beginner");
+        Course editedCourse = new Course(course);
+        editedCourse.setLevel("Beginner");
 
-        courseManagementPage.editCourse(courseElement, course);
+        courseManagementPage.editCourse(courseElement, editedCourse);
 
         courseManagementPage.verifyAlertMessage("updated");
     }
@@ -924,9 +963,10 @@ public class EditCourseTests extends TestsBase {
         }
 
         // Edit course
-        course.setLevel("Intermediate");
+        Course editedCourse = new Course(course);
+        editedCourse.setLevel("Intermediate");
 
-        courseManagementPage.editCourse(courseElement, course);
+        courseManagementPage.editCourse(courseElement, editedCourse);
 
         courseManagementPage.verifyAlertMessage("updated");
     }
@@ -959,9 +999,10 @@ public class EditCourseTests extends TestsBase {
         }
 
         // Edit course
-        course.setLevel("Advanced");
+        Course editedCourse = new Course(course);
+        editedCourse.setLevel("Advanced");
 
-        courseManagementPage.editCourse(courseElement, course);
+        courseManagementPage.editCourse(courseElement, editedCourse);
 
         courseManagementPage.verifyAlertMessage("updated");
     }
@@ -994,9 +1035,10 @@ public class EditCourseTests extends TestsBase {
         }
 
         // Edit course
-        course.setPrice(CourseDataGenerator.largePrice());
+        Course editedCourse = new Course(course);
+        editedCourse.setPrice(CourseDataGenerator.largePrice());
 
-        courseManagementPage.editCourse(courseElement, course);
+        courseManagementPage.editCourse(courseElement, editedCourse);
 
         courseManagementPage.verifyAlertMessage("fail");
     }
@@ -1029,9 +1071,10 @@ public class EditCourseTests extends TestsBase {
         }
 
         // Edit course
-        course.setThumbnailUrl(CourseDataGenerator.invalidUrl());
+        Course editedCourse = new Course(course);
+        editedCourse.setThumbnailUrl(CourseDataGenerator.invalidUrl());
 
-        courseManagementPage.editCourse(courseElement, course);
+        courseManagementPage.editCourse(courseElement, editedCourse);
 
         courseManagementPage.verifyAlertMessage("fail");
     }
@@ -1064,9 +1107,10 @@ public class EditCourseTests extends TestsBase {
         }
 
         // Edit course
-        course.setThumbnailUrl(CourseDataGenerator.validThumbnailUrl());
+        Course editedCourse = new Course(course);
+        editedCourse.setThumbnailUrl(CourseDataGenerator.validThumbnailUrl());
 
-        courseManagementPage.editCourse(courseElement, course);
+        courseManagementPage.editCourse(courseElement, editedCourse);
 
         courseManagementPage.verifyAlertMessage("updated");
     }
@@ -1099,9 +1143,10 @@ public class EditCourseTests extends TestsBase {
         }
 
         // Edit course
-        course.setMeetingUrl(CourseDataGenerator.invalidUrl());
+        Course editedCourse = new Course(course);
+        editedCourse.setMeetingUrl(CourseDataGenerator.invalidUrl());
 
-        courseManagementPage.editCourse(courseElement, course);
+        courseManagementPage.editCourse(courseElement, editedCourse);
 
         courseManagementPage.verifyAlertMessage("fail");
     }
@@ -1134,9 +1179,10 @@ public class EditCourseTests extends TestsBase {
         }
 
         // Edit course
-        course.setMeetingUrl(CourseDataGenerator.validTeamsLink());
+        Course editedCourse = new Course(course);
+        editedCourse.setMeetingUrl(CourseDataGenerator.validTeamsLink());
 
-        courseManagementPage.editCourse(courseElement, course);
+        courseManagementPage.editCourse(courseElement, editedCourse);
 
         courseManagementPage.verifyAlertMessage("updated");
     }
@@ -1176,9 +1222,10 @@ public class EditCourseTests extends TestsBase {
         }
 
         // Edit course
-        course.setTitle(CourseDataGenerator.randomCourseName());
+        Course editedCourse = new Course(course);
+        editedCourse.setTitle(CourseDataGenerator.randomCourseName());
 
-        courseManagementPage.editCourse(courseElement, course);
+        courseManagementPage.editCourse(courseElement, editedCourse);
 
         courseManagementPage.verifyAlertMessage("updated");
     }
@@ -1216,9 +1263,10 @@ public class EditCourseTests extends TestsBase {
         }
 
         // Edit course
-        course.setDescription(CourseDataGenerator.randomDescription());
+        Course editedCourse = new Course(course);
+        editedCourse.setDescription(CourseDataGenerator.randomDescription());
 
-        courseManagementPage.editCourse(courseElement, course);
+        courseManagementPage.editCourse(courseElement, editedCourse);
 
         courseManagementPage.verifyAlertMessage("updated");
     }
@@ -1256,9 +1304,10 @@ public class EditCourseTests extends TestsBase {
         }
 
         // Edit course
-        course.setDuration(CourseDataGenerator.validDuration());
+        Course editedCourse = new Course(course);
+        editedCourse.setDuration(CourseDataGenerator.validDuration());
 
-        courseManagementPage.editCourse(courseElement, course);
+        courseManagementPage.editCourse(courseElement, editedCourse);
 
         courseManagementPage.verifyAlertMessage("updated");
     }
@@ -1296,9 +1345,10 @@ public class EditCourseTests extends TestsBase {
         }
 
         // Edit course
-        course.setLevel("Intermediate");
+        Course editedCourse = new Course(course);
+        editedCourse.setLevel("Intermediate");
 
-        courseManagementPage.editCourse(courseElement, course);
+        courseManagementPage.editCourse(courseElement, editedCourse);
 
         courseManagementPage.verifyAlertMessage("updated");
     }
@@ -1336,9 +1386,10 @@ public class EditCourseTests extends TestsBase {
         }
 
         // Edit course
-        course.setPrice(CourseDataGenerator.validPrice());
+        Course editedCourse = new Course(course);
+        editedCourse.setPrice(CourseDataGenerator.validPrice());
 
-        courseManagementPage.editCourse(courseElement, course);
+        courseManagementPage.editCourse(courseElement, editedCourse);
 
         courseManagementPage.verifyAlertMessage("updated");
     }
@@ -1376,9 +1427,10 @@ public class EditCourseTests extends TestsBase {
         }
 
         // Edit course
-        course.setThumbnailUrl(CourseDataGenerator.validThumbnailUrl());
+        Course editedCourse = new Course(course);
+        editedCourse.setThumbnailUrl(CourseDataGenerator.validThumbnailUrl());
 
-        courseManagementPage.editCourse(courseElement, course);
+        courseManagementPage.editCourse(courseElement, editedCourse);
 
         courseManagementPage.verifyAlertMessage("updated");
     }
@@ -1416,9 +1468,10 @@ public class EditCourseTests extends TestsBase {
         }
 
         // Edit course
-        course.setMeetingUrl(CourseDataGenerator.validTeamsLink());
+        Course editedCourse = new Course(course);
+        editedCourse.setMeetingUrl(CourseDataGenerator.validTeamsLink());
 
-        courseManagementPage.editCourse(courseElement, course);
+        courseManagementPage.editCourse(courseElement, editedCourse);
 
         courseManagementPage.verifyAlertMessage("updated");
     }
@@ -1456,9 +1509,10 @@ public class EditCourseTests extends TestsBase {
         }
 
         // Edit course
-        course.setPublished(true);
+        Course editedCourse = new Course(course);
+        editedCourse.setPublished(true);
 
-        courseManagementPage.editCourse(courseElement, course);
+        courseManagementPage.editCourse(courseElement, editedCourse);
 
         courseManagementPage.verifyAlertMessage("updated");
     }
@@ -1498,9 +1552,10 @@ public class EditCourseTests extends TestsBase {
         }
 
         // Edit course
-        course.setTitle(CourseDataGenerator.randomCourseName());
+        Course editedCourse = new Course(course);
+        editedCourse.setTitle(CourseDataGenerator.randomCourseName());
 
-        courseManagementPage.editCourse(courseElement, course);
+        courseManagementPage.editCourse(courseElement, editedCourse);
 
         courseManagementPage.verifyAlertMessage("updated");
     }
@@ -1538,9 +1593,10 @@ public class EditCourseTests extends TestsBase {
         }
 
         // Edit course
-        course.setDescription(CourseDataGenerator.randomDescription());
+        Course editedCourse = new Course(course);
+        editedCourse.setDescription(CourseDataGenerator.randomDescription());
 
-        courseManagementPage.editCourse(courseElement, course);
+        courseManagementPage.editCourse(courseElement, editedCourse);
 
         courseManagementPage.verifyAlertMessage("updated");
     }
@@ -1578,9 +1634,10 @@ public class EditCourseTests extends TestsBase {
         }
 
         // Edit course
-        course.setDuration(CourseDataGenerator.validDuration());
+        Course editedCourse = new Course(course);
+        editedCourse.setDuration(CourseDataGenerator.validDuration());
 
-        courseManagementPage.editCourse(courseElement, course);
+        courseManagementPage.editCourse(courseElement, editedCourse);
 
         courseManagementPage.verifyAlertMessage("updated");
     }
@@ -1618,9 +1675,10 @@ public class EditCourseTests extends TestsBase {
         }
 
         // Edit course
-        course.setLevel("Intermediate");
+        Course editedCourse = new Course(course);
+        editedCourse.setLevel("Intermediate");
 
-        courseManagementPage.editCourse(courseElement, course);
+        courseManagementPage.editCourse(courseElement, editedCourse);
 
         courseManagementPage.verifyAlertMessage("updated");
     }
@@ -1658,9 +1716,10 @@ public class EditCourseTests extends TestsBase {
         }
 
         // Edit course
-        course.setPrice(CourseDataGenerator.validPrice());
+        Course editedCourse = new Course(course);
+        editedCourse.setPrice(CourseDataGenerator.validPrice());
 
-        courseManagementPage.editCourse(courseElement, course);
+        courseManagementPage.editCourse(courseElement, editedCourse);
 
         courseManagementPage.verifyAlertMessage("updated");
     }
@@ -1698,9 +1757,10 @@ public class EditCourseTests extends TestsBase {
         }
 
         // Edit course
-        course.setThumbnailUrl(CourseDataGenerator.validThumbnailUrl());
+        Course editedCourse = new Course(course);
+        editedCourse.setThumbnailUrl(CourseDataGenerator.validThumbnailUrl());
 
-        courseManagementPage.editCourse(courseElement, course);
+        courseManagementPage.editCourse(courseElement, editedCourse);
 
         courseManagementPage.verifyAlertMessage("updated");
     }
@@ -1738,9 +1798,10 @@ public class EditCourseTests extends TestsBase {
         }
 
         // Edit course
-        course.setMeetingUrl(CourseDataGenerator.validTeamsLink());
+        Course editedCourse = new Course(course);
+        editedCourse.setMeetingUrl(CourseDataGenerator.validTeamsLink());
 
-        courseManagementPage.editCourse(courseElement, course);
+        courseManagementPage.editCourse(courseElement, editedCourse);
 
         courseManagementPage.verifyAlertMessage("updated");
     }
@@ -1778,9 +1839,10 @@ public class EditCourseTests extends TestsBase {
         }
 
         // Edit course
-        course.setPublished(false);
+        Course editedCourse = new Course(course);
+        editedCourse.setPublished(false);
 
-        courseManagementPage.editCourse(courseElement, course);
+        courseManagementPage.editCourse(courseElement, editedCourse);
 
         courseManagementPage.verifyAlertMessage("updated");
     }
