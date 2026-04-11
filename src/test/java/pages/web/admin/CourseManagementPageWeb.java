@@ -10,7 +10,10 @@ import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 import pages.interfaces.admin.ICourseManagementPage;
 import pages.web.BasePageWeb;
-import utils.*;
+import utils.ConfigManager;
+import utils.ReportManager;
+import utils.ScreenshotUtils;
+import utils.SoftAssertManager;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -407,6 +410,7 @@ public class CourseManagementPageWeb extends BasePageWeb implements ICourseManag
     }
 
     private void publishCourse(boolean publish) {
+        closeKeyboardIfOpen();
         WebElement element = getElement(coursePublishedCheckboxField);
 
         if (publish && !element.isSelected())
