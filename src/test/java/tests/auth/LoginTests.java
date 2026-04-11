@@ -7,7 +7,6 @@ import pages.interfaces.INavigationBar;
 import pages.interfaces.auth.ILoginPage;
 import pages.interfaces.dashboard.IDashboardPage;
 import tests.TestsBase;
-import utils.ConfigManager;
 import utils.UserTestData;
 
 public class LoginTests extends TestsBase {

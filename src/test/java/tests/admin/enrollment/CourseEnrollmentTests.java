@@ -90,7 +90,7 @@ public class CourseEnrollmentTests extends TestsBase {
         course.setDescription(CourseDataGenerator.randomDescription());
         course.setPublished(false);
 
-        enrollUserToCourse(
+        AddCourseAndEnrollUserToCourse(
                 course,
                 courseManagementPage,
                 navigationBar,
@@ -106,7 +106,7 @@ public class CourseEnrollmentTests extends TestsBase {
         course.setDescription(CourseDataGenerator.randomDescription());
         course.setPublished(true);
 
-        enrollUserToCourse(
+        AddCourseAndEnrollUserToCourse(
                 course,
                 courseManagementPage,
                 navigationBar,

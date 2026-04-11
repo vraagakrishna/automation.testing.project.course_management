@@ -10,7 +10,6 @@ import pages.interfaces.auth.ILoginPage;
 import pages.interfaces.dashboard.IAdminDashboardPage;
 import pages.interfaces.dashboard.IDashboardPage;
 import tests.TestsBase;
-import utils.ConfigManager;
 import utils.CourseDataGenerator;
 
 public class CreateCourseTests extends TestsBase {

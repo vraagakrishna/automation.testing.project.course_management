@@ -168,7 +168,7 @@ public class TestsBase {
         );
     }
 
-    protected void enrollUserToCourse(
+    protected void AddCourseAndEnrollUserToCourse(
             Course course,
             ICourseManagementPage courseManagementPage,
             INavigationBar navigationBar,
