@@ -49,9 +49,7 @@ public class CourseEnrollmentTests extends TestsBase {
 
         loginPage.verifyLoginPageIsDisplayed();
 
-        loginPage.loginUser(ConfigManager.getAdminEmail(), ConfigManager.getAdminPassword());
-
-        dashboardPage.verifyDashboardPageIsDisplayed();
+        loginAsAdminAndVerify(loginPage, dashboardPage);
 
         navigationBar.goToAdminPanel();
 

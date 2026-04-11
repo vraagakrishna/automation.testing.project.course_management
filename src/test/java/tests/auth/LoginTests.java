@@ -55,9 +55,7 @@ public class LoginTests extends TestsBase {
 
     @Test(description = "Login with valid credentials - Admin", groups = "2. Login Tests", priority = 2)
     public void validCredentialsLoginAdmin() {
-        loginPage.loginUser(ConfigManager.getAdminEmail(), ConfigManager.getAdminPassword());
-
-        dashboardPage.verifyDashboardPageIsDisplayed();
+        loginAsAdminAndVerify(loginPage, dashboardPage);
 
         navigationBar.logout();
 
@@ -66,9 +64,7 @@ public class LoginTests extends TestsBase {
 
     @Test(description = "Login with valid credentials - User", groups = "2. Login Tests", priority = 3)
     public void validCredentialsLoginUser() {
-        loginPage.loginUser(ConfigManager.getUserEmail(), ConfigManager.getUserPassword());
-
-        dashboardPage.verifyDashboardPageIsDisplayed();
+        loginAsUserAndVerify(loginPage, dashboardPage);
 
         navigationBar.logout();
 

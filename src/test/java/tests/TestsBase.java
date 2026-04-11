@@ -12,6 +12,7 @@ import org.testng.annotations.BeforeSuite;
 import pages.interfaces.INavigationBar;
 import pages.interfaces.admin.ICourseManagementPage;
 import pages.interfaces.admin.IEnrollmentsManagementPage;
+import pages.interfaces.auth.ILoginPage;
 import pages.interfaces.dashboard.IAdminDashboardPage;
 import services.AppiumServiceManager;
 import utils.ConfigManager;
@@ -79,6 +80,24 @@ public class TestsBase {
 
     protected void cleanUpPage() {
         // the inherited classes will implement this, if necessary
+    }
+
+    protected void loginAsAdminAndVerify(
+            ILoginPage loginPage,
+            IDashboardPage dashboardPage
+    ) {
+        loginPage.loginUser(ConfigManager.getAdminEmail(), ConfigManager.getAdminPassword());
+
+        dashboardPage.verifyDashboardPageIsDisplayed();
+    }
+
+    protected void loginAsUserAndVerify(
+            ILoginPage loginPage,
+            IDashboardPage dashboardPage
+    ) {
+        loginPage.loginUser(ConfigManager.getUserEmail(), ConfigManager.getUserPassword());
+
+        dashboardPage.verifyDashboardPageIsDisplayed();
     }
 
     protected void cleanUpCourse(
