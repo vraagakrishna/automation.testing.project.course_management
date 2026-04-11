@@ -16,6 +16,8 @@ import pages.interfaces.admin.IEnrollmentsManagementPage;
 import pages.interfaces.auth.ILoginPage;
 import pages.interfaces.dashboard.IAdminDashboardPage;
 import pages.interfaces.dashboard.IDashboardPage;
+import pages.interfaces.dashboard.IUserDashboardPage;
+import pages.interfaces.user.ICoursePage;
 import pages.web.HomePageWeb;
 import pages.web.NavigationBarWeb;
 import pages.web.admin.CourseManagementPageWeb;
@@ -23,6 +25,8 @@ import pages.web.admin.EnrollmentsManagementPageWeb;
 import pages.web.auth.LoginPageWeb;
 import pages.web.dashboard.AdminDashboardPageWeb;
 import pages.web.dashboard.DashboardPageWeb;
+import pages.web.dashboard.UserDashboardPageWeb;
+import pages.web.user.CoursePageWeb;
 import utils.ConfigManager;
 
 public class PageFactory {
@@ -114,6 +118,26 @@ public class PageFactory {
 
         if (platformName.equalsIgnoreCase(Constants.PLATFORM_ANDROID))
             return new EnrollmentsManagementPageAndroid(driver);
+
+        throw new RuntimeException("Unsupported platform: " + platformName);
+    }
+
+    public static IUserDashboardPage getUserDashboardPage(AppiumDriver driver) {
+        String platformName = ConfigManager.getPlatformName();
+        String executionType = ConfigManager.getExecutionType();
+
+        if (executionType.equalsIgnoreCase(Constants.EXECUTION_TYPE_MOBILE_WEB))
+            return new UserDashboardPageWeb(driver);
+
+        throw new RuntimeException("Unsupported platform: " + platformName);
+    }
+
+    public static ICoursePage getCoursePage(AppiumDriver driver) {
+        String platformName = ConfigManager.getPlatformName();
+        String executionType = ConfigManager.getExecutionType();
+
+        if (executionType.equalsIgnoreCase(Constants.EXECUTION_TYPE_MOBILE_WEB))
+            return new CoursePageWeb(driver);
 
         throw new RuntimeException("Unsupported platform: " + platformName);
     }

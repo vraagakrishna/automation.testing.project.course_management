@@ -14,6 +14,7 @@ import pages.interfaces.admin.ICourseManagementPage;
 import pages.interfaces.admin.IEnrollmentsManagementPage;
 import pages.interfaces.auth.ILoginPage;
 import pages.interfaces.dashboard.IAdminDashboardPage;
+import pages.interfaces.dashboard.IDashboardPage;
 import services.AppiumServiceManager;
 import utils.ConfigManager;
 import utils.LoggingManager;
@@ -162,6 +163,32 @@ public class TestsBase {
 
         return getCourse(
                 course,
+                courseManagementPage,
+                navigationBar,
+                adminDashboardPage
+        );
+    }
+
+    protected WebElement editCourseAndGetCourse(
+            Course course,
+            Course editedCourse,
+            ICourseManagementPage courseManagementPage,
+            INavigationBar navigationBar,
+            IAdminDashboardPage adminDashboardPage
+    ) {
+        WebElement courseElement = getCourse(
+                course,
+                courseManagementPage,
+                navigationBar,
+                adminDashboardPage
+        );
+
+        courseManagementPage.editCourse(courseElement, editedCourse);
+
+        courseManagementPage.verifyAlertMessage("updated");
+
+        return getCourse(
+                editedCourse,
                 courseManagementPage,
                 navigationBar,
                 adminDashboardPage
