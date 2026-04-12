@@ -66,18 +66,18 @@ The goal of this project is to:
 
 ```md
 src/test/java
-├── common # Shared constants and global configurations
-├── factory # Driver, capability, and page object creation logic
-├── listener # Test listeners for logging, reporting, and hooks
-├── models # Data models used across tests
+├── common              # Shared constants and global configurations
+├── factory             # Driver, capability, and page object creation logic
+├── listener            # Test listeners for logging, reporting, and hooks
+├── models              # Data models used across tests
 ├── pages
-│ ├── android # Android-specific page implementations
-│ ├── web # Web-specific page implementations
-│ ├── interfaces # Platform-agnostic page contracts
-│ └── BasePage.java # Shared base functionality for all pages
-├── services # External service management (e.g., Appium lifecycle)
-├── tests # Test classes and test setup logic
-├── utils # Reusable helper utilities
+│ ├── android           # Android-specific page implementations
+│ ├── web               # Web-specific page implementations
+│ ├── interfaces        # Platform-agnostic page contracts
+│ └── BasePage.java     # Shared base functionality for all pages
+├── services            # External service management (e.g., Appium lifecycle)
+├── tests               # Test classes and test setup logic
+├── utils               # Reusable helper utilities
 │
 pom.xml # Project dependencies and build configuration
 testng.xml # Test suite configuration
