@@ -20,8 +20,6 @@ public class CoursePageWeb extends BasePageWeb implements ICoursePage {
 
     // <editor-fold desc="Class Fields / Constants">
     private static final Logger logger = Logger.getLogger(CoursePageWeb.class.getName());
-
-
     // </editor-fold>
 
     // <editor-fold desc="Ctor">
