@@ -128,55 +128,9 @@ public class CoursePageAndroid extends BasePageAndroid implements ICoursePage {
         }
 
 
-        /*
         // Validate thumbnail
         logger.info("Validating thumbnail");
-        try {
-            List<WebElement> images = courseCardElement.findElements(By.xpath("./img"));
-            String expectedUrl = course.getThumbnailUrl();
-
-            // Image exists
-            if (!images.isEmpty()) {
-                WebElement img = images.get(0);
-                String actualUrl = img.getAttribute("src");
-
-                softAssert.assertTrue(
-                        expectedUrl != null && !expectedUrl.isBlank(),
-                        "Image is displayed but no expected thumbnail URL was provided"
-                );
-
-                softAssert.assertEquals(
-                        actualUrl,
-                        expectedUrl,
-                        "Expected course thumbnail URL: " + expectedUrl +
-                                ", but found: " + actualUrl
-                );
-            }
-
-            // No image → fallback div
-            else {
-                WebElement thumbnailDiv = courseCardElement.findElement(By.xpath("./div[1]"));
-                String style = thumbnailDiv.getAttribute("style");
-
-                String actualUrl = extractBackgroundUrl(style);
-
-                softAssert.assertTrue(
-                        expectedUrl == null || expectedUrl.isBlank(),
-                        "Expected image thumbnail, but fallback UI is shown"
-                );
-
-                softAssert.assertTrue(
-                        actualUrl == null,
-                        "Expected default thumbnail (no URL), but found: " + actualUrl
-                );
-            }
-        } catch (NoSuchElementException ex) {
-            softAssert.assertTrue(
-                    false,
-                    "Course thumbnail is not found"
-            );
-        }
-        */
+        // TODO: Thumbnail cannot be validated — not exposed via accessibility
 
 
         // Validate enrolled
