@@ -71,9 +71,9 @@ public class EnrollmentsManagementPageAndroid extends BasePageAndroid implements
 
     @Override
     public void clickEnroll(String courseName, String userEmail, String enrollmentNotes, boolean shouldWork) {
-        logger.info("Enrolling user " + userEmail + " to course " + courseName);
+        logger.info("Enrolling user '" + userEmail + "' to course '" + courseName + "'");
         ReportManager.getTest()
-                     .info("Enrolling user " + userEmail + " to course " + courseName);
+                     .info("Enrolling user '" + userEmail + "' to course '" + courseName + "'");
         clickButton(enrollUserBtn);
 
         boolean courseExists = this.setDropdownValue("-- Select Course --", courseName);
@@ -103,9 +103,9 @@ public class EnrollmentsManagementPageAndroid extends BasePageAndroid implements
 
         clickButton(enrollSubmitBtn);
 
-        logger.info("Enrolled user " + userEmail + " to course " + courseName);
+        logger.info("Enrolled user '" + userEmail + "' to course '" + courseName + "'");
         ReportManager.getTest()
-                     .info("Enrolled user " + userEmail + " to course " + courseName);
+                     .info("Enrolled user '" + userEmail + "' to course '" + courseName + "'");
     }
 
     @Override

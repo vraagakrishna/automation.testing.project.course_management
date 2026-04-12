@@ -211,7 +211,7 @@ public class CoursePageWeb extends BasePageWeb implements ICoursePage {
     }
     // </editor-fold>
 
-    // <editor-fold desc="Public Methods">
+    // <editor-fold desc="Private Methods">
     private WebElement findCourse(String courseTitle) {
         return getElement(
                 By.xpath(
