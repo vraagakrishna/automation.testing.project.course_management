@@ -7,7 +7,6 @@ import pages.interfaces.INavigationBar;
 import pages.interfaces.auth.ILoginPage;
 import pages.interfaces.dashboard.IDashboardPage;
 import tests.TestsBase;
-import utils.ConfigManager;
 import utils.UserTestData;
 
 public class LoginTests extends TestsBase {
@@ -53,11 +52,18 @@ public class LoginTests extends TestsBase {
         loginPage.verifyErrorMessage("Invalid");
     }
 
-    @Test(description = "Login with valid credentials", groups = "2. Login Tests", priority = 2)
-    public void validCredentialsLogin() {
-        loginPage.loginUser(ConfigManager.getAdminEmail(), ConfigManager.getAdminPassword());
+    @Test(description = "Login with valid credentials - Admin", groups = "2. Login Tests", priority = 2)
+    public void validCredentialsLoginAdmin() {
+        loginAsAdminAndVerify(loginPage, dashboardPage);
 
-        dashboardPage.verifyDashboardPageIsDisplayed();
+        navigationBar.logout();
+
+        homePage.verifyHomePageIsDisplayed();
+    }
+
+    @Test(description = "Login with valid credentials - User", groups = "2. Login Tests", priority = 3)
+    public void validCredentialsLoginUser() {
+        loginAsUserAndVerify(loginPage, dashboardPage);
 
         navigationBar.logout();
 

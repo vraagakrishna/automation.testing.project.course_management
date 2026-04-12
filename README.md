@@ -30,7 +30,7 @@ The framework automates the following real-world scenario:
 ### User Validation
 
 7. Login as the created user
-8. Verify the assinged course is visible
+8. Verify the assigned course is visible
 
 ### Session Handling
 
@@ -41,6 +41,7 @@ The framework automates the following real-world scenario:
 ## Project Goal
 
 The goal of this project is to:
+
 * Demonstrate **end-to-end test automation** across multiple user roles.
 * Validate **data consistency** between admin and user views.
 * Showcase **mobile web automation** using Appium + Selenium.
@@ -53,15 +54,34 @@ The goal of this project is to:
 * **Version Control**: Git
 * **Automation**: Selenium WebDriver
 * **Module Automation**: Appium
-* **Device**: 
-  * **Android** (Real Device / Emulator) - fully supported
-  * **iOS** (Planned) - not yet tested due to lack of device and iOS app
+* **Device**:
+    * **Android** (Real Device / Emulator) - fully supported
+    * **iOS** (Planned) - not yet tested due to lack of device and iOS app
 * **Inspector Tool**: [Appium Inspector](https://github.com/appium/appium-inspector/releases)
 * **Screen Mirroring**: [scrcpy](https://github.com/Genymobile/scrcpy/releases)
 
 <br/>
 
 ## Project Structure
+
+```md
+src/test/java
+├── common              # Shared constants and global configurations
+├── factory             # Driver, capability, and page object creation logic
+├── listener            # Test listeners for logging, reporting, and hooks
+├── models              # Data models used across tests
+├── pages
+│ ├── android           # Android-specific page implementations
+│ ├── web               # Web-specific page implementations
+│ ├── interfaces        # Platform-agnostic page contracts
+│ └── BasePage.java     # Shared base functionality for all pages
+├── services            # External service management (e.g., Appium lifecycle)
+├── tests               # Test classes and test setup logic
+├── utils               # Reusable helper utilities
+│
+pom.xml # Project dependencies and build configuration
+testng.xml # Test suite configuration
+```
 
 <br/>
 
@@ -80,24 +100,94 @@ cd automation.testing.project.course_management
 mvn clean install
 ```
 
-3. TBC
+3. Verify Android Device (for mobile tests)
+
+```bash
+adb devices
+```
+
+You should see at least one connected device or emulator listed.
 
 <br/>
 
-## Setup in IntelliJ IDEA
+## Running Tests
 
-1. Import the project
+There are multiple ways to execute tests depending on:
 
-* Open IntelliJ IDEA.
-* Select **File** -> **Open**, and choose the cloned project folder.
-* Wait for IntelliJ to download all Maven dependencies.
+* How the Appium server is started
+* Which platform you want to run (Web or Android)
 
-2. TBC
+> **Default Behaviour**: <br/>
+> If no execution type is specified, tests will run in Web (mobileWeb) mode.
 
-<br/>
+### Required Parameters
 
-## CI/CD Pipeline
+All tests run require the following:
 
-TBC
+```bash
+-DADMIN_EMAIL=ADMIN_EMAIL \ 
+-DADMIN_PASSWORD=ADMIN_PASSWORD \ 
+-DUSER_EMAIL=USER_EMAIL \
+-DUSER_PASSWORD=USER_PASSWORD
+```
+
+### Execution Modes
+
+| Mode          | Parameter Value | Description               | 
+|:--------------|:----------------|:--------------------------|
+| Web (Default) | `mobileWeb`     | Runs tests in browser     | 
+| Android App   | `nativeApp`     | Runs tests on Android app | 
+
+### Appium Server Options
+
+#### Option 1: Start Appium Manually
+
+```bash
+appium
+```
+
+Then run
+
+```bash
+mvn test \
+-DAPPIUM_SERVER_URL=APPIUM_SERVER_URL \
+<REQUIRED_PARAMS> 
+```
+
+#### Option 2: Start Appium in Code (Recommended)
+
+No manual setup required - the framework manages Appium.
+
+```bash
+mvn test <REQUIRED_PARAMS> 
+```
+
+### Run Web Tests (Default)
+
+```bash
+mvn test \
+-DEXECUTION_TYPE=mobileWeb \
+<REQUIRED_PARAMS> 
+```
+
+Or explicitly:
+
+```bash
+mvn test <REQUIRED_PARAMS> 
+```
+
+### Run Android Tests
+
+```bash
+mvn test \
+-DEXECUTION_TYPE=nativeApp \
+<REQUIRED_PARAMS> 
+```
+
+### Notes
+
+* Ensure your environment variables (e.g., `ANDROID_HOME`) are properly configured.
+* Make sure an emulator or real device is running before executing Android tests.
+* Platform selection is controlled via runtime parameters.
 
 <br/>

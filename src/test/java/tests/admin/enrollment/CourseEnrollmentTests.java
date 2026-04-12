@@ -49,9 +49,7 @@ public class CourseEnrollmentTests extends TestsBase {
 
         loginPage.verifyLoginPageIsDisplayed();
 
-        loginPage.loginUser(ConfigManager.getAdminEmail(), ConfigManager.getAdminPassword());
-
-        dashboardPage.verifyDashboardPageIsDisplayed();
+        loginAsAdminAndVerify(loginPage, dashboardPage);
 
         navigationBar.goToAdminPanel();
 
@@ -73,43 +71,47 @@ public class CourseEnrollmentTests extends TestsBase {
 
         courseManagementPage.verifyBlankCourseFormIsDisplayed();
     }
+
+    @Override
+    protected void cleanUpPage() {
+        cleanUpCourse(
+                navigationBar,
+                adminDashboardPage,
+                courseManagementPage
+        );
+    }
     // </editor-fold>
 
     // <editor-fold desc="Public Methods">
     @Test(description = "Enroll user to Unpublished Course", groups = "5. Enrollment Tests")
     public void enrollUserToUnpublishedCourse() {
-        enrollUserToCourse(false);
+        Course course = new Course();
+        course.setTitle(CourseDataGenerator.randomCourseName());
+        course.setDescription(CourseDataGenerator.randomDescription());
+        course.setPublished(false);
+
+        AddCourseAndEnrollUserToCourse(
+                course,
+                courseManagementPage,
+                navigationBar,
+                enrollmentsManagementPage,
+                adminDashboardPage
+        );
     }
 
     @Test(description = "Enroll user to Published Course", groups = "5. Enrollment Tests")
     public void enrollUserToPublishedCourse() {
-        enrollUserToCourse(true);
-    }
-    // </editor-fold>
-
-    // <editor-fold desc="Private Methods">
-    private void enrollUserToCourse(boolean publish) {
         Course course = new Course();
         course.setTitle(CourseDataGenerator.randomCourseName());
         course.setDescription(CourseDataGenerator.randomDescription());
-        course.setPublished(publish);
-        courseManagementPage.addCourse(course);
+        course.setPublished(true);
 
-        courseManagementPage.verifyAlertMessage("created");
-
-        navigationBar.clickEnrollmentsBtn();
-
-        enrollmentsManagementPage.clickEnroll(
-                course.getTitle(),
-                ConfigManager.getUserEmail(),
-                "Enrolling user to " + (publish ? "Published" : "Unpublished") + " course",
-                publish
-        );
-
-        enrollmentsManagementPage.searchForEnrollment(
-                course.getTitle(),
-                ConfigManager.getUserEmail(),
-                publish
+        AddCourseAndEnrollUserToCourse(
+                course,
+                courseManagementPage,
+                navigationBar,
+                enrollmentsManagementPage,
+                adminDashboardPage
         );
     }
     // </editor-fold>

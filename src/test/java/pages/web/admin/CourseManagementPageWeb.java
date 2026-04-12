@@ -10,6 +10,7 @@ import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 import pages.interfaces.admin.ICourseManagementPage;
 import pages.web.BasePageWeb;
+import utils.ConfigManager;
 import utils.ReportManager;
 import utils.ScreenshotUtils;
 import utils.SoftAssertManager;
@@ -98,6 +99,8 @@ public class CourseManagementPageWeb extends BasePageWeb implements ICourseManag
         ReportManager.getTest()
                      .info("Add course: " + course);
 
+        ConfigManager.courses.add(course);
+
         this.clearAddCourseForm();
 
         populateCourseData(course);
@@ -113,6 +116,7 @@ public class CourseManagementPageWeb extends BasePageWeb implements ICourseManag
             logger.info("Verifying course is displayed: " + course.getTitle());
             WebElement courseCardElement = findCourse(course);
             scrollIntoView(courseCardElement);
+            ScreenshotUtils.captureAndAttach(driver, "Course content");
 
             try {
                 validateCourseContent(courseCardElement, course);
@@ -132,10 +136,38 @@ public class CourseManagementPageWeb extends BasePageWeb implements ICourseManag
     }
 
     @Override
+    public WebElement validateCourseIsDisplayedAndNoAssertion(Course course) {
+        try {
+            logger.info("Verifying course is displayed: " + course.getTitle());
+            return findCourse(course);
+        } catch (Exception ex) {
+            logger.info("Course did not exist");
+            return null;
+        }
+    }
+
+    @Override
+    public void validateCourseIsNotDisplayed(Course course) {
+        try {
+            logger.info("Verifying course is not displayed: " + course.getTitle());
+            findCourse(course);
+            ScreenshotUtils.captureAndAttach(driver, "Course content");
+
+            SoftAssertManager.getSoftAssert()
+                             .assertTrue(false, "Course should not exist after deletion!");
+
+        } catch (Exception ex) {
+            // ignored
+        }
+    }
+
+    @Override
     public void editCourse(WebElement courseElement, Course course) {
         logger.info("Editing course " + course.toString());
         ReportManager.getTest()
                      .info("Edit course: " + course);
+
+        ConfigManager.courses.add(course);
 
         clickCourseEditBtn(courseElement);
 
@@ -159,6 +191,32 @@ public class CourseManagementPageWeb extends BasePageWeb implements ICourseManag
         this.clickCancelCourseBtn();
 
         ScreenshotUtils.captureAndAttach(driver, "After clicking Cancel button");
+    }
+
+    @Override
+    public void clickCancelCourseBtn() {
+        logger.info("Clicking Cancel button");
+        clickButton(clickCancelCourseBtn);
+    }
+
+    @Override
+    public void deleteCourse(WebElement courseElement) {
+        logger.info("Deleting course");
+        ReportManager.getTest()
+                     .info("Deleting course");
+
+        clickCourseDeleteBtn(courseElement);
+
+        alertUtils.verifyIfConfirmationAlertMessageIsCorrect(
+                "Are you sure you want to delete this course?",
+                true
+        );
+
+        alertUtils.verifyIfAlertMessageIsCorrect(
+                "Course deleted successfully!"
+        );
+
+        ScreenshotUtils.captureAndAttach(driver, "After clicking Delete button");
     }
 
     @Override
@@ -352,6 +410,7 @@ public class CourseManagementPageWeb extends BasePageWeb implements ICourseManag
     }
 
     private void publishCourse(boolean publish) {
+        closeKeyboardIfOpen();
         WebElement element = getElement(coursePublishedCheckboxField);
 
         if (publish && !element.isSelected())
@@ -369,10 +428,6 @@ public class CourseManagementPageWeb extends BasePageWeb implements ICourseManag
     private void clickSaveCourseBtn() {
         closeKeyboardIfOpen();
         clickButton(saveCourseBtn);
-    }
-
-    private void clickCancelCourseBtn() {
-        clickButton(clickCancelCourseBtn);
     }
 
     private WebElement findCourse(Course course) {
@@ -573,6 +628,11 @@ public class CourseManagementPageWeb extends BasePageWeb implements ICourseManag
     private void clickCourseEditBtn(WebElement courseElement) {
         WebElement editButton = courseElement.findElement(By.xpath(".//button[1]"));
         clickButton(editButton);
+    }
+
+    private void clickCourseDeleteBtn(WebElement courseElement) {
+        WebElement deleteButton = courseElement.findElement(By.xpath(".//button[2]"));
+        clickButton(deleteButton);
     }
     // </editor-fold>
 
