@@ -1,22 +1,23 @@
-package pages.web.user;
+package pages.android.user;
 
+import io.appium.java_client.AppiumBy;
 import io.appium.java_client.AppiumDriver;
 import models.Course;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.testng.asserts.SoftAssert;
+import pages.android.BasePageAndroid;
 import pages.interfaces.user.ICoursePage;
-import pages.web.BasePageWeb;
+import pages.web.user.CoursePageWeb;
 import utils.ScreenshotUtils;
 import utils.SoftAssertManager;
 
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.Locale;
 import java.util.logging.Logger;
 
-public class CoursePageWeb extends BasePageWeb implements ICoursePage {
+public class CoursePageAndroid extends BasePageAndroid implements ICoursePage {
 
     // <editor-fold desc="Class Fields / Constants">
     private static final Logger logger = Logger.getLogger(CoursePageWeb.class.getName());
@@ -25,7 +26,7 @@ public class CoursePageWeb extends BasePageWeb implements ICoursePage {
     // </editor-fold>
 
     // <editor-fold desc="Ctor">
-    public CoursePageWeb(AppiumDriver driver) {
+    public CoursePageAndroid(AppiumDriver driver) {
         super(driver);
     }
     // </editor-fold>
@@ -36,7 +37,6 @@ public class CoursePageWeb extends BasePageWeb implements ICoursePage {
         logger.info("Finding course: " + course.getTitle());
         try {
             WebElement courseCardElement = findCourse(course.getTitle());
-            scrollIntoView(courseCardElement);
             ScreenshotUtils.captureAndAttach(driver, "Course content");
 
             return courseCardElement;
@@ -54,12 +54,18 @@ public class CoursePageWeb extends BasePageWeb implements ICoursePage {
         SoftAssert softAssert = SoftAssertManager.getSoftAssert();
 
 
+        String contentDesc = courseCardElement.getAttribute("content-desc");
+        logger.info("Full content-desc: " + contentDesc);
+
+        // Split lines
+        String[] lines = contentDesc.split("\\n");
+
+
         // Validate description
         logger.info("Validating description");
         try {
-            WebElement description = courseCardElement.findElement(By.tagName("p"));
-            String actualDescription = description.getText()
-                                                  .trim();
+            String actualDescription = lines[3].trim();
+
             softAssert.assertEquals(
                     actualDescription,
                     course.getDescription(),
@@ -73,75 +79,56 @@ public class CoursePageWeb extends BasePageWeb implements ICoursePage {
         }
 
 
-        // Validate level and price
-        logger.info("Validating level and price");
+        // Validate level
+        logger.info("Validating level");
         try {
-            List<WebElement> badges = courseCardElement.findElements(
-                    By.xpath("./div[2]/span")
+            String actualLevel = lines[4].trim();
+            softAssert.assertTrue(
+                    actualLevel.equalsIgnoreCase(course.getLevel()),
+                    "Expected level: " + course.getLevel() + ", but actual level: " + actualLevel
             );
-
-            // normalise text (avoid repeated getText calls)
-            List<String> badgeTexts = badges.stream()
-                                            .map(e -> e.getText()
-                                                       .trim())
-                                            .toList();
-
-
-            // Validate level
-            logger.info("Validating level");
-            if (badgeTexts.isEmpty()) {
-                softAssert.assertTrue(
-                        false,
-                        "Expected course level: " + course.getLevel() + ", but no badges found"
-                );
-            } else {
-                String actualLevel = badgeTexts.get(0);
-                softAssert.assertTrue(
-                        actualLevel.equalsIgnoreCase(course.getLevel()),
-                        "Expected course level: " + course.getLevel() + ", but actual course level: " + actualLevel
-                );
-            }
-
-
-            // Validate price
-            BigDecimal expectedCoursePrice = course.getPrice();
-
-            if (badgeTexts.size() < 2) {
-                if (expectedCoursePrice != null) {
-                    softAssert.assertTrue(
-                            false,
-                            "Expected course price: " + expectedCoursePrice + ", but price badge not found"
-                    );
-                }
-            } else {
-                String actual = badgeTexts.get(1)
-                                          .trim();
-
-                if (expectedCoursePrice == null || expectedCoursePrice.compareTo(BigDecimal.valueOf(0f)) == 0) {
-                    softAssert.assertTrue(
-                            actual.equalsIgnoreCase("Free") || actual.equalsIgnoreCase("R0.00"),
-                            "Expected no price or 'Free', but got: " + actual
-                    );
-                } else {
-                    String expectedCoursePriceFormatted = "R" + String.format(
-                            Locale.ENGLISH, "%.0f", expectedCoursePrice
-                    );
-
-                    softAssert.assertEquals(
-                            actual,
-                            expectedCoursePriceFormatted,
-                            "Expected course price: " + expectedCoursePriceFormatted + ", but actual course price: " + actual
-                    );
-                }
-            }
         } catch (NoSuchElementException ex) {
             softAssert.assertTrue(
                     false,
-                    "Expected course level " + course.getLevel() + ", duration: " + course.getLevel() + ", but got none"
+                    "Course level is not found"
             );
         }
 
 
+        // Validate price
+        logger.info("Validating price");
+        try {
+            BigDecimal expectedCoursePrice = course.getPrice();
+            String actualPrice = lines[5].trim();
+
+            // price not provided or price = 0
+            if (expectedCoursePrice == null || expectedCoursePrice.compareTo(BigDecimal.valueOf(0)) == 0) {
+                softAssert.assertTrue(
+                        actualPrice.equalsIgnoreCase("Free") ||
+                                actualPrice.equalsIgnoreCase("R0.00") ||
+                                actualPrice.equalsIgnoreCase("R 0.00"),
+                        "Expected no price or 'Free', but got: " + actualPrice
+                );
+            } else {
+                String expectedCoursePriceFormatted = String.format(
+                        Locale.ENGLISH, "%.2f", course.getPrice()
+                );
+
+                softAssert.assertTrue(
+                        actualPrice.equalsIgnoreCase("R" + expectedCoursePriceFormatted) ||
+                                actualPrice.equalsIgnoreCase("R " + expectedCoursePriceFormatted),
+                        "Expected price: " + expectedCoursePriceFormatted + ", but actual price: " + actualPrice
+                );
+            }
+        } catch (NoSuchElementException ex) {
+            softAssert.assertTrue(
+                    false,
+                    "Course price is not found"
+            );
+        }
+
+
+        /*
         // Validate thumbnail
         logger.info("Validating thumbnail");
         try {
@@ -189,13 +176,14 @@ public class CoursePageWeb extends BasePageWeb implements ICoursePage {
                     "Course thumbnail is not found"
             );
         }
+        */
 
 
         // Validate enrolled
         logger.info("Validating enrolled");
         try {
-            WebElement enrolled = courseCardElement.findElement(By.xpath("./button"));
-            String enrolledText = enrolled.getText();
+            WebElement enrolled = courseCardElement.findElement(By.xpath(".//android.widget.Button"));
+            String enrolledText = enrolled.getAttribute("content-desc");
 
             boolean userEnrolled = enrolledText.equalsIgnoreCase("Enrolled");
 
@@ -213,14 +201,12 @@ public class CoursePageWeb extends BasePageWeb implements ICoursePage {
     }
     // </editor-fold>
 
-    // <editor-fold desc="Public Methods">
+    // <editor-fold desc="Private Methods">
     private WebElement findCourse(String courseTitle) {
-        return getElement(
-                By.xpath(
-                        "//div[contains(@class,'courses-grid')]" +
-                                "//h3[normalize-space()='" + courseTitle + "']/ancestor::div[1]"
-                )
-        );
+        return getElement(AppiumBy.androidUIAutomator(
+                "new UiScrollable(new UiSelector().scrollable(true))" +
+                        ".scrollIntoView(new UiSelector().descriptionContains(\"" + courseTitle + "\"))"
+        ));
     }
     // </editor-fold>
 

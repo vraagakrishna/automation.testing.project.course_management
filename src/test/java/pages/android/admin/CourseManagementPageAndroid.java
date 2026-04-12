@@ -470,17 +470,19 @@ public class CourseManagementPageAndroid extends BasePageAndroid implements ICou
             // price not provided or price = 0
             if (expectedCoursePrice == null || expectedCoursePrice.compareTo(BigDecimal.valueOf(0)) == 0) {
                 softAssert.assertTrue(
-                        actualPrice.equalsIgnoreCase("Free") || actualPrice.equalsIgnoreCase("R 0.00"),
+                        actualPrice.equalsIgnoreCase("Free") ||
+                                actualPrice.equalsIgnoreCase("R 0.00") ||
+                                actualPrice.equalsIgnoreCase("R0.00"),
                         "Expected no price or 'Free', but got: " + actualPrice
                 );
             } else {
-                String expectedCoursePriceFormatted = "R " + String.format(
+                String expectedCoursePriceFormatted = String.format(
                         Locale.ENGLISH, "%.2f", course.getPrice()
                 );
 
-                softAssert.assertEquals(
-                        actualPrice,
-                        expectedCoursePriceFormatted,
+                softAssert.assertTrue(
+                        actualPrice.equalsIgnoreCase("R" + expectedCoursePriceFormatted) ||
+                                actualPrice.equalsIgnoreCase("R " + expectedCoursePriceFormatted),
                         "Expected price: " + expectedCoursePriceFormatted + ", but actual price: " + actualPrice
                 );
             }

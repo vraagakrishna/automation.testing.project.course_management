@@ -9,6 +9,8 @@ import pages.android.admin.EnrollmentsManagementPageAndroid;
 import pages.android.auth.LoginPageAndroid;
 import pages.android.dashboard.AdminDashboardPageAndroid;
 import pages.android.dashboard.DashboardPageAndroid;
+import pages.android.dashboard.UserDashboardPageAndroid;
+import pages.android.user.CoursePageAndroid;
 import pages.interfaces.IHomePage;
 import pages.interfaces.INavigationBar;
 import pages.interfaces.admin.ICourseManagementPage;
@@ -129,6 +131,9 @@ public class PageFactory {
         if (executionType.equalsIgnoreCase(Constants.EXECUTION_TYPE_MOBILE_WEB))
             return new UserDashboardPageWeb(driver);
 
+        if (platformName.equalsIgnoreCase(Constants.PLATFORM_ANDROID))
+            return new UserDashboardPageAndroid(driver);
+
         throw new RuntimeException("Unsupported platform: " + platformName);
     }
 
@@ -138,6 +143,9 @@ public class PageFactory {
 
         if (executionType.equalsIgnoreCase(Constants.EXECUTION_TYPE_MOBILE_WEB))
             return new CoursePageWeb(driver);
+
+        if (platformName.equalsIgnoreCase(Constants.PLATFORM_ANDROID))
+            return new CoursePageAndroid(driver);
 
         throw new RuntimeException("Unsupported platform: " + platformName);
     }

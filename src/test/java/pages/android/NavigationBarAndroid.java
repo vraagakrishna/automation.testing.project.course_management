@@ -3,6 +3,8 @@ package pages.android;
 import io.appium.java_client.AppiumBy;
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.TimeoutException;
 import pages.interfaces.INavigationBar;
 
 import java.util.logging.Logger;
@@ -48,7 +50,20 @@ public class NavigationBarAndroid extends BasePageAndroid implements INavigation
     public void logout() {
         logger.info("Logging out...");
         this.clickNavBurger();
-        this.clickButton(logoutBtn);
+
+        int attempts = 0;
+        int maxAttempts = 5;
+
+        while (attempts < maxAttempts) {
+            try {
+                this.clickButton(logoutBtn);
+                break;
+            } catch (NoSuchElementException | TimeoutException ex) {
+                this.clickNavBurger();
+            } finally {
+                attempts++;
+            }
+        }
     }
 
     @Override

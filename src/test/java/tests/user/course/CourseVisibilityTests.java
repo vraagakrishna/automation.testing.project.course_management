@@ -2,6 +2,8 @@ package tests.user.course;
 
 import factory.PageFactory;
 import models.Course;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 import pages.interfaces.IHomePage;
@@ -15,6 +17,7 @@ import pages.interfaces.dashboard.IUserDashboardPage;
 import pages.interfaces.user.ICoursePage;
 import tests.TestsBase;
 import utils.CourseDataGenerator;
+import utils.ScreenshotUtils;
 import utils.SoftAssertManager;
 
 public class CourseVisibilityTests extends TestsBase {
@@ -296,9 +299,27 @@ public class CourseVisibilityTests extends TestsBase {
     private void logOutAdminFromAdminDashboard() {
         navigationBar.clickBackToWebsiteBtn();
 
-        dashboardPage.verifyDashboardPageIsDisplayed();
+        int attempts = 0;
+        int maxAttempts = 5;
 
-        logOut();
+        while (attempts < maxAttempts) {
+            try {
+                dashboardPage.verifyDashboardPageIsDisplayed();
+
+                logOut();
+                break;
+            } catch (NoSuchElementException | TimeoutException ex) {
+                SoftAssertManager.getSoftAssert()
+                                 .assertTrue(false, "Did not navigate to Dashboard after clicking on 'Back to Home'");
+                ScreenshotUtils.captureAndAttach(
+                        driver,
+                        "Did not navigate to Dashboard after clicking on 'Back to Home'"
+                );
+                navigationBar.clickBackToWebsiteBtn();
+            } finally {
+                attempts++;
+            }
+        }
     }
 
     private void logOut() {
