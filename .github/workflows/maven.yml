@@ -100,11 +100,23 @@ jobs:
       - name: Run iOS Tests (${{ matrix.execution_type }})
         if: matrix.platform_name == 'iOS'
         run: |
-          # Booting the simulator
-          UDID=$(xcrun simctl list devices | grep -m 1 "iPhone 15" | awk -F '[()]' '{print $2}')
-          xcrun simctl boot $UDID
-          xcrun simctl waitstarted $UDID
-
+          # 1. Get an available device
+          DEVICE_NAME="iPhone 15"
+          UDID=$(xcrun simctl list devices available "$DEVICE_NAME" | grep "$DEVICE_NAME" | head -1 | awk -F '[()]' '{print $2}')
+          
+          # 2. Check if the device is already booted, if not, boot it
+          STATUS=$(xcrun simctl list devices | grep "$UDID" | awk '{print $NF}')
+          if [ "$STATUS" != "(Booted)" ]; then
+            echo "Booting $DEVICE_NAME ($UDID)..."
+            xcrun simctl boot $UDID
+          else
+            echo "Simulator $UDID is already booted."
+          fi
+          
+          # 3. Wait for the simulator to be ready 
+          xcrun simctl bootstatus $UDID --wait
+          
+          # 4. Run tests
           mvn clean test -DPLATFORM_NAME=${{ matrix.platform_name }} -DEXECUTION_TYPE=${{ matrix.execution_type }} -DADMIN_EMAIL=${{ secrets.ADMIN_EMAIL }} -DADMIN_PASSWORD=${{ secrets.ADMIN_PASSWORD }} -DUSER_EMAIL=${{ secrets.USER_EMAIL }} -DUSER_PASSWORD=${{ secrets.USER_PASSWORD }}
 
       # --- SHARED REPORTING ---
