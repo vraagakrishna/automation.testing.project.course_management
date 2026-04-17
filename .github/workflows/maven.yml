@@ -65,6 +65,14 @@ jobs:
             appium driver install xcuitest
           fi
 
+      # --- FIX KVM PERMISSIONS (Linux Only) ---
+      - name: Enable KVM group perms
+        if: matrix.platform_name == 'Android'
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
       # --- LOGIC FOR ANDROID ---
       - name: Run Android Tests (${{ matrix.execution_type }})
         if: matrix.platform_name == 'Android'
@@ -74,9 +82,15 @@ jobs:
           target: google_apis
           arch: x86_64
           disable-animations: true
-          # Linux uses KVM, so we don't need the swiftshader workaround usually
           emulator-options: -no-snapshot-save -no-window -noaudio -no-boot-anim
           script: |
+            # Ensure the device is recognized
+            echo "Checking connected devices..."
+            adb devices
+            
+            # Wait for device to be fully usable (extra safety)
+            adb wait-for-device
+            
             mvn clean test \
             -DPLATFORM_NAME=${{ matrix.platform_name }} \
             -DEXECUTION_TYPE=${{ matrix.execution_type }} \
