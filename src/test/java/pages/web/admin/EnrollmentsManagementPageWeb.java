@@ -71,9 +71,9 @@ public class EnrollmentsManagementPageWeb extends BasePageWeb implements IEnroll
 
     @Override
     public void clickEnroll(String courseName, String userEmail, String enrollmentNotes, boolean shouldWork) {
-        logger.info("Enrolling user " + userEmail + " to course " + courseName);
+        logger.info("Enrolling user '" + userEmail + "' to course '" + courseName + "'");
         ReportManager.getTest()
-                     .info("Enrolling user " + userEmail + " to course " + courseName);
+                     .info("Enrolling user '" + userEmail + "' to course '" + courseName + "'");
         clickButton(enrollUserBtn);
 
         boolean courseExists = this.selectByVisibleText(enrollCourseDropdown, courseName);
@@ -89,20 +89,21 @@ public class EnrollmentsManagementPageWeb extends BasePageWeb implements IEnroll
         }
 
         enterKeys(enrollSearchField, userEmail);
+        closeKeyboardIfOpen();
 
         By userResult = By.xpath("//div[starts-with(text(),'" + userEmail + "')]/parent::div");
         scrollToViewThenClickButton(userResult);
 
         scrollToViewThenClickButton(enrollSubmitBtn);
 
-        logger.info("Enrolled user " + userEmail + " to course " + courseName);
+        logger.info("Enrolled user '" + userEmail + "' to course '" + courseName + "'");
         ReportManager.getTest()
-                     .info("Enrolled user " + userEmail + " to course " + courseName);
+                     .info("Enrolled user '" + userEmail + "' to course '" + courseName + "'");
     }
 
     @Override
     public void searchForEnrollment(String courseName, String userEmail, boolean shouldExist) {
-        logger.info("Searching for enrollment: user " + userEmail + " to course " + courseName);
+        logger.info("Searching for enrollment: user '" + userEmail + "' to course '" + courseName + "'");
         ReportManager.getTest()
                      .info("Searching for enrollment: user " + userEmail + " to course " + courseName);
         searchEmail(userEmail);

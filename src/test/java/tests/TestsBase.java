@@ -202,7 +202,6 @@ public class TestsBase {
             IEnrollmentsManagementPage enrollmentsManagementPage,
             IAdminDashboardPage adminDashboardPage
     ) {
-
         WebElement courseElement = addCourseAndGetCourse(
                 course,
                 courseManagementPage,
