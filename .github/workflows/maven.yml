@@ -28,10 +28,15 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - execution_type: mobileWeb
+          - platform_name: Android
+            execution_type: mobileWeb
             name: Android-Web
-          - execution_type: nativeApp
+          - platform_name: Android
+            execution_type: nativeApp
             name: Android-Native
+          - platform_name: iOS
+            execution_type: mobileWeb
+            name: iOS-Web
 
     steps:
       - name: Checkout code
@@ -53,6 +58,7 @@ jobs:
 
       # --- LOGIC FOR ANDROID ---
       - name: Run Android Tests (${{ matrix.execution_type }})
+        if: matrix.platform == 'Android'
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 31
@@ -60,11 +66,30 @@ jobs:
           arch: arm64-v8a
           script: |
             mvn clean test \
+            -DPLATFORM_NAME=${{ matrix.platform_name }} \
             -DEXECUTION_TYPE=${{ matrix.execution_type }} \
             -DADMIN_EMAIL=${{ secrets.ADMIN_EMAIL }} \
             -DADMIN_PASSWORD=${{ secrets.ADMIN_PASSWORD }} \
             -DUSER_EMAIL=${{ secrets.USER_EMAIL }} \
             -DUSER_PASSWORD=${{ secrets.USER_PASSWORD }}
+            
+      # --- LOGIC FOR iOS ---
+      - name: Run iOS Tests (${{ matrix.execution_type }})
+        if: matrix.platform == 'iOS'
+        run: |
+          # Booting the simulator
+          UDID=$(xcrun simctl list devices | grep -m 1 "iPhone 15" | awk -F '[()]' '{print $2}')
+          xcrun simctl boot $UDID
+          xcrun simctl waitstarted $UDID
+
+          # Run tests (iOS Native will fail as expected via your Java exception)
+          mvn clean test \
+          -DPLATFORM_NAME=${{ matrix.platform_name }} \
+          -DEXECUTION_TYPE=${{ matrix.execution_type }} \
+          -DADMIN_EMAIL=${{ secrets.ADMIN_EMAIL }} \
+          -DADMIN_PASSWORD=${{ secrets.ADMIN_PASSWORD }} \
+          -DUSER_EMAIL=${{ secrets.USER_EMAIL }} \
+          -DUSER_PASSWORD=${{ secrets.USER_PASSWORD }}
 
       # --- SHARED REPORTING ---
       - name: Upload Test Report (${{ matrix.name }})
