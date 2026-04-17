@@ -31,14 +31,14 @@ jobs:
             execution_type: mobileWeb
             os: ubuntu-latest
             name: Android-Web
-          - platform_name: Android
-            execution_type: nativeApp
-            os: ubuntu-latest
-            name: Android-Native
-          - platform_name: iOS
-            execution_type: mobileWeb
-            os: macos-13
-            name: iOS-Web
+          #- platform_name: Android
+          #  execution_type: nativeApp
+          #  os: ubuntu-latest
+          #  name: Android-Native
+          #- platform_name: iOS
+          #  execution_type: mobileWeb
+          #  os: macos-13
+          #  name: iOS-Web
 
     runs-on: ${{ matrix.os }}
 
