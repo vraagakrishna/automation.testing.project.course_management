@@ -1,10 +1,13 @@
 package pages.android.dashboard;
 
 import io.appium.java_client.AppiumDriver;
+import models.Course;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import pages.android.BasePageAndroid;
 import pages.interfaces.dashboard.IUserDashboardPage;
 import pages.web.dashboard.UserDashboardPageWeb;
+import utils.ScreenshotUtils;
 
 import java.util.logging.Logger;
 
@@ -27,6 +30,26 @@ public class UserDashboardPageAndroid extends BasePageAndroid implements IUserDa
     public void clickViewAllCourses() {
         logger.info("Clicking View All courses button");
         clickButton(viewAllCoursesBtn);
+    }
+
+    @Override
+    public void validateEnrolledCourse(Course course) {
+        logger.info("Finding enrolled course: " + course.getTitle());
+        try {
+            findCourse(course.getTitle());
+            ScreenshotUtils.captureAndAttach(driver, "Enrolled Course");
+        } catch (Exception ex) {
+            logger.info("Course did not exist!");
+            ScreenshotUtils.captureAndAttach(driver, "Enrolled Course does not exist!");
+        }
+    }
+    // </editor-fold>
+
+    // <editor-fold desc="Private Methods">
+    private WebElement findCourse(String courseTitle) {
+        return getElement(
+                By.xpath("//android.view.View[@content-desc=\"" + courseTitle + "\"]")
+        );
     }
     // </editor-fold>
 
