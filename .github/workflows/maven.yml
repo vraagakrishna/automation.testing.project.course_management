@@ -23,21 +23,24 @@ on:
 
 jobs:
   mobile-build:
-    # macos-13 (Intel) because macos-latest (M1) does not support nested virtualisation
-    runs-on: macos-13
     strategy:
       fail-fast: false
       matrix:
         include:
           - platform_name: Android
             execution_type: mobileWeb
+            os: ubuntu-latest
             name: Android-Web
-          #- platform_name: Android
-          #  execution_type: nativeApp
-          #  name: Android-Native
-          #- platform_name: iOS
-          #  execution_type: mobileWeb
-          #  name: iOS-Web
+          - platform_name: Android
+            execution_type: nativeApp
+            os: ubuntu-latest
+            name: Android-Native
+          - platform_name: iOS
+            execution_type: mobileWeb
+            os: macos-13
+            name: iOS-Web
+
+    runs-on: ${{ matrix.os }}
 
     steps:
       - name: Checkout code
@@ -55,7 +58,12 @@ jobs:
       - name: Install Node.js & Appium
         run: |
           npm install -g appium
-          appium driver install uiautomator2
+          # Only install the driver needed for the current platform to save setup time
+          if [ "${{ matrix.platform_name }}" = "Android" ]; then
+            appium driver install uiautomator2
+          else
+            appium driver install xcuitest
+          fi
 
       # --- LOGIC FOR ANDROID ---
       - name: Run Android Tests (${{ matrix.execution_type }})
@@ -66,7 +74,8 @@ jobs:
           target: google_apis
           arch: x86_64
           disable-animations: true
-          emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim
+          # Linux uses KVM, so we don't need the swiftshader workaround usually
+          emulator-options: -no-snapshot-save -no-window -noaudio -no-boot-anim
           script: |
             mvn clean test \
             -DPLATFORM_NAME=${{ matrix.platform_name }} \
