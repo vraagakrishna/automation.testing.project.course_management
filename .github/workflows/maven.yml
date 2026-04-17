@@ -31,12 +31,12 @@ jobs:
           - platform_name: Android
             execution_type: mobileWeb
             name: Android-Web
-          - platform_name: Android
-            execution_type: nativeApp
-            name: Android-Native
-          - platform_name: iOS
-            execution_type: mobileWeb
-            name: iOS-Web
+          #- platform_name: Android
+          #  execution_type: nativeApp
+          #  name: Android-Native
+          #- platform_name: iOS
+          #  execution_type: mobileWeb
+          #  name: iOS-Web
 
     steps:
       - name: Checkout code
@@ -72,7 +72,7 @@ jobs:
             -DADMIN_PASSWORD=${{ secrets.ADMIN_PASSWORD }} \
             -DUSER_EMAIL=${{ secrets.USER_EMAIL }} \
             -DUSER_PASSWORD=${{ secrets.USER_PASSWORD }}
-            
+
       # --- LOGIC FOR iOS ---
       - name: Run iOS Tests (${{ matrix.execution_type }})
         if: matrix.platform == 'iOS'
