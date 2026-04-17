@@ -59,7 +59,7 @@ jobs:
 
       # --- LOGIC FOR ANDROID ---
       - name: Run Android Tests (${{ matrix.execution_type }})
-        if: matrix.platform == 'Android'
+        if: matrix.platform_name == 'Android'
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 31
@@ -78,7 +78,7 @@ jobs:
 
       # --- LOGIC FOR iOS ---
       - name: Run iOS Tests (${{ matrix.execution_type }})
-        if: matrix.platform == 'iOS'
+        if: matrix.platform_name == 'iOS'
         run: |
           # Booting the simulator
           UDID=$(xcrun simctl list devices | grep -m 1 "iPhone 15" | awk -F '[()]' '{print $2}')
