@@ -100,34 +100,28 @@ jobs:
       - name: Run iOS Tests (${{ matrix.execution_type }})
         if: matrix.platform_name == 'iOS'
         run: |
-          # 1. List all available devices and pick the first one that isn't a watch or TV
-          echo "Looking for an available simulator..."
+          # 1. Identify Simulator
           UDID=$(xcrun simctl list devices available | grep "iPhone" | head -1 | awk -F '[()]' '{print $2}')
           
-          if [ -z "$UDID" ]; then
-            echo "Error: No iPhone simulator found! Listing all devices:"
-            xcrun simctl list devices available
-            exit 1
-          fi
-          
-          # 2. Get the status more reliably
-          STATUS=$(xcrun simctl list devices | grep "$UDID" | awk '{print $NF}')
-          echo "Found simulator $UDID with status $STATUS"
-          
-          # 3. Boot only if not already booted
-          if [ "$STATUS" != "(Booted)" ]; then
-            echo "Booting simulator $UDID..."
-            # On M1/M2 runners, we often need to specify the arch explicitly
-            xcrun simctl boot "$UDID" --arch=arm64 || xcrun simctl boot "$UDID"
-          else
-            echo "Simulator $UDID is already booted."
-          fi
-          
-          # 4. Wait for the simulator to be ready
+          # 2. Boot the device
+          echo "Booting simulator $UDID..."
+          xcrun simctl boot "$UDID" || echo "Device already booting/booted"
+
+          # 3. Wait for the simulator to reach 'Booted' status using a loop
           echo "Waiting for simulator to be ready..."
-          xcrun simctl bootstatus "$UDID" --wait
+          TIMEOUT=60
+          COUNT=0
+          while [ "$(xcrun simctl list devices | grep "$UDID" | awk '{print $NF}')" != "(Booted)" ]; do
+            if [ $COUNT -ge $TIMEOUT ]; then
+              echo "Error: Simulator failed to boot within $TIMEOUT seconds."
+              exit 1
+            fi
+            sleep 2
+            COUNT=$((COUNT+2))
+          done
+          echo "Simulator is ready!"
           
-          # 5. Run tests
+          # 4. Run tests
           mvn clean test -DPLATFORM_NAME=${{ matrix.platform_name }} -DEXECUTION_TYPE=${{ matrix.execution_type }} -DADMIN_EMAIL=${{ secrets.ADMIN_EMAIL }} -DADMIN_PASSWORD=${{ secrets.ADMIN_PASSWORD }} -DUSER_EMAIL=${{ secrets.USER_EMAIL }} -DUSER_PASSWORD=${{ secrets.USER_PASSWORD }}
 
       # --- SHARED REPORTING ---
