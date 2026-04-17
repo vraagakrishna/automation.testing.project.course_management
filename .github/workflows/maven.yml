@@ -1,0 +1,62 @@
+name: Mobile Automation Matrix
+on:
+  workflow_dispatch:
+    inputs:
+      branch_name:
+        description: 'Branch to run tests on'
+        required: true
+        default: 'main'
+
+jobs:
+  mobile-build:
+    runs-on: macos-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - execution_type: mobileWeb
+            name: Android-Web
+          - execution_type: nativeApp
+            name: Android-Native
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.branch_name }}
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+          cache: maven
+
+      - name: Install Node.js & Appium
+        run: |
+          npm install -g appium
+          appium driver install uiautomator2
+
+      # --- LOGIC FOR ANDROID ---
+      - name: Run Android Tests (${{ matrix.execution_type }})
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 31
+          target: google_apis
+          arch: x86_64
+          script: |
+            mvn clean test \
+            -DEXECUTION_TYPE=${{ matrix.execution_type }} \
+            -DADMIN_EMAIL=${{ secrets.ADMIN_EMAIL }} \
+            -DADMIN_PASSWORD=${{ secrets.ADMIN_PASSWORD }} \
+            -DUSER_EMAIL=${{ secrets.USER_EMAIL }} \
+            -DUSER_PASSWORD=${{ secrets.USER_PASSWORD }}
+
+      # --- SHARED REPORTING ---
+      - name: Upload Test Report (${{ matrix.name }})
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Reports-${{ matrix.name }}
+          path: ./Reports/
+          if-no-files-found: warn
