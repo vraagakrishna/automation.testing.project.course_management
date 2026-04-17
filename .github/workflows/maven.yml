@@ -27,18 +27,24 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          #- platform_name: Android
-          #  execution_type: mobileWeb
-          #  os: ubuntu-latest
-          #  name: Android-Web
-          #- platform_name: Android
-          #  execution_type: nativeApp
-          #  os: ubuntu-latest
-          #  name: Android-Native
-          - platform_name: iOS
+          - name: Android-Web
+            platform_name: Android
             execution_type: mobileWeb
+            automation_name: UiAutomator2
+            os: ubuntu-latest
+            browser_name: chrome
+          - name: Android-Native
+            platform_name: Android
+            execution_type: nativeApp
+            automation_name: UiAutomator2
+            os: ubuntu-latest
+            browser_name: chrome
+          - name: iOS-Web
+            platform_name: iOS
+            execution_type: mobileWeb
+            automation_name: XCUITest
             os: macos-latest
-            name: iOS-Web
+            browser_name: safari
 
     runs-on: ${{ matrix.os }}
 
@@ -94,7 +100,7 @@ jobs:
             # Wait for device to be fully usable (extra safety)
             adb wait-for-device
             
-            mvn clean test -DPLATFORM_NAME=${{ matrix.platform_name }} -DEXECUTION_TYPE=${{ matrix.execution_type }} -DADMIN_EMAIL=${{ secrets.ADMIN_EMAIL }} -DADMIN_PASSWORD=${{ secrets.ADMIN_PASSWORD }} -DUSER_EMAIL=${{ secrets.USER_EMAIL }} -DUSER_PASSWORD=${{ secrets.USER_PASSWORD }}
+            mvn clean test -DPLATFORM_NAME=${{ matrix.platform_name }} -DEXECUTION_TYPE=${{ matrix.execution_type }} -DAUTOMATOR_NAME=${{ matrix.automation_name }} -DBROWSER_NAME=${{ matrix.browser_name }} -DADMIN_EMAIL=${{ secrets.ADMIN_EMAIL }} -DADMIN_PASSWORD=${{ secrets.ADMIN_PASSWORD }} -DUSER_EMAIL=${{ secrets.USER_EMAIL }} -DUSER_PASSWORD=${{ secrets.USER_PASSWORD }}
 
       # --- LOGIC FOR iOS ---
       - name: Run iOS Tests (${{ matrix.execution_type }})
@@ -122,7 +128,7 @@ jobs:
           echo "Simulator is ready!"
           
           # 4. Run tests
-          mvn clean test -DPLATFORM_NAME=${{ matrix.platform_name }} -DEXECUTION_TYPE=${{ matrix.execution_type }} -DADMIN_EMAIL=${{ secrets.ADMIN_EMAIL }} -DADMIN_PASSWORD=${{ secrets.ADMIN_PASSWORD }} -DUSER_EMAIL=${{ secrets.USER_EMAIL }} -DUSER_PASSWORD=${{ secrets.USER_PASSWORD }}
+          mvn clean test -DPLATFORM_NAME=${{ matrix.platform_name }} -DEXECUTION_TYPE=${{ matrix.execution_type }} -DAUTOMATOR_NAME=${{ matrix.automation_name }} -DBROWSER_NAME=${{ matrix.browser_name }} -DADMIN_EMAIL=${{ secrets.ADMIN_EMAIL }} -DADMIN_PASSWORD=${{ secrets.ADMIN_PASSWORD }} -DUSER_EMAIL=${{ secrets.USER_EMAIL }} -DUSER_PASSWORD=${{ secrets.USER_PASSWORD }}
 
       # --- SHARED REPORTING ---
       - name: Upload Test Report (${{ matrix.name }})
