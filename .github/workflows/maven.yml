@@ -91,13 +91,7 @@ jobs:
             # Wait for device to be fully usable (extra safety)
             adb wait-for-device
             
-            mvn clean test \
-            -DPLATFORM_NAME=${{ matrix.platform_name }} \
-            -DEXECUTION_TYPE=${{ matrix.execution_type }} \
-            -DADMIN_EMAIL=${{ secrets.ADMIN_EMAIL }} \
-            -DADMIN_PASSWORD=${{ secrets.ADMIN_PASSWORD }} \
-            -DUSER_EMAIL=${{ secrets.USER_EMAIL }} \
-            -DUSER_PASSWORD=${{ secrets.USER_PASSWORD }}
+            mvn clean test -DPLATFORM_NAME=${{ matrix.platform_name }} -DEXECUTION_TYPE=${{ matrix.execution_type }} -DADMIN_EMAIL=${{ secrets.ADMIN_EMAIL }} -DADMIN_PASSWORD=${{ secrets.ADMIN_PASSWORD }} -DUSER_EMAIL=${{ secrets.USER_EMAIL }} -DUSER_PASSWORD=${{ secrets.USER_PASSWORD }}
 
       # --- LOGIC FOR iOS ---
       - name: Run iOS Tests (${{ matrix.execution_type }})
@@ -108,14 +102,7 @@ jobs:
           xcrun simctl boot $UDID
           xcrun simctl waitstarted $UDID
 
-          # Run tests (iOS Native will fail as expected via your Java exception)
-          mvn clean test \
-          -DPLATFORM_NAME=${{ matrix.platform_name }} \
-          -DEXECUTION_TYPE=${{ matrix.execution_type }} \
-          -DADMIN_EMAIL=${{ secrets.ADMIN_EMAIL }} \
-          -DADMIN_PASSWORD=${{ secrets.ADMIN_PASSWORD }} \
-          -DUSER_EMAIL=${{ secrets.USER_EMAIL }} \
-          -DUSER_PASSWORD=${{ secrets.USER_PASSWORD }}
+          mvn clean test -DPLATFORM_NAME=${{ matrix.platform_name }} -DEXECUTION_TYPE=${{ matrix.execution_type }} -DADMIN_EMAIL=${{ secrets.ADMIN_EMAIL }} -DADMIN_PASSWORD=${{ secrets.ADMIN_PASSWORD }} -DUSER_EMAIL=${{ secrets.USER_EMAIL }} -DUSER_PASSWORD=${{ secrets.USER_PASSWORD }}
 
       # --- SHARED REPORTING ---
       - name: Upload Test Report (${{ matrix.name }})
