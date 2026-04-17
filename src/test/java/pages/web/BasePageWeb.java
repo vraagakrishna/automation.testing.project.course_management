@@ -29,6 +29,11 @@ public class BasePageWeb extends BasePage {
         clickButton(element);
     }
 
+    @Override
+    protected void clickButton(By by) {
+        scrollToViewThenClickButton(by);
+    }
+
     protected void clickButton(WebElement element) {
         ((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
     }
