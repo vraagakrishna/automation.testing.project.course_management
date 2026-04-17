@@ -98,8 +98,12 @@ jobs:
             adb devices
             
             # Wait for device to be fully usable (extra safety)
+            echo "Waiting for system server..."
             adb wait-for-device
             
+            while [ "`adb shell getprop init.svc.bootanim`" != "stopped" ]; do sleep 2; done
+            
+            # Now run your test
             mvn clean test -DPLATFORM_NAME=${{ matrix.platform_name }} -DEXECUTION_TYPE=${{ matrix.execution_type }} -DAUTOMATOR_NAME=${{ matrix.automation_name }} -DBROWSER_NAME=${{ matrix.browser_name }} -DADMIN_EMAIL=${{ secrets.ADMIN_EMAIL }} -DADMIN_PASSWORD=${{ secrets.ADMIN_PASSWORD }} -DUSER_EMAIL=${{ secrets.USER_EMAIL }} -DUSER_PASSWORD=${{ secrets.USER_PASSWORD }}
 
       # --- LOGIC FOR iOS ---

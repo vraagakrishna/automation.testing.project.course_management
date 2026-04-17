@@ -8,6 +8,7 @@ import utils.ApkDownloader;
 import utils.ConfigManager;
 
 import java.io.File;
+import java.time.Duration;
 
 public class CapabilityFactory {
 
@@ -22,7 +23,9 @@ public class CapabilityFactory {
         if (platform.equalsIgnoreCase(Constants.PLATFORM_ANDROID)) {
             UiAutomator2Options options = new UiAutomator2Options()
                     .setAutomationName(automatorName)
-                    .setPlatformName(platform);
+                    .setPlatformName(platform)
+                    .setAdbExecTimeout(Duration.ofSeconds(60))        // Give ADB 60s instead of 30s
+                    .setAppWaitDuration(Duration.ofSeconds(60));      // Wait longer for Appium to hook into the app
 
             if (executionType.equalsIgnoreCase(Constants.EXECUTION_TYPE_MOBILE_WEB)) {
                 options.withBrowserName(browserName);
