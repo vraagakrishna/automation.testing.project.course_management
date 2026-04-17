@@ -37,7 +37,7 @@ jobs:
           #  name: Android-Native
           - platform_name: iOS
             execution_type: mobileWeb
-            os: macos-13
+            os: macos-latest
             name: iOS-Web
 
     runs-on: ${{ matrix.os }}
