@@ -36,7 +36,9 @@ public class NavigationBarAndroid extends BasePageAndroid implements INavigation
 
     private final By enrollmentsNavBtn = By.xpath("//android.widget.Button[@content-desc=\"Enrollments\"]");
 
-    private final By backToWebsiteBtn = By.xpath("//android.widget.Button[@content-desc=\"Back to Home\"]");
+    private final By backToWebsiteBtn = AppiumBy.androidUIAutomator("new UiScrollable(" +
+            "new UiSelector().scrollable(true)).scrollIntoView(new UiSelector().description(\"Back to Home\")" +
+            ")");
     // </editor-fold>
 
     // <editor-fold desc="Ctor">
