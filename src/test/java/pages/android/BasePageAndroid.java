@@ -46,17 +46,19 @@ public class BasePageAndroid extends BasePage {
         Wait<AppiumDriver> wait = new FluentWait<>(driver).withTimeout(Duration.ofSeconds(5))
                                                           .pollingEvery(Duration.ofMillis(300));
 
-        boolean popupDisplayed = wait.until(d -> d.getPageSource()
-                                                  .contains("live-region=\"1\""));
-
-        if (!popupDisplayed) return null;
+        try {
+            wait.until(d -> d.getPageSource()
+                             .contains("live-region=\"1\""));
+        } catch (TimeoutException ex) {
+            return "";
+        }
 
         String source = driver.getPageSource();
 
         Pattern pattern = Pattern.compile("content-desc=\"([^\"]*)\"[^>]*live-region=\"1\"");
         Matcher matcher = pattern.matcher(source);
 
-        String popupText = null;
+        String popupText = "";
         if (matcher.find()) {
             popupText = matcher.group(1);
         }
