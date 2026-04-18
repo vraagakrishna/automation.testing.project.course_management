@@ -16,7 +16,9 @@ public class NavigationBarAndroid extends BasePageAndroid implements INavigation
 
     private final By navBurgerBtn = By.xpath("//android.widget.Button");
 
-    private final By loginBtn = By.xpath("//android.widget.Button[@content-desc=\"Login / Sign Up\"]");
+    private final By loginBtn = AppiumBy.androidUIAutomator("new UiScrollable(" +
+            "new UiSelector().scrollable(true)).scrollIntoView(new UiSelector().description(\"Login / Sign Up\")" +
+            ")");
 
     private final By logoutBtn = By.xpath("//android.widget.Button[@content-desc=\"Logout\"]");
 
