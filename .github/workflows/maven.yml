@@ -136,7 +136,17 @@ jobs:
           
           # 5. Extra Safety: Wait for the UI process (backboardd) to be alive
           echo "Waiting for System UI (backboardd) to be ready..."
-          timeout 60 /bin/bash -c "until xcrun simctl spawn $UDID launchctl list com.apple.backboardd > /dev/null 2>&1; do sleep 5; done"
+          MAX_RETRIES=12
+          RETRY_COUNT=0
+          until xcrun simctl spawn "$UDID" launchctl list com.apple.backboardd > /dev/null 2>&1; do
+            if [ $RETRY_COUNT -ge $MAX_RETRIES ]; then
+              echo "Error: System UI failed to start within 60 seconds."
+              exit 1
+            fi
+            echo "Still waiting for backboardd..."
+            sleep 5
+            RETRY_COUNT=$((RETRY_COUNT+1))
+          done
     
           echo "Simulator $UDID is ready for tests!"
           
