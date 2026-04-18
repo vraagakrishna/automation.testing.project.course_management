@@ -26,7 +26,7 @@ public class BasePageWeb extends BasePage {
 
     // <editor-fold desc="Protected Methods">
     protected void scrollToViewThenClickButton(By by) {
-        WebElement element = this.getElement(by);
+        WebElement element = this.getElement(by, 50);
         scrollIntoView(element);
         clickButton(element);
     }

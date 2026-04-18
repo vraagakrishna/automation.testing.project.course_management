@@ -28,7 +28,7 @@ public class HomePageWeb extends BasePageWeb implements IHomePage {
         String expectedHeading = "Master Test Automation";
 
         // wait until the element is visible
-        WebElement element = this.getElement(homePageTitle);
+        WebElement element = this.getElement(homePageTitle, 50);
 
         String heading = element.findElement(By.tagName("h1"))
                                 .getText();

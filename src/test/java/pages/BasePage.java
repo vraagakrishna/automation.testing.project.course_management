@@ -31,6 +31,11 @@ public class BasePage {
                 .until(visibilityOfElementLocated(by));
     }
 
+    protected WebElement getElement(By by, int seconds) {
+        return new WebDriverWait(driver, Duration.ofSeconds(seconds))
+                .until(visibilityOfElementLocated(by));
+    }
+
     protected void clickButton(By by) {
         this.getElement(by)
             .click();
