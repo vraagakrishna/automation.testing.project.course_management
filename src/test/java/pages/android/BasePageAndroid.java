@@ -5,6 +5,7 @@ import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -170,6 +171,21 @@ public class BasePageAndroid extends BasePage {
             if (keyboardOpen) driver.executeScript("mobile: pressKey", Map.of("keycode", 4));
         } catch (Exception ignored) {
             // keyboard was not open
+        }
+    }
+
+    protected void waitForSpinner(By loadingSpinner) {
+        // Create a wait instance
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(1));
+
+        try {
+            // First, wait for it to appear (short timeout)
+            wait.until(ExpectedConditions.visibilityOfElementLocated(loadingSpinner));
+
+            // Then, wait for it to disappear (this is the "Sync" point)
+            wait.until(ExpectedConditions.invisibilityOfElementLocated(loadingSpinner));
+        } catch (TimeoutException e) {
+            // If it never appeared because the app was too fast, just log it and move on
         }
     }
 

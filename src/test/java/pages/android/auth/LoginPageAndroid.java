@@ -29,6 +29,8 @@ public class LoginPageAndroid extends BasePageAndroid implements ILoginPage {
 
     private final By errorPanel = By.xpath(
             "//android.view.View[@focusable='true' and @clickable='false' and @content-desc][2]");
+
+    private final By loadingSpinner = By.className("android.widget.ProgressBar");
     // </editor-fold>
 
     // <editor-fold desc="Ctor">
@@ -101,6 +103,8 @@ public class LoginPageAndroid extends BasePageAndroid implements ILoginPage {
 
     private void clickLoginButton() {
         this.clickButton(loginButton);
+
+        this.waitForSpinner(loadingSpinner);
     }
 
     private String getEmailAddress() {
