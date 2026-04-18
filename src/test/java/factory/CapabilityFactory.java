@@ -41,7 +41,10 @@ public class CapabilityFactory {
         } else if (platform.equalsIgnoreCase(Constants.PLATFORM_IOS)) {
             XCUITestOptions options = new XCUITestOptions()
                     .setAutomationName(automatorName)
-                    .setPlatformName(platform);
+                    .setPlatformName(platform)
+                    .setWdaLaunchTimeout(Duration.ofMinutes(10))    // Wait up to 10 mins for the build
+                    .setWdaConnectionTimeout(Duration.ofMinutes(5)) // Wait for the server to respond
+                    .setUseNewWDA(false);                           // Don't rebuild if already built
 
             if (executionType.equalsIgnoreCase(Constants.EXECUTION_TYPE_MOBILE_WEB)) {
                 options.withBrowserName(browserName);
