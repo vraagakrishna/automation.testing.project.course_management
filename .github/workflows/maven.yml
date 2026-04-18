@@ -126,12 +126,21 @@ jobs:
               echo "Error: Simulator failed to boot within $TIMEOUT seconds."
               exit 1
             fi
-            sleep 2
-            COUNT=$((COUNT+2))
+            sleep 5S
+            COUNT=$((COUNT+5))
           done
-          echo "Simulator is ready!"
           
-          # 4. Run tests
+          # 4. Verification: The iOD version of 'adb devices'
+          echo "Checking booted iOS devices..."
+          xcrun simctl list devices | grep "(Booted)"
+          
+          # 5. Extra Safety: Wait for the UI process (backboardd) to be alive
+          echo "Waiting for System UI (backboardd) to be ready..."
+          timeout 60 /bin/bash -c "until xcrun simctl spawn $UDID launchctl list com.apple.backboardd > /dev/null 2>&1; do sleep 5; done"
+    
+          echo "Simulator $UDID is ready for tests!"
+          
+          # 6. Run tests
           mvn clean test -DPLATFORM_NAME=${{ matrix.platform_name }} -DEXECUTION_TYPE=${{ matrix.execution_type }} -DAUTOMATOR_NAME=${{ matrix.automation_name }} -DBROWSER_NAME=${{ matrix.browser_name }} -DADMIN_EMAIL=${{ secrets.ADMIN_EMAIL }} -DADMIN_PASSWORD=${{ secrets.ADMIN_PASSWORD }} -DUSER_EMAIL=${{ secrets.USER_EMAIL }} -DUSER_PASSWORD=${{ secrets.USER_PASSWORD }}
 
       # --- SHARED REPORTING ---
