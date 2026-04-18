@@ -72,7 +72,7 @@ public class LoginPageAndroid extends BasePageAndroid implements ILoginPage {
 
     @Override
     public void verifyErrorMessage(String expectedMessage) {
-        logger.info("Verifying error message");
+        logger.info("Verifying Error Message is: " + expectedMessage);
         WebElement element = this.getElement(errorPanel);
 
         String actualMessage = element.getAttribute("content-desc");
