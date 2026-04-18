@@ -50,13 +50,11 @@ The goal of this project is to:
 ## Tech Stack
 
 * **Language**: Java 21
-* **Build Tool**: Maven 2.x
-* **Version Control**: Git
-* **Automation**: Selenium WebDriver
-* **Module Automation**: Appium
+* **Build Tool**: Maven 3.x
+* **Automation**: Selenium 4 & Appium 3
 * **Device**:
-    * **Android** (Real Device / Emulator) - fully supported
-    * **iOS** (Planned) - not yet tested due to lack of device and iOS app
+    * **Android** (Web & Native App)
+    * **iOS** (Web supported; Native App in development)
 * **Inspector Tool**: [Appium Inspector](https://github.com/appium/appium-inspector/releases)
 * **Screen Mirroring**: [scrcpy](https://github.com/Genymobile/scrcpy/releases)
 
@@ -100,94 +98,114 @@ cd automation.testing.project.course_management
 mvn clean install
 ```
 
-3. Verify Android Device (for mobile tests)
+3. Verify Connected Devices
+
+To run tests locally, ensure your device is recognised by your machine.
+
+You should see at least one connected device or emulator listed.
+
+**Android**:
 
 ```bash
 adb devices
 ```
 
-You should see at least one connected device or emulator listed.
+**iOS**:
+
+```bash
+xcrun simctl list devices | grep "(Booted)"
+```
 
 <br/>
 
 ## Running Tests
 
-There are multiple ways to execute tests depending on:
-
-* How the Appium server is started
-* Which platform you want to run (Web or Android)
-
-> **Default Behaviour**: <br/>
-> If no execution type is specified, tests will run in Web (mobileWeb) mode.
-
 ### Required Parameters
 
-All tests run require the following:
+To maintain security, credentials and environment configurations must be passed dueing execution:
+
+#### Security Credentials
+
+* `-DADMIN_EMAIL`
+* `-DADMIN_PASSWORD`
+* `-DUSER_EMAIL`
+* `-DUSER_PASSWORD`
+
+#### Driver Configuration
+
+* `-DPLATFORM_NAME`: `Android` or `iOS`
+* `-DEXECUTION_TYPE`: `mobileWeb` or `nativeApp`
+* `-DAUTOMATOR_NAME`: `UiAutomator2` or `XCUITest`
+* `-DBROWSER_NAME`: `chrome` (Android) or `safari` (iOS)
+
+### Execution Commands
+
+1. Android Web
 
 ```bash
--DADMIN_EMAIL=ADMIN_EMAIL \ 
--DADMIN_PASSWORD=ADMIN_PASSWORD \ 
--DUSER_EMAIL=USER_EMAIL \
--DUSER_PASSWORD=USER_PASSWORD
+mvn clean test \
+  -DPLATFORM_NAME=Android \
+  -DEXECUTION_TYPE=mobileWeb \
+  -DAUTOMATOR_NAME=UiAutomator2 \
+  -DBROWSER_NAME=chrome \
+  <REQUIRED_PARAMS>
 ```
 
-### Execution Modes
-
-| Mode          | Parameter Value | Description               | 
-|:--------------|:----------------|:--------------------------|
-| Web (Default) | `mobileWeb`     | Runs tests in browser     | 
-| Android App   | `nativeApp`     | Runs tests on Android app | 
-
-### Appium Server Options
-
-#### Option 1: Start Appium Manually
+2. Android Native App
 
 ```bash
-appium
+mvn clean test \
+  -DPLATFORM_NAME=Android \
+  -DEXECUTION_TYPE=nativeApp \
+  -DAUTOMATOR_NAME=UiAutomator2 \
+  -DBROWSER_NAME=chrome \
+  <REQUIRED_PARAMS>
 ```
 
-Then run
+3. iOS Web
 
 ```bash
-mvn test \
--DAPPIUM_SERVER_URL=APPIUM_SERVER_URL \
-<REQUIRED_PARAMS> 
+mvn clean test \
+  -DPLATFORM_NAME=iOS \
+  -DEXECUTION_TYPE=mobileWeb \
+  -DAUTOMATOR_NAME=XCUITest \
+  -DBROWSER_NAME=safari \
+  <REQUIRED_PARAMS>
 ```
 
-#### Option 2: Start Appium in Code (Recommended)
+### Appium Server Management
 
-No manual setup required - the framework manages Appium.
+The framework provides flexibility in how the Appium server is handled during test execution:
+
+#### Option 1: Automatic Setup (Recommended)
+
+The framework is designed to be "plug-and-play". If no external server URL is provided, the framework will
+automatically:
+
+* Locate a free port on your machine.
+* Start a local Appium server instance.
+* Automatically shut down the server once the test suite completes.
+
+**How to run**: Simply execute your `mvn clean test <OTHER_REQUIRED_PARAMS>` command with the required platform and
+credential parameters. No manual server setup is required.
+
+#### Option 2: Manual/Remote Server
+
+If you prefer to use a running Appium server, you can bypass the internal manager by providing the server URL.
+
+**How to run**:
+
+1. Start your server manually (e.g., by typing `appium` in your terminal).
+2. Add the `APPIUM_SERVER_URL` property to your Maven command:
 
 ```bash
-mvn test <REQUIRED_PARAMS> 
+mvn clean test \
+  -DAPPIUM_SERVER_URL=APPIUM_SERVER_URL \ 
+  <OTHER_REQUIRED_PARAMS>
 ```
 
-### Run Web Tests (Default)
+**Note**: When running manually, ensure your Appium server has the necessary drivers installed (`uiautomator2` for
+Android or `xcuitest` for iOS) to match your `-DAUTOMATOR_NAME` parameter.
 
-```bash
-mvn test \
--DEXECUTION_TYPE=mobileWeb \
-<REQUIRED_PARAMS> 
-```
-
-Or explicitly:
-
-```bash
-mvn test <REQUIRED_PARAMS> 
-```
-
-### Run Android Tests
-
-```bash
-mvn test \
--DEXECUTION_TYPE=nativeApp \
-<REQUIRED_PARAMS> 
-```
-
-### Notes
-
-* Ensure your environment variables (e.g., `ANDROID_HOME`) are properly configured.
-* Make sure an emulator or real device is running before executing Android tests.
-* Platform selection is controlled via runtime parameters.
 
 <br/>
