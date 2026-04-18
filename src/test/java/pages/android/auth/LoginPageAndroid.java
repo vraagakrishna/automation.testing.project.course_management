@@ -59,6 +59,7 @@ public class LoginPageAndroid extends BasePageAndroid implements ILoginPage {
         this.enterEmailAddress(email);
         this.enterPassword(password);
 
+        this.closeKeyboardIfOpen();
         this.clickLoginButton();
     }
 
