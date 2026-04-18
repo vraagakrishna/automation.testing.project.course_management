@@ -1,5 +1,6 @@
 package pages.web;
 
+import common.Constants;
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -7,6 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import pages.BasePage;
+import utils.ConfigManager;
 
 import java.util.List;
 
@@ -35,6 +37,12 @@ public class BasePageWeb extends BasePage {
     }
 
     protected void clickButton(WebElement element) {
+        if (ConfigManager.getPlatformName()
+                         .equalsIgnoreCase(Constants.PLATFORM_IOS)) {
+            element.click();  // better for Safari alert handling
+            return;
+        }
+
         ((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
     }
 
