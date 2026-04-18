@@ -8,6 +8,7 @@ import org.testng.Assert;
 import pages.interfaces.auth.ILoginPage;
 import pages.web.BasePageWeb;
 import utils.ReportManager;
+import utils.ScreenshotUtils;
 
 import java.util.logging.Logger;
 
@@ -61,6 +62,8 @@ public class LoginPageWeb extends BasePageWeb implements ILoginPage {
         this.enterEmailAddress(email);
         this.enterPassword(password);
 
+        ScreenshotUtils.captureAndAttach(driver, "Login details filled in: email=" + email + ",password=" + password);
+
         this.clickLoginButton();
     }
 
@@ -73,6 +76,7 @@ public class LoginPageWeb extends BasePageWeb implements ILoginPage {
 
     @Override
     public void verifyErrorMessage(String expectedMessage) {
+        logger.info("Verifying Error Message is: " + expectedMessage);
         this.alertUtils.verifyIfAlertMessageIsCorrect(expectedMessage);
     }
     // </editor-fold>
