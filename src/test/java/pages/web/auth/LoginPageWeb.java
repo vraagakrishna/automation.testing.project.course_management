@@ -62,8 +62,6 @@ public class LoginPageWeb extends BasePageWeb implements ILoginPage {
         this.enterEmailAddress(email);
         this.enterPassword(password);
 
-        ScreenshotUtils.captureAndAttach(driver, "Login details filled in");
-
         this.clickLoginButton();
     }
 
