@@ -39,15 +39,20 @@ public class CapabilityFactory {
                             "--disable-blink-features=AutomationControlled",
 
                             // Add a real-looking User-Agent to hide the "Headless/Automation" signature
-                            "--user-agent=Mozilla/5.0 (Linux; Android 13; SM-A505F) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.6045.163 Mobile Safari/537.36"
+                            "--user-agent=Mozilla/5.0 (Linux; Android 13; SM-A505F) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.6045.163 Mobile Safari/537.36",
+
+                            // Overcomes limited resource problems in CI
+                            "--disable-dev-shm-usage",
+                            "--no-sandbox"
                     ));
 
                     // This prevents the "Chrome is being controlled by automated software" info bar
                     Map<String, Object> chromeOptions = new HashMap<>();
-                    chromeOptions.put("excludeSwitches", new String[]{"enable-automation"});
+                    // Use List.of to ensure the JSON is sent as a clean array []
+                    chromeOptions.put("excludeSwitches", List.of("enable-automation"));
+
                     options.setCapability("appium:chromeOptions", chromeOptions);
                 }
-
             } else if (executionType.equalsIgnoreCase(Constants.EXECUTION_TYPE_NATIVE_APP)) {
                 ApkDownloader.downloadApk(appUrl, appPath);
 

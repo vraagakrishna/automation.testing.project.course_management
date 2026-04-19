@@ -26,8 +26,15 @@ public class DriverFactory {
 
         String executionType = ConfigManager.getExecutionType();
 
-        if (executionType.equalsIgnoreCase(Constants.EXECUTION_TYPE_MOBILE_WEB))
+        if (executionType.equalsIgnoreCase(Constants.EXECUTION_TYPE_MOBILE_WEB)) {
+            // Give the browser 3 seconds to "settle" after the handshake
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException ignored) {
+            }
+
             driverInstance.get(Constants.DEV_URL);
+        }
 
         return driverInstance;
     }
