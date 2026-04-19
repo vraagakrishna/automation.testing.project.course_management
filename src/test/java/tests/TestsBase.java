@@ -41,6 +41,8 @@ public class TestsBase {
 
     @BeforeMethod
     public void setUp(Method method, ITestResult result) throws MalformedURLException {
+        paceTest();
+
         ReportManager.startTest(result);
 
         logger.info("Setting up the driver");
@@ -227,6 +229,16 @@ public class TestsBase {
                 ConfigManager.getUserEmail(),
                 course.isPublished()
         );
+    }
+
+    private void paceTest() {
+        // A 5-10 second pause before every single test
+        // gives the Cloudflare WAF time to "forget" the previous session
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
     // </editor-fold>
 
