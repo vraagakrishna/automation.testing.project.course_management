@@ -23,7 +23,6 @@ import utils.SoftAssertManager;
 
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
-import java.util.Objects;
 import java.util.logging.Logger;
 
 public class TestsBase {
@@ -111,7 +110,8 @@ public class TestsBase {
     ) {
         ConfigManager.courses
                 .stream()
-                .filter(course -> course.getTitle() != null || !Objects.equals(course.getTitle(), ""))
+                .filter(course -> course.getTitle() != null || !course.getTitle()
+                                                                      .isEmpty())
                 .forEach(course -> {
                     logger.info("Cleaning up course: " + course);
 
