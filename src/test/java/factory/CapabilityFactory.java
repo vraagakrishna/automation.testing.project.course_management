@@ -36,7 +36,10 @@ public class CapabilityFactory {
                 // ONLY apply these if the browser is Chrome
                 if (browserName.equalsIgnoreCase(Constants.BROWSER_NAME_CHROME)) {
                     options.setChromedriverArgs(List.of(
-                            "--disable-blink-features=AutomationControlled"
+                            "--disable-blink-features=AutomationControlled",
+
+                            // Add a real-looking User-Agent to hide the "Headless/Automation" signature
+                            "--user-agent=Mozilla/5.0 (Linux; Android 13; SM-A505F) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.6045.163 Mobile Safari/537.36"
                     ));
 
                     // This prevents the "Chrome is being controlled by automated software" info bar
