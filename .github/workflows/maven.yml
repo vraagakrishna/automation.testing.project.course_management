@@ -90,8 +90,8 @@ jobs:
           api-level: 31
           target: google_apis
           arch: x86_64
-          disable-animations: false  # To look more 'human'
-          emulator-options: -no-snapshot-save -noaudio -no-boot-anim # Removed -no-window
+          disable-animations: true # Keep this true for CI stability
+          emulator-options: -no-snapshot-save -no-window -noaudio -no-boot-anim
           script: |
             # Ensure the device is recognized
             echo "Checking connected devices..."
