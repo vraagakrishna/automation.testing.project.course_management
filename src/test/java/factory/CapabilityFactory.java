@@ -39,17 +39,20 @@ public class CapabilityFactory {
                             "--disable-blink-features=AutomationControlled",
 
                             // Add a real-looking User-Agent to hide the "Headless/Automation" signature
-                            "--user-agent=Mozilla/5.0 (Linux; Android 13; SM-A505F) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.6045.163 Mobile Safari/537.36",
-
-                            // Overcomes limited resource problems in CI
-                            "--disable-dev-shm-usage",
-                            "--no-sandbox"
+                            "--user-agent=Mozilla/5.0 (Linux; Android 13; SM-A505F) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.6045.163 Mobile Safari/537.36"
                     ));
 
                     // This prevents the "Chrome is being controlled by automated software" info bar
                     Map<String, Object> chromeOptions = new HashMap<>();
                     // Use List.of to ensure the JSON is sent as a clean array []
                     chromeOptions.put("excludeSwitches", List.of("enable-automation"));
+
+                    // Add these specifically to pretend we have a high-res screen
+                    chromeOptions.put("args", List.of(
+                            "--window-size=1080,2340",
+                            "--force-device-scale-factor=2.75", // Samsung A50 pixel density
+                            "--high-dpi-support=1"
+                    ));
 
                     options.setCapability("appium:chromeOptions", chromeOptions);
                 }

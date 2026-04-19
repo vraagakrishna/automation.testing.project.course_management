@@ -27,6 +27,9 @@ public class DriverFactory {
         String executionType = ConfigManager.getExecutionType();
 
         if (executionType.equalsIgnoreCase(Constants.EXECUTION_TYPE_MOBILE_WEB)) {
+            // Navigate to Google first to establish a "clean" session history
+            driverInstance.get("https://www.google.com");
+
             // Give the browser 3 seconds to "settle" after the handshake
             try {
                 Thread.sleep(3000);
