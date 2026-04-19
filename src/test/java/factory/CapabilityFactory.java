@@ -39,13 +39,26 @@ public class CapabilityFactory {
                             "--disable-blink-features=AutomationControlled",
 
                             // Add a real-looking User-Agent to hide the "Headless/Automation" signature
-                            "--user-agent=Mozilla/5.0 (Linux; Android 13; SM-A505F) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.6045.163 Mobile Safari/537.36"
+                            "--user-agent=Mozilla/5.0 (Linux; Android 13; SM-A505F) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.6045.163 Mobile Safari/537.36",
+
+                            "--disable-infobars",
+                            "--no-sandbox",
+                            "--disable-dev-shm-usage"
                     ));
 
-                    // This prevents the "Chrome is being controlled by automated software" info bar
                     Map<String, Object> chromeOptions = new HashMap<>();
-                    // Use List.of to ensure the JSON is sent as a clean array []
+
+                    // This prevents the "Chrome is being controlled by automated software" info bar
                     chromeOptions.put("excludeSwitches", List.of("enable-automation"));
+
+                    // Incognito can help clear bad state from previous runs
+                    chromeOptions.put("args", List.of(
+                            "--disable-notifications",
+                            "--disable-popup-blocking",
+
+                            // Helps prevent Vercel from tracking session history
+                            "--incognito"
+                    ));
 
                     options.setCapability("appium:chromeOptions", chromeOptions);
                 }

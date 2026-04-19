@@ -27,14 +27,16 @@ public class DriverFactory {
         String executionType = ConfigManager.getExecutionType();
 
         if (executionType.equalsIgnoreCase(Constants.EXECUTION_TYPE_MOBILE_WEB)) {
-            // Navigate to Google first to establish a "clean" session history
-            driverInstance.get("https://www.google.com");
-
-            // Give the browser 3 seconds to "settle" after the handshake
+            // Wait a random amount of time (5-10s) before navigating.
+            // This prevents the "rhythmic" bot detection signature on the 10th run.
+            long jitter = 5000 + (long) (Math.random() * 5000);
             try {
-                Thread.sleep(3000);
+                Thread.sleep(jitter);
             } catch (InterruptedException ignored) {
             }
+
+            // Navigate to Google first to establish a "clean" session history
+            driverInstance.get("https://www.google.com");
 
             driverInstance.get(Constants.DEV_URL);
         }
@@ -53,7 +55,8 @@ public class DriverFactory {
     public static void quitDriver() {
         AppiumDriver driverInstance = driver.get();
         if (driverInstance != null) {
-            driverInstance.manage().deleteAllCookies();
+            driverInstance.manage()
+                          .deleteAllCookies();
             driverInstance.quit();
             driver.remove();
         }
