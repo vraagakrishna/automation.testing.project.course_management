@@ -383,6 +383,7 @@ public class CourseManagementPageAndroid extends BasePageAndroid implements ICou
     }
 
     private void publishCourse(boolean publish) {
+        closeKeyboardIfOpen();
         WebElement element = getElement(coursePublishedCheckboxField);
 
         boolean isChecked = Boolean.parseBoolean(element.getAttribute("checked"));
