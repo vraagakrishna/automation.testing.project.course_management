@@ -152,10 +152,6 @@ public class BasePageWeb extends BasePage {
         if (currentText != null && currentText.equals(keys.toString()))
             return;
 
-        if (keys.toString()
-                .isEmpty())
-            return;
-
         element.click();
         element.clear();
         element.sendKeys((CharSequence) keys);
