@@ -412,6 +412,7 @@ public class CourseManagementPageWeb extends BasePageWeb implements ICourseManag
     private void publishCourse(boolean publish) {
         closeKeyboardIfOpen();
         WebElement element = getElement(coursePublishedCheckboxField);
+        scrollIntoView(element);
 
         if (publish && !element.isSelected())
             element.click();
