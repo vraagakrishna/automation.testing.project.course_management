@@ -110,7 +110,7 @@ public class TestsBase {
     ) {
         ConfigManager.courses
                 .stream()
-                .filter(course -> course.getTitle() != null || !course.getTitle()
+                .filter(course -> course.getTitle() != null && !course.getTitle()
                                                                       .isEmpty())
                 .forEach(course -> {
                     logger.info("Cleaning up course: " + course);
