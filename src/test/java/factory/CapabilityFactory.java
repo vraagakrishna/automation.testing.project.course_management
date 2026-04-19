@@ -47,13 +47,6 @@ public class CapabilityFactory {
                     // Use List.of to ensure the JSON is sent as a clean array []
                     chromeOptions.put("excludeSwitches", List.of("enable-automation"));
 
-                    // Add these specifically to pretend we have a high-res screen
-                    chromeOptions.put("args", List.of(
-                            "--window-size=1080,2340",
-                            "--force-device-scale-factor=2.75", // Samsung A50 pixel density
-                            "--high-dpi-support=1"
-                    ));
-
                     options.setCapability("appium:chromeOptions", chromeOptions);
                 }
             } else if (executionType.equalsIgnoreCase(Constants.EXECUTION_TYPE_NATIVE_APP)) {
