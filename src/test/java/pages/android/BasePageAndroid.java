@@ -195,6 +195,12 @@ public class BasePageAndroid extends BasePage {
     protected String getElementText(WebElement element) {
         return element.getAttribute("text");
     }
+
+    @Override
+    protected void enterKeys(By by, Object keys) {
+        closeKeyboardIfOpen();
+        super.enterKeys(by, keys);
+    }
     // </editor-fold>
 
 }
