@@ -143,6 +143,7 @@ public class BasePageWeb extends BasePage {
 
     @Override
     protected void enterKeys(By by, Object keys) {
+        closeKeyboardIfOpen();
         WebElement element = this.getElement(by);
         scrollIntoView(element);
 
