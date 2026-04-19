@@ -53,6 +53,7 @@ public class DriverFactory {
     public static void quitDriver() {
         AppiumDriver driverInstance = driver.get();
         if (driverInstance != null) {
+            driverInstance.manage().deleteAllCookies();
             driverInstance.quit();
             driver.remove();
         }
