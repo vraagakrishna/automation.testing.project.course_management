@@ -8,7 +8,6 @@ import org.testng.Assert;
 import pages.interfaces.auth.ILoginPage;
 import pages.web.BasePageWeb;
 import utils.ReportManager;
-import utils.ScreenshotUtils;
 
 import java.util.logging.Logger;
 
