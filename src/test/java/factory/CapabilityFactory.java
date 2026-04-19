@@ -9,6 +9,9 @@ import utils.ConfigManager;
 
 import java.io.File;
 import java.time.Duration;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class CapabilityFactory {
 
@@ -29,6 +32,19 @@ public class CapabilityFactory {
 
             if (executionType.equalsIgnoreCase(Constants.EXECUTION_TYPE_MOBILE_WEB)) {
                 options.withBrowserName(browserName);
+
+                // ONLY apply these if the browser is Chrome
+                if (browserName.equalsIgnoreCase(Constants.BROWSER_NAME_CHROME)) {
+                    options.setChromedriverArgs(List.of(
+                            "--disable-blink-features=AutomationControlled"
+                    ));
+
+                    // This prevents the "Chrome is being controlled by automated software" info bar
+                    Map<String, Object> chromeOptions = new HashMap<>();
+                    chromeOptions.put("excludeSwitches", new String[]{"enable-automation"});
+                    options.setCapability("appium:chromeOptions", chromeOptions);
+                }
+
             } else if (executionType.equalsIgnoreCase(Constants.EXECUTION_TYPE_NATIVE_APP)) {
                 ApkDownloader.downloadApk(appUrl, appPath);
 
