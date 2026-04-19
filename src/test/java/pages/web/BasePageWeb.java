@@ -140,6 +140,25 @@ public class BasePageWeb extends BasePage {
         else
             return element.getAttribute("value");
     }
+
+    @Override
+    protected void enterKeys(By by, Object keys) {
+        WebElement element = this.getElement(by);
+        scrollIntoView(element);
+
+        String currentText = getElementText(element);
+
+        if (currentText != null && currentText.equals(keys.toString()))
+            return;
+
+        if (keys.toString()
+                .isEmpty())
+            return;
+
+        element.click();
+        element.clear();
+        element.sendKeys((CharSequence) keys);
+    }
     // </editor-fold>
 
 }
