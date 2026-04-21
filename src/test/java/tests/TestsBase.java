@@ -1,5 +1,6 @@
 package tests;
 
+import common.Constants;
 import factory.DriverFactory;
 import io.appium.java_client.AppiumDriver;
 import models.Course;
@@ -66,6 +67,12 @@ public class TestsBase {
             logger.info("Cleaning driver...");
             DriverFactory.cleanDriver();
         }
+
+        if (ConfigManager.getExecutionType()
+                         .equalsIgnoreCase(Constants.EXECUTION_TYPE_NATIVE_APP)) {
+            // Native App Tests will quit driver in @AfterMethod
+            quitDriver();
+        }
     }
 
     @AfterClass(alwaysRun = true)
@@ -73,9 +80,7 @@ public class TestsBase {
         logger.info("Tearing down...");
 
         if (driver != null) {
-            logger.info("Quitting driver...");
-            DriverFactory.quitDriver();
-            driver = null;
+            quitDriver();
         }
     }
 
@@ -239,6 +244,14 @@ public class TestsBase {
                 ConfigManager.getUserEmail(),
                 course.isPublished()
         );
+    }
+    // </editor-fold>
+
+    // <editor-fold desc="Private Methods">
+    private void quitDriver() {
+        logger.info("Quitting driver...");
+        DriverFactory.quitDriver();
+        driver = null;
     }
     // </editor-fold>
 
