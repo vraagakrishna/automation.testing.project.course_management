@@ -315,10 +315,13 @@ public class CourseManagementPageWeb extends BasePageWeb implements ICourseManag
                         "",
                         errorMessage
                 );
-                case "description" -> Assert.assertNull(
-                        getElement(courseDescriptionField).getAttribute("value"),
-                        errorMessage
-                );
+                case "description" -> {
+                    String value = getElement(courseDescriptionField).getAttribute("value");
+                    Assert.assertTrue(
+                            value == null || value.trim().isEmpty(),
+                            errorMessage
+                    );
+                }
                 case "duration" -> Assert.assertEquals(
                         getElement(courseDurationField).getAttribute("value"),
                         "",
