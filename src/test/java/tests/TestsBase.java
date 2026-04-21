@@ -5,10 +5,7 @@ import io.appium.java_client.AppiumDriver;
 import models.Course;
 import org.openqa.selenium.WebElement;
 import org.testng.ITestResult;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.*;
 import pages.interfaces.INavigationBar;
 import pages.interfaces.admin.ICourseManagementPage;
 import pages.interfaces.admin.IEnrollmentsManagementPage;
@@ -41,15 +38,19 @@ public class TestsBase {
 
     @BeforeMethod
     public void setUp(Method method, ITestResult result) throws MalformedURLException {
-        paceTest();
-
         ReportManager.startTest(result);
 
         logger.info("Setting up the driver");
 
-        driver = DriverFactory.initDriver();
+        driver = DriverFactory.getDriver();
 
-        DriverFactory.setDriver(driver);
+        if (driver == null) {
+            driver = DriverFactory.initDriver();
+
+            DriverFactory.setDriver(driver);
+        } else {
+            DriverFactory.reInitDriver(driver);
+        }
 
         SoftAssertManager.getSoftAssert();
 
@@ -58,9 +59,17 @@ public class TestsBase {
     }
 
     @AfterMethod(alwaysRun = true)
-    public void tearDownTest(ITestResult result) {
+    public void cleanTest(ITestResult result) {
         cleanUpPage();
 
+        if (driver != null) {
+            logger.info("Cleaning driver...");
+            DriverFactory.cleanDriver();
+        }
+    }
+
+    @AfterClass(alwaysRun = true)
+    public void tearDownTest() {
         logger.info("Tearing down...");
 
         if (driver != null) {
@@ -230,16 +239,6 @@ public class TestsBase {
                 ConfigManager.getUserEmail(),
                 course.isPublished()
         );
-    }
-
-    private void paceTest() {
-        // A 5-10 second pause before every single test
-        // gives the Cloudflare WAF time to "forget" the previous session
-        try {
-            Thread.sleep(10000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
     // </editor-fold>
 

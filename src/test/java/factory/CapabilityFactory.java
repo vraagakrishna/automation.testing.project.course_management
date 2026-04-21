@@ -9,9 +9,6 @@ import utils.ConfigManager;
 
 import java.io.File;
 import java.time.Duration;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class CapabilityFactory {
 
@@ -32,36 +29,6 @@ public class CapabilityFactory {
 
             if (executionType.equalsIgnoreCase(Constants.EXECUTION_TYPE_MOBILE_WEB)) {
                 options.withBrowserName(browserName);
-
-                // ONLY apply these if the browser is Chrome
-                if (browserName.equalsIgnoreCase(Constants.BROWSER_NAME_CHROME)) {
-                    options.setChromedriverArgs(List.of(
-                            "--disable-blink-features=AutomationControlled",
-
-                            // Add a real-looking User-Agent to hide the "Headless/Automation" signature
-                            "--user-agent=Mozilla/5.0 (Linux; Android 13; SM-A505F) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.6045.163 Mobile Safari/537.36",
-
-                            "--disable-infobars",
-                            "--no-sandbox",
-                            "--disable-dev-shm-usage"
-                    ));
-
-                    Map<String, Object> chromeOptions = new HashMap<>();
-
-                    // This prevents the "Chrome is being controlled by automated software" info bar
-                    chromeOptions.put("excludeSwitches", List.of("enable-automation"));
-
-                    // Incognito can help clear bad state from previous runs
-                    chromeOptions.put("args", List.of(
-                            "--disable-notifications",
-                            "--disable-popup-blocking",
-
-                            // Helps prevent Vercel from tracking session history
-                            "--incognito"
-                    ));
-
-                    options.setCapability("appium:chromeOptions", chromeOptions);
-                }
             } else if (executionType.equalsIgnoreCase(Constants.EXECUTION_TYPE_NATIVE_APP)) {
                 ApkDownloader.downloadApk(appUrl, appPath);
 

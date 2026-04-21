@@ -2,6 +2,7 @@ package factory;
 
 import common.Constants;
 import io.appium.java_client.AppiumDriver;
+import org.openqa.selenium.JavascriptExecutor;
 import services.AppiumServiceManager;
 import utils.ConfigManager;
 
@@ -26,22 +27,19 @@ public class DriverFactory {
 
         String executionType = ConfigManager.getExecutionType();
 
-        if (executionType.equalsIgnoreCase(Constants.EXECUTION_TYPE_MOBILE_WEB)) {
-            // Wait a random amount of time (5-10s) before navigating.
-            // This prevents the "rhythmic" bot detection signature on the 10th run.
-            long jitter = 5000 + (long) (Math.random() * 5000);
-            try {
-                Thread.sleep(jitter);
-            } catch (InterruptedException ignored) {
-            }
-
-            // Navigate to Google first to establish a "clean" session history
-            driverInstance.get("https://www.google.com");
-
+        if (executionType.equalsIgnoreCase(Constants.EXECUTION_TYPE_MOBILE_WEB))
             driverInstance.get(Constants.DEV_URL);
-        }
 
         return driverInstance;
+    }
+
+    public static void reInitDriver(AppiumDriver driver) {
+        resetBrowserState(driver);
+
+        if (ConfigManager.getExecutionType()
+                         .equalsIgnoreCase(Constants.EXECUTION_TYPE_MOBILE_WEB)) {
+            driver.get(Constants.DEV_URL);
+        }
     }
 
     public static AppiumDriver getDriver() {
@@ -52,18 +50,32 @@ public class DriverFactory {
         driver.set(driverInstance);
     }
 
+    public static void cleanDriver() {
+        AppiumDriver driverInstance = driver.get();
+        if (driverInstance != null)
+            resetBrowserState(driverInstance);
+    }
+
     public static void quitDriver() {
         AppiumDriver driverInstance = driver.get();
         if (driverInstance != null) {
-
-            if (ConfigManager.getExecutionType()
-                             .equalsIgnoreCase(Constants.EXECUTION_TYPE_MOBILE_WEB)) {
-                driverInstance.manage()
-                              .deleteAllCookies();
-            }
-
             driverInstance.quit();
             driver.remove();
+        }
+    }
+    // </editor-fold>
+
+    // <editor-fold desc="Public Methods">
+    private static void resetBrowserState(AppiumDriver driver) {
+        if (ConfigManager.getExecutionType()
+                         .equalsIgnoreCase(Constants.EXECUTION_TYPE_MOBILE_WEB)) {
+            driver.manage()
+                  .deleteAllCookies();
+
+            // Clear local & session storage
+            ((JavascriptExecutor) driver).executeScript(
+                    "window.localStorage.clear(); window.sessionStorage.clear();"
+            );
         }
     }
     // </editor-fold>
