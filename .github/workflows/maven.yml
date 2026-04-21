@@ -27,24 +27,24 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - name: Android-Web
-            platform_name: Android
-            execution_type: mobileWeb
-            automation_name: UiAutomator2
-            os: ubuntu-latest
-            browser_name: chrome
-          - name: Android-Native
-            platform_name: Android
-            execution_type: nativeApp
-            automation_name: UiAutomator2
-            os: ubuntu-latest
-            browser_name: chrome
-          #- name: iOS-Web
-          #  platform_name: iOS
+          #- name: Android-Web
+          #  platform_name: Android
           #  execution_type: mobileWeb
-          #  automation_name: XCUITest
-          #  os: macos-latest
-          #  browser_name: safari
+          #  automation_name: UiAutomator2
+          #  os: ubuntu-latest
+          #  browser_name: chrome
+          #- name: Android-Native
+          #  platform_name: Android
+          #  execution_type: nativeApp
+          #  automation_name: UiAutomator2
+          #  os: ubuntu-latest
+          #  browser_name: chrome
+          - name: iOS-Web
+            platform_name: iOS
+            execution_type: mobileWeb
+            automation_name: XCUITest
+            os: macos-latest
+            browser_name: safari
 
     runs-on: ${{ matrix.os }}
 
