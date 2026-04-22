@@ -6,10 +6,12 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import pages.BasePage;
 import utils.ConfigManager;
 
+import java.time.Duration;
 import java.util.List;
 
 public class BasePageWeb extends BasePage {
@@ -72,7 +74,11 @@ public class BasePageWeb extends BasePage {
         scrollIntoView(element);
         element.click();
 
-        List<WebElement> options = element.findElements(By.tagName("option"));
+        // Wait until options are present
+        List<WebElement> options = new WebDriverWait(driver, Duration.ofSeconds(10)).until(driver -> {
+            List<WebElement> opts = element.findElements(By.tagName("option"));
+            return opts.size() > 1 ? opts : null;
+        });
 
         for (WebElement option : options) {
             String text = option.getText()
