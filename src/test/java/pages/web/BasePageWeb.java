@@ -98,7 +98,8 @@ public class BasePageWeb extends BasePage {
     protected String getValidationMessage(By by) {
         WebElement element = getElement(by);
         return driver.executeScript("return arguments[0].validationMessage;", element)
-                     .toString();
+                     .toString()
+                     .toLowerCase();
     }
 
     protected void scrollIntoView(WebElement element) {
