@@ -318,7 +318,8 @@ public class CourseManagementPageWeb extends BasePageWeb implements ICourseManag
                 case "description" -> {
                     String value = getElement(courseDescriptionField).getAttribute("value");
                     Assert.assertTrue(
-                            value == null || value.trim().isEmpty(),
+                            value == null || value.trim()
+                                                  .isEmpty(),
                             errorMessage
                     );
                 }
