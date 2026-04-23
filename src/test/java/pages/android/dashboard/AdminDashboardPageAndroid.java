@@ -1,5 +1,6 @@
 package pages.android.dashboard;
 
+import io.appium.java_client.AppiumBy;
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
@@ -15,7 +16,9 @@ public class AdminDashboardPageAndroid extends BasePageAndroid implements IAdmin
 
     private final By adminDashboardHeading = By.xpath("//android.view.View[@content-desc=\"Admin Dashboard\"]");
 
-    private final By manageCoursesButton = By.xpath("//android.view.View[@content-desc=\"Manage Courses\"]");
+    private final By manageCoursesButton = AppiumBy.androidUIAutomator("new UiScrollable(" +
+            "new UiSelector().scrollable(true)).scrollIntoView(new UiSelector().description(\"Manage Courses\")" +
+            ")");
     // </editor-fold>
 
     // <editor-fold desc="Ctor">
