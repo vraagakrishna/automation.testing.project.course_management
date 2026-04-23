@@ -4,7 +4,9 @@ import common.Constants;
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -162,6 +164,15 @@ public class BasePageWeb extends BasePage {
         element.click();
         element.clear();
         element.sendKeys((CharSequence) keys);
+    }
+
+    protected void invisibilityOfElement(By by) {
+        try {
+            new WebDriverWait(driver, Duration.ofSeconds(20))
+                    .until(ExpectedConditions.invisibilityOfElementLocated(by));
+        } catch (TimeoutException ignored) {
+            // overlay might not exist, that's fine
+        }
     }
     // </editor-fold>
 

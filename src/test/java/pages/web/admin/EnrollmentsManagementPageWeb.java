@@ -16,6 +16,8 @@ public class EnrollmentsManagementPageWeb extends BasePageWeb implements IEnroll
     // <editor-fold desc="Class Fields / Constants">
     private static final Logger logger = Logger.getLogger(EnrollmentsManagementPageWeb.class.getName());
 
+    private final By overlay = By.xpath("//div[contains(@style,'box-shadow')]");
+
     private final By emailField = By.xpath("//input[@placeholder=\"Search by email...\"]");
 
     private final By coursesDropdown = By.xpath("//select[option[contains(text(),'All Courses')]]");
@@ -154,8 +156,13 @@ public class EnrollmentsManagementPageWeb extends BasePageWeb implements IEnroll
     // <editor-fold desc="Private Methods">
     private void searchEmail(String email) {
         logger.info("Search for email: " + email);
+        waitForOverlayToDisappear();
         enterKeys(emailField, email);
         closeKeyboardIfOpen();
+    }
+
+    private void waitForOverlayToDisappear() {
+        this.invisibilityOfElement(overlay);
     }
 
     private boolean searchCourse(String courseName) {
