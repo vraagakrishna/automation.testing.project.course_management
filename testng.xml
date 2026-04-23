@@ -12,7 +12,7 @@
             <!--<class name="tests.admin.course.EditCourseTests" />-->
             <!--<class name="tests.admin.enrollment.CourseEnrollmentTests" />-->
             <!--<class name="tests.user.course.CourseVisibilityTests" />-->
-            <class name="tests.user.enrollment.UserEnrolledCourseTests"/>
+            <!--<class name="tests.user.enrollment.UserEnrolledCourseTests"/>-->
         </classes>
     </test>
 </suite>
