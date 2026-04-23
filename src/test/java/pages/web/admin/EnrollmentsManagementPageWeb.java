@@ -105,7 +105,7 @@ public class EnrollmentsManagementPageWeb extends BasePageWeb implements IEnroll
     public void searchForEnrollment(String courseName, String userEmail, boolean shouldExist) {
         logger.info("Searching for enrollment: user '" + userEmail + "' to course '" + courseName + "'");
         ReportManager.getTest()
-                     .info("Searching for enrollment: user " + userEmail + " to course " + courseName);
+                     .info("Searching for enrollment: user '" + userEmail + "' to course '" + courseName + "'");
         searchEmail(userEmail);
         boolean courseFound = searchCourse(courseName);
 
