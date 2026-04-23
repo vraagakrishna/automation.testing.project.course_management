@@ -44,10 +44,14 @@ public class CapabilityFactory {
                     .setPlatformName(platform)
                     .setWdaLaunchTimeout(Duration.ofMinutes(10))    // Wait up to 10 mins for the build
                     .setWdaConnectionTimeout(Duration.ofMinutes(5)) // Wait for the server to respond
-                    .setUseNewWDA(false);                           // Don't rebuild if already built
+                    .setUseNewWDA(true);                            // Force clean session
 
             if (executionType.equalsIgnoreCase(Constants.EXECUTION_TYPE_MOBILE_WEB)) {
                 options.withBrowserName(browserName);
+
+                options.setCapability("appium:includeSafariInWebviews", true);
+                options.setCapability("appium:webviewConnectTimeout", 60000);
+                options.setCapability("appium:shouldUseSingletonTestManager", false);
             } else if (executionType.equalsIgnoreCase(Constants.EXECUTION_TYPE_NATIVE_APP)) {
                 throw new UnsupportedOperationException(platform + " is not supported yet for " + executionType);
             } else {
