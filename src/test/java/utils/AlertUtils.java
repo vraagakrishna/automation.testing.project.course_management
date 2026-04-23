@@ -33,7 +33,7 @@ public class AlertUtils {
 
         Assert.assertTrue(
                 alertMessage.contains(expectedMessage.toLowerCase()),
-                "Expected alert message: " + expectedMessage + ", but actual alert message: " + alertMessage
+                "Expected alert message: '" + expectedMessage + "', but actual alert message: '" + alertMessage + "'"
         );
     }
 

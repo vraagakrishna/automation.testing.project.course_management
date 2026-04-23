@@ -239,7 +239,7 @@ public class CourseManagementPageAndroid extends BasePageAndroid implements ICou
         String actualMessage = getSnackBarText().toLowerCase();
         Assert.assertTrue(
                 actualMessage.contains(expectedMessage),
-                "Expected alert message: " + expectedMessage + ", but actual alert message: " + actualMessage
+                "Expected alert message: '" + expectedMessage + "', but actual alert message: '" + actualMessage + "'"
         );
     }
     // </editor-fold>
