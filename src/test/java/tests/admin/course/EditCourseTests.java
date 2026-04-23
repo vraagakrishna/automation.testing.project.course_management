@@ -263,7 +263,7 @@ public class EditCourseTests extends TestsBase {
 
         courseManagementPage.editCourse(courseElement, editedCourse);
 
-        courseManagementPage.verifyAlertMessage("updated");
+        courseManagementPage.verifyAlertMessage("update");
     }
 
     @Test(description = "Edit - Submit Unpublished Alphanumeric Duration", groups = "6. Edit Course Tests", priority = 7)
