@@ -202,7 +202,7 @@ public class TestsBase {
 
         courseManagementPage.editCourse(courseElement, editedCourse);
 
-        courseManagementPage.verifyAlertMessage("updated");
+        courseManagementPage.verifyAlertMessage("update");
 
         return getCourse(
                 editedCourse,

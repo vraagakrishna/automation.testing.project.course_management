@@ -315,7 +315,7 @@ public class EditCourseTests extends TestsBase {
 
         courseManagementPage.editCourse(courseElement, editedCourse);
 
-        courseManagementPage.verifyAlertMessage("updated");
+        courseManagementPage.verifyAlertMessage("update");
     }
 
     @Test(description = "Edit - Submit Unpublished Valid Duration", groups = "6. Edit Course Tests", priority = 9)
@@ -341,7 +341,7 @@ public class EditCourseTests extends TestsBase {
 
         courseManagementPage.editCourse(courseElement, editedCourse);
 
-        courseManagementPage.verifyAlertMessage("updated");
+        courseManagementPage.verifyAlertMessage("update");
     }
 
     @Test(description = "Edit - Submit Unpublished Level Beginner", groups = "6. Edit Course Tests", priority = 10)
@@ -367,7 +367,7 @@ public class EditCourseTests extends TestsBase {
 
         courseManagementPage.editCourse(courseElement, editedCourse);
 
-        courseManagementPage.verifyAlertMessage("updated");
+        courseManagementPage.verifyAlertMessage("update");
     }
 
     @Test(description = "Edit - Submit Unpublished Level Intermediate", groups = "6. Edit Course Tests", priority = 11)
@@ -393,7 +393,7 @@ public class EditCourseTests extends TestsBase {
 
         courseManagementPage.editCourse(courseElement, editedCourse);
 
-        courseManagementPage.verifyAlertMessage("updated");
+        courseManagementPage.verifyAlertMessage("update");
     }
 
     @Test(description = "Edit - Submit Unpublished Level Advanced", groups = "6. Edit Course Tests", priority = 12)
@@ -419,7 +419,7 @@ public class EditCourseTests extends TestsBase {
 
         courseManagementPage.editCourse(courseElement, editedCourse);
 
-        courseManagementPage.verifyAlertMessage("updated");
+        courseManagementPage.verifyAlertMessage("update");
     }
 
     @Test(description = "Edit - Submit Unpublished Large Price", groups = "6. Edit Course Tests", priority = 13)
@@ -497,7 +497,7 @@ public class EditCourseTests extends TestsBase {
 
         courseManagementPage.editCourse(courseElement, editedCourse);
 
-        courseManagementPage.verifyAlertMessage("updated");
+        courseManagementPage.verifyAlertMessage("update");
     }
 
     @Test(description = "Edit - Submit Unpublished Invalid Meeting URL", groups = "6. Edit Course Tests", priority = 16)
@@ -549,7 +549,7 @@ public class EditCourseTests extends TestsBase {
 
         courseManagementPage.editCourse(courseElement, editedCourse);
 
-        courseManagementPage.verifyAlertMessage("updated");
+        courseManagementPage.verifyAlertMessage("update");
     }
     // </editor-fold>
 
@@ -605,7 +605,7 @@ public class EditCourseTests extends TestsBase {
 
         courseManagementPage.editCourse(courseElement, editedCourse);
 
-        courseManagementPage.verifyAlertMessage("updated");
+        courseManagementPage.verifyAlertMessage("update");
     }
 
     @Test(description = "Edit - Submit Published Alphanumeric Duration", groups = "6. Edit Course Tests", priority = 20)
@@ -659,7 +659,7 @@ public class EditCourseTests extends TestsBase {
 
         courseManagementPage.editCourse(courseElement, editedCourse);
 
-        courseManagementPage.verifyAlertMessage("updated");
+        courseManagementPage.verifyAlertMessage("update");
     }
 
     @Test(description = "Edit - Submit Published Valid Duration", groups = "6. Edit Course Tests", priority = 22)
@@ -686,7 +686,7 @@ public class EditCourseTests extends TestsBase {
 
         courseManagementPage.editCourse(courseElement, editedCourse);
 
-        courseManagementPage.verifyAlertMessage("updated");
+        courseManagementPage.verifyAlertMessage("update");
     }
 
     @Test(description = "Edit - Submit Published Level Beginner", groups = "6. Edit Course Tests", priority = 23)
@@ -713,7 +713,7 @@ public class EditCourseTests extends TestsBase {
 
         courseManagementPage.editCourse(courseElement, editedCourse);
 
-        courseManagementPage.verifyAlertMessage("updated");
+        courseManagementPage.verifyAlertMessage("update");
     }
 
     @Test(description = "Edit - Submit Published Level Intermediate", groups = "6. Edit Course Tests", priority = 24)
@@ -740,7 +740,7 @@ public class EditCourseTests extends TestsBase {
 
         courseManagementPage.editCourse(courseElement, editedCourse);
 
-        courseManagementPage.verifyAlertMessage("updated");
+        courseManagementPage.verifyAlertMessage("update");
     }
 
     @Test(description = "Edit - Submit Published Level Advanced", groups = "6. Edit Course Tests", priority = 25)
@@ -767,7 +767,7 @@ public class EditCourseTests extends TestsBase {
 
         courseManagementPage.editCourse(courseElement, editedCourse);
 
-        courseManagementPage.verifyAlertMessage("updated");
+        courseManagementPage.verifyAlertMessage("update");
     }
 
     @Test(description = "Edit - Submit Published Large Price", groups = "6. Edit Course Tests", priority = 26)
@@ -848,7 +848,7 @@ public class EditCourseTests extends TestsBase {
 
         courseManagementPage.editCourse(courseElement, editedCourse);
 
-        courseManagementPage.verifyAlertMessage("updated");
+        courseManagementPage.verifyAlertMessage("update");
     }
 
     @Test(description = "Edit - Submit Published Invalid Meeting URL", groups = "6. Edit Course Tests", priority = 29)
@@ -902,7 +902,7 @@ public class EditCourseTests extends TestsBase {
 
         courseManagementPage.editCourse(courseElement, editedCourse);
 
-        courseManagementPage.verifyAlertMessage("updated");
+        courseManagementPage.verifyAlertMessage("update");
     }
     // </editor-fold>
 
@@ -936,7 +936,7 @@ public class EditCourseTests extends TestsBase {
 
         courseManagementPage.editCourse(courseElement, editedCourse);
 
-        courseManagementPage.verifyAlertMessage("updated");
+        courseManagementPage.verifyAlertMessage("update");
     }
 
     @Test(description = "Edit Unpublished Description Only", groups = "6. Edit Course Tests", priority = 32)
@@ -968,7 +968,7 @@ public class EditCourseTests extends TestsBase {
 
         courseManagementPage.editCourse(courseElement, editedCourse);
 
-        courseManagementPage.verifyAlertMessage("updated");
+        courseManagementPage.verifyAlertMessage("update");
     }
 
     @Test(description = "Edit Unpublished Duration Only", groups = "6. Edit Course Tests", priority = 33)
@@ -1000,7 +1000,7 @@ public class EditCourseTests extends TestsBase {
 
         courseManagementPage.editCourse(courseElement, editedCourse);
 
-        courseManagementPage.verifyAlertMessage("updated");
+        courseManagementPage.verifyAlertMessage("update");
     }
 
     @Test(description = "Edit Unpublished Level Only", groups = "6. Edit Course Tests", priority = 34)
@@ -1032,7 +1032,7 @@ public class EditCourseTests extends TestsBase {
 
         courseManagementPage.editCourse(courseElement, editedCourse);
 
-        courseManagementPage.verifyAlertMessage("updated");
+        courseManagementPage.verifyAlertMessage("update");
     }
 
     @Test(description = "Edit Unpublished Price Only", groups = "6. Edit Course Tests", priority = 35)
@@ -1064,7 +1064,7 @@ public class EditCourseTests extends TestsBase {
 
         courseManagementPage.editCourse(courseElement, editedCourse);
 
-        courseManagementPage.verifyAlertMessage("updated");
+        courseManagementPage.verifyAlertMessage("update");
     }
 
     @Test(description = "Edit Unpublished Thumbnail URL Only", groups = "6. Edit Course Tests", priority = 36)
@@ -1096,7 +1096,7 @@ public class EditCourseTests extends TestsBase {
 
         courseManagementPage.editCourse(courseElement, editedCourse);
 
-        courseManagementPage.verifyAlertMessage("updated");
+        courseManagementPage.verifyAlertMessage("update");
     }
 
     @Test(description = "Edit Unpublished Meeting Link Only", groups = "6. Edit Course Tests", priority = 37)
@@ -1128,7 +1128,7 @@ public class EditCourseTests extends TestsBase {
 
         courseManagementPage.editCourse(courseElement, editedCourse);
 
-        courseManagementPage.verifyAlertMessage("updated");
+        courseManagementPage.verifyAlertMessage("update");
     }
 
     @Test(description = "Edit Unpublished course to Published", groups = "6. Edit Course Tests", priority = 38)
@@ -1160,7 +1160,7 @@ public class EditCourseTests extends TestsBase {
 
         courseManagementPage.editCourse(courseElement, editedCourse);
 
-        courseManagementPage.verifyAlertMessage("updated");
+        courseManagementPage.verifyAlertMessage("update");
     }
     // </editor-fold>
 
@@ -1194,7 +1194,7 @@ public class EditCourseTests extends TestsBase {
 
         courseManagementPage.editCourse(courseElement, editedCourse);
 
-        courseManagementPage.verifyAlertMessage("updated");
+        courseManagementPage.verifyAlertMessage("update");
     }
 
     @Test(description = "Edit Published Description Only", groups = "6. Edit Course Tests", priority = 40)
@@ -1226,7 +1226,7 @@ public class EditCourseTests extends TestsBase {
 
         courseManagementPage.editCourse(courseElement, editedCourse);
 
-        courseManagementPage.verifyAlertMessage("updated");
+        courseManagementPage.verifyAlertMessage("update");
     }
 
     @Test(description = "Edit Published Duration Only", groups = "6. Edit Course Tests", priority = 41)
@@ -1258,7 +1258,7 @@ public class EditCourseTests extends TestsBase {
 
         courseManagementPage.editCourse(courseElement, editedCourse);
 
-        courseManagementPage.verifyAlertMessage("updated");
+        courseManagementPage.verifyAlertMessage("update");
     }
 
     @Test(description = "Edit Published Level Only", groups = "6. Edit Course Tests", priority = 42)
@@ -1290,7 +1290,7 @@ public class EditCourseTests extends TestsBase {
 
         courseManagementPage.editCourse(courseElement, editedCourse);
 
-        courseManagementPage.verifyAlertMessage("updated");
+        courseManagementPage.verifyAlertMessage("update");
     }
 
     @Test(description = "Edit Published Price Only", groups = "6. Edit Course Tests", priority = 43)
@@ -1322,7 +1322,7 @@ public class EditCourseTests extends TestsBase {
 
         courseManagementPage.editCourse(courseElement, editedCourse);
 
-        courseManagementPage.verifyAlertMessage("updated");
+        courseManagementPage.verifyAlertMessage("update");
     }
 
     @Test(description = "Edit Published Thumbnail URL Only", groups = "6. Edit Course Tests", priority = 44)
@@ -1354,7 +1354,7 @@ public class EditCourseTests extends TestsBase {
 
         courseManagementPage.editCourse(courseElement, editedCourse);
 
-        courseManagementPage.verifyAlertMessage("updated");
+        courseManagementPage.verifyAlertMessage("update");
     }
 
     @Test(description = "Edit Published Meeting Link Only", groups = "6. Edit Course Tests", priority = 45)
@@ -1386,7 +1386,7 @@ public class EditCourseTests extends TestsBase {
 
         courseManagementPage.editCourse(courseElement, editedCourse);
 
-        courseManagementPage.verifyAlertMessage("updated");
+        courseManagementPage.verifyAlertMessage("update");
     }
 
     @Test(description = "Edit Published course to Unpublished", groups = "6. Edit Course Tests", priority = 46)
@@ -1418,7 +1418,7 @@ public class EditCourseTests extends TestsBase {
 
         courseManagementPage.editCourse(courseElement, editedCourse);
 
-        courseManagementPage.verifyAlertMessage("updated");
+        courseManagementPage.verifyAlertMessage("update");
     }
     // </editor-fold>
     // </editor-fold>
