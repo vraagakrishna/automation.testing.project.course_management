@@ -38,21 +38,21 @@ public class LoginTests extends TestsBase {
     // </editor-fold>
 
     // <editor-fold desc="Public Methods">
-    @Test(description = "Submission of a blank login form", groups = "2. Login Tests")
+    @Test(description = "Submission of a blank login form", groups = "Login Tests")
     public void blankLoginFormSubmission() {
         loginPage.loginUser("", "");
 
         loginPage.verifyErrorMessage("email and password");
     }
 
-    @Test(description = "Login using invalid credentials", groups = "2. Login Tests", priority = 1)
+    @Test(description = "Login using invalid credentials", groups = "Login Tests", priority = 1)
     public void invalidCredentialsLogin() {
         loginPage.loginUser(UserTestData.getEmail(), UserTestData.getWeakPassword());
 
         loginPage.verifyErrorMessage("Invalid");
     }
 
-    @Test(description = "Login with valid credentials - Admin", groups = "2. Login Tests", priority = 2)
+    @Test(description = "Login with valid credentials - Admin", groups = "Login Tests", priority = 2)
     public void validCredentialsLoginAdmin() {
         loginAsAdminAndVerify(loginPage, dashboardPage);
 
@@ -61,7 +61,7 @@ public class LoginTests extends TestsBase {
         homePage.verifyHomePageIsDisplayed();
     }
 
-    @Test(description = "Login with valid credentials - User", groups = "2. Login Tests", priority = 3)
+    @Test(description = "Login with valid credentials - User", groups = "Login Tests", priority = 3)
     public void validCredentialsLoginUser() {
         loginAsUserAndVerify(loginPage, dashboardPage);
 

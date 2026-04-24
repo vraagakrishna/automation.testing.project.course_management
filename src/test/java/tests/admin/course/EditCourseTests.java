@@ -72,7 +72,7 @@ public class EditCourseTests extends TestsBase {
 
     // <editor-fold desc="Public Methods">
     // <editor-fold desc="Basic Validation">
-    @Test(description = "Edit - Submit Blank Form", groups = "6. Edit Course Tests")
+    @Test(description = "Edit - Submit Blank Form", groups = "Edit Course Tests")
     public void submitBlankForm() {
         Course course = new Course();
         course.setTitle(CourseDataGenerator.randomCourseName());
@@ -101,7 +101,7 @@ public class EditCourseTests extends TestsBase {
         courseManagementPage.clickCancelCourseBtn();  // Going back to Course Page
     }
 
-    @Test(description = "Edit - Submit Title Only", groups = "6. Edit Course Tests", priority = 1)
+    @Test(description = "Edit - Submit Title Only", groups = "Edit Course Tests", priority = 1)
     public void submitTitleOnly() {
         Course course = new Course();
         course.setTitle(CourseDataGenerator.randomCourseName());
@@ -129,7 +129,7 @@ public class EditCourseTests extends TestsBase {
         courseManagementPage.clickCancelCourseBtn();  // Going back to Course Page
     }
 
-    @Test(description = "Edit - Submit Description Only", groups = "6. Edit Course Tests", priority = 2)
+    @Test(description = "Edit - Submit Description Only", groups = "Edit Course Tests", priority = 2)
     public void submitDescriptionOnly() {
         Course course = new Course();
         course.setTitle(CourseDataGenerator.randomCourseName());
@@ -157,7 +157,7 @@ public class EditCourseTests extends TestsBase {
         courseManagementPage.clickCancelCourseBtn();  // Going back to Course Page
     }
 
-    @Test(description = "Cancel Course Editing", groups = "6. Edit Course Tests", priority = 3)
+    @Test(description = "Cancel Course Editing", groups = "Edit Course Tests", priority = 3)
     public void cancelCourseCreation() {
         Course course = new Course();
         course.setTitle(CourseDataGenerator.randomCourseName());
@@ -188,7 +188,7 @@ public class EditCourseTests extends TestsBase {
         courseManagementPage.clickCancelCourseBtn();  // Going back to Course Page
     }
 
-    @Test(description = "Delete Course", groups = "6. Edit Course Tests", priority = 4)
+    @Test(description = "Delete Course", groups = "Edit Course Tests", priority = 4)
     public void deleteCourse() {
         Course course = new Course();
         course.setTitle(CourseDataGenerator.randomCourseName());
@@ -214,7 +214,7 @@ public class EditCourseTests extends TestsBase {
     // </editor-fold>
 
     // <editor-fold desc="Basic Validation on Unpublished">
-    @Test(description = "Edit - Submit Unpublished Long Course Title", groups = "6. Edit Course Tests", priority = 5)
+    @Test(description = "Edit - Submit Unpublished Long Course Title", groups = "Edit Course Tests", priority = 5)
     public void submitUnpublishedLongCourseTitle() {
         Course course = new Course();
         course.setTitle(CourseDataGenerator.randomCourseName());
@@ -240,7 +240,7 @@ public class EditCourseTests extends TestsBase {
         courseManagementPage.verifyAlertMessage("fail");
     }
 
-    @Test(description = "Edit - Submit Unpublished Long Course Description", groups = "6. Edit Course Tests", priority = 6)
+    @Test(description = "Edit - Submit Unpublished Long Course Description", groups = "Edit Course Tests", priority = 6)
     public void submitUnpublishedLongCourseDescription() {
         Course course = new Course();
         course.setTitle(CourseDataGenerator.randomCourseName());
@@ -266,7 +266,7 @@ public class EditCourseTests extends TestsBase {
         courseManagementPage.verifyAlertMessage("update");
     }
 
-    @Test(description = "Edit - Submit Unpublished Alphanumeric Duration", groups = "6. Edit Course Tests", priority = 7)
+    @Test(description = "Edit - Submit Unpublished Alphanumeric Duration", groups = "Edit Course Tests", priority = 7)
     public void submitUnpublishedAlphaNumericDuration() {
         Course course = new Course();
         course.setTitle(CourseDataGenerator.randomCourseName());
@@ -292,7 +292,7 @@ public class EditCourseTests extends TestsBase {
         courseManagementPage.verifyAlertMessage("fail");
     }
 
-    @Test(description = "Edit - Submit Unpublished Random Duration", groups = "6. Edit Course Tests", priority = 8)
+    @Test(description = "Edit - Submit Unpublished Random Duration", groups = "Edit Course Tests", priority = 8)
     public void submitUnpublishedRandomDuration() {
         Course course = new Course();
         course.setTitle(CourseDataGenerator.randomCourseName());
@@ -318,7 +318,7 @@ public class EditCourseTests extends TestsBase {
         courseManagementPage.verifyAlertMessage("update");
     }
 
-    @Test(description = "Edit - Submit Unpublished Valid Duration", groups = "6. Edit Course Tests", priority = 9)
+    @Test(description = "Edit - Submit Unpublished Valid Duration", groups = "Edit Course Tests", priority = 9)
     public void submitUnpublishedValidDuration() {
         Course course = new Course();
         course.setTitle(CourseDataGenerator.randomCourseName());
@@ -344,7 +344,7 @@ public class EditCourseTests extends TestsBase {
         courseManagementPage.verifyAlertMessage("update");
     }
 
-    @Test(description = "Edit - Submit Unpublished Level Beginner", groups = "6. Edit Course Tests", priority = 10)
+    @Test(description = "Edit - Submit Unpublished Level Beginner", groups = "Edit Course Tests", priority = 10)
     public void submitUnpublishedLevelBeginner() {
         Course course = new Course();
         course.setTitle(CourseDataGenerator.randomCourseName());
@@ -370,7 +370,7 @@ public class EditCourseTests extends TestsBase {
         courseManagementPage.verifyAlertMessage("update");
     }
 
-    @Test(description = "Edit - Submit Unpublished Level Intermediate", groups = "6. Edit Course Tests", priority = 11)
+    @Test(description = "Edit - Submit Unpublished Level Intermediate", groups = "Edit Course Tests", priority = 11)
     public void submitUnpublishedLevelIntermediate() {
         Course course = new Course();
         course.setTitle(CourseDataGenerator.randomCourseName());
@@ -396,7 +396,7 @@ public class EditCourseTests extends TestsBase {
         courseManagementPage.verifyAlertMessage("update");
     }
 
-    @Test(description = "Edit - Submit Unpublished Level Advanced", groups = "6. Edit Course Tests", priority = 12)
+    @Test(description = "Edit - Submit Unpublished Level Advanced", groups = "Edit Course Tests", priority = 12)
     public void submitUnpublishedLevelAdvanced() {
         Course course = new Course();
         course.setTitle(CourseDataGenerator.randomCourseName());
@@ -422,7 +422,7 @@ public class EditCourseTests extends TestsBase {
         courseManagementPage.verifyAlertMessage("update");
     }
 
-    @Test(description = "Edit - Submit Unpublished Large Price", groups = "6. Edit Course Tests", priority = 13)
+    @Test(description = "Edit - Submit Unpublished Large Price", groups = "Edit Course Tests", priority = 13)
     public void submitUnpublishedLargePrice() {
         Course course = new Course();
         course.setTitle(CourseDataGenerator.randomCourseName());
@@ -448,7 +448,7 @@ public class EditCourseTests extends TestsBase {
         courseManagementPage.verifyAlertMessage("fail");
     }
 
-    @Test(description = "Edit - Submit Unpublished Invalid Thumbnail URL", groups = "6. Edit Course Tests", priority = 14)
+    @Test(description = "Edit - Submit Unpublished Invalid Thumbnail URL", groups = "Edit Course Tests", priority = 14)
     public void submitUnpublishedInvalidThumbnailUrl() {
         Course course = new Course();
         course.setTitle(CourseDataGenerator.randomCourseName());
@@ -474,7 +474,7 @@ public class EditCourseTests extends TestsBase {
         courseManagementPage.verifyAlertMessage("fail");
     }
 
-    @Test(description = "Edit - Submit Unpublished Valid Thumbnail URL", groups = "6. Edit Course Tests", priority = 15)
+    @Test(description = "Edit - Submit Unpublished Valid Thumbnail URL", groups = "Edit Course Tests", priority = 15)
     public void submitUnpublishedValidThumbnailUrl() {
         Course course = new Course();
         course.setTitle(CourseDataGenerator.randomCourseName());
@@ -500,7 +500,7 @@ public class EditCourseTests extends TestsBase {
         courseManagementPage.verifyAlertMessage("update");
     }
 
-    @Test(description = "Edit - Submit Unpublished Invalid Meeting URL", groups = "6. Edit Course Tests", priority = 16)
+    @Test(description = "Edit - Submit Unpublished Invalid Meeting URL", groups = "Edit Course Tests", priority = 16)
     public void submitUnpublishedInvalidMeetingUrl() {
         Course course = new Course();
         course.setTitle(CourseDataGenerator.randomCourseName());
@@ -526,7 +526,7 @@ public class EditCourseTests extends TestsBase {
         courseManagementPage.verifyAlertMessage("fail");
     }
 
-    @Test(description = "Edit - Submit Unpublished Valid Teams URL", groups = "6. Edit Course Tests", priority = 17)
+    @Test(description = "Edit - Submit Unpublished Valid Teams URL", groups = "Edit Course Tests", priority = 17)
     public void submitUnpublishedValidTeamsUrl() {
         Course course = new Course();
         course.setTitle(CourseDataGenerator.randomCourseName());
@@ -554,7 +554,7 @@ public class EditCourseTests extends TestsBase {
     // </editor-fold>
 
     // <editor-fold desc="Basic Validation on Published">
-    @Test(description = "Edit - Submit Published Long Course Title", groups = "6. Edit Course Tests", priority = 18)
+    @Test(description = "Edit - Submit Published Long Course Title", groups = "Edit Course Tests", priority = 18)
     public void submitPublishedLongCourseTitle() {
         Course course = new Course();
         course.setTitle(CourseDataGenerator.randomCourseName());
@@ -581,7 +581,7 @@ public class EditCourseTests extends TestsBase {
         courseManagementPage.verifyAlertMessage("fail");
     }
 
-    @Test(description = "Edit - Submit Published Long Course Description", groups = "6. Edit Course Tests", priority = 19)
+    @Test(description = "Edit - Submit Published Long Course Description", groups = "Edit Course Tests", priority = 19)
     public void submitPublishedLongCourseDescription() {
         Course course = new Course();
         course.setTitle(CourseDataGenerator.randomCourseName());
@@ -608,7 +608,7 @@ public class EditCourseTests extends TestsBase {
         courseManagementPage.verifyAlertMessage("update");
     }
 
-    @Test(description = "Edit - Submit Published Alphanumeric Duration", groups = "6. Edit Course Tests", priority = 20)
+    @Test(description = "Edit - Submit Published Alphanumeric Duration", groups = "Edit Course Tests", priority = 20)
     public void submitPublishedAlphaNumericDuration() {
         Course course = new Course();
         course.setTitle(CourseDataGenerator.randomCourseName());
@@ -635,7 +635,7 @@ public class EditCourseTests extends TestsBase {
         courseManagementPage.verifyAlertMessage("fail");
     }
 
-    @Test(description = "Edit - Submit Published Random Duration", groups = "6. Edit Course Tests", priority = 21)
+    @Test(description = "Edit - Submit Published Random Duration", groups = "Edit Course Tests", priority = 21)
     public void submitPublishedRandomDuration() {
         Course course = new Course();
         course.setTitle(CourseDataGenerator.randomCourseName());
@@ -662,7 +662,7 @@ public class EditCourseTests extends TestsBase {
         courseManagementPage.verifyAlertMessage("update");
     }
 
-    @Test(description = "Edit - Submit Published Valid Duration", groups = "6. Edit Course Tests", priority = 22)
+    @Test(description = "Edit - Submit Published Valid Duration", groups = "Edit Course Tests", priority = 22)
     public void submitPublishedValidDuration() {
         Course course = new Course();
         course.setTitle(CourseDataGenerator.randomCourseName());
@@ -689,7 +689,7 @@ public class EditCourseTests extends TestsBase {
         courseManagementPage.verifyAlertMessage("update");
     }
 
-    @Test(description = "Edit - Submit Published Level Beginner", groups = "6. Edit Course Tests", priority = 23)
+    @Test(description = "Edit - Submit Published Level Beginner", groups = "Edit Course Tests", priority = 23)
     public void submitPublishedLevelBeginner() {
         Course course = new Course();
         course.setTitle(CourseDataGenerator.randomCourseName());
@@ -716,7 +716,7 @@ public class EditCourseTests extends TestsBase {
         courseManagementPage.verifyAlertMessage("update");
     }
 
-    @Test(description = "Edit - Submit Published Level Intermediate", groups = "6. Edit Course Tests", priority = 24)
+    @Test(description = "Edit - Submit Published Level Intermediate", groups = "Edit Course Tests", priority = 24)
     public void submitPublishedLevelIntermediate() {
         Course course = new Course();
         course.setTitle(CourseDataGenerator.randomCourseName());
@@ -743,7 +743,7 @@ public class EditCourseTests extends TestsBase {
         courseManagementPage.verifyAlertMessage("update");
     }
 
-    @Test(description = "Edit - Submit Published Level Advanced", groups = "6. Edit Course Tests", priority = 25)
+    @Test(description = "Edit - Submit Published Level Advanced", groups = "Edit Course Tests", priority = 25)
     public void submitPublishedLevelAdvanced() {
         Course course = new Course();
         course.setTitle(CourseDataGenerator.randomCourseName());
@@ -770,7 +770,7 @@ public class EditCourseTests extends TestsBase {
         courseManagementPage.verifyAlertMessage("update");
     }
 
-    @Test(description = "Edit - Submit Published Large Price", groups = "6. Edit Course Tests", priority = 26)
+    @Test(description = "Edit - Submit Published Large Price", groups = "Edit Course Tests", priority = 26)
     public void submitPublishedLargePrice() {
         Course course = new Course();
         course.setTitle(CourseDataGenerator.randomCourseName());
@@ -797,7 +797,7 @@ public class EditCourseTests extends TestsBase {
         courseManagementPage.verifyAlertMessage("fail");
     }
 
-    @Test(description = "Edit - Submit Published Invalid Thumbnail URL", groups = "6. Edit Course Tests", priority = 27)
+    @Test(description = "Edit - Submit Published Invalid Thumbnail URL", groups = "Edit Course Tests", priority = 27)
     public void submitPublishedInvalidThumbnailUrl() {
         Course course = new Course();
         course.setTitle(CourseDataGenerator.randomCourseName());
@@ -824,7 +824,7 @@ public class EditCourseTests extends TestsBase {
         courseManagementPage.verifyAlertMessage("fail");
     }
 
-    @Test(description = "Edit - Submit Published Valid Thumbnail URL", groups = "6. Edit Course Tests", priority = 28)
+    @Test(description = "Edit - Submit Published Valid Thumbnail URL", groups = "Edit Course Tests", priority = 28)
     public void submitPublishedValidThumbnailUrl() {
         Course course = new Course();
         course.setTitle(CourseDataGenerator.randomCourseName());
@@ -851,7 +851,7 @@ public class EditCourseTests extends TestsBase {
         courseManagementPage.verifyAlertMessage("update");
     }
 
-    @Test(description = "Edit - Submit Published Invalid Meeting URL", groups = "6. Edit Course Tests", priority = 29)
+    @Test(description = "Edit - Submit Published Invalid Meeting URL", groups = "Edit Course Tests", priority = 29)
     public void submitPublishedInvalidMeetingUrl() {
         Course course = new Course();
         course.setTitle(CourseDataGenerator.randomCourseName());
@@ -878,7 +878,7 @@ public class EditCourseTests extends TestsBase {
         courseManagementPage.verifyAlertMessage("fail");
     }
 
-    @Test(description = "Edit - Submit Published Valid Teams URL", groups = "6. Edit Course Tests", priority = 30)
+    @Test(description = "Edit - Submit Published Valid Teams URL", groups = "Edit Course Tests", priority = 30)
     public void submitPublishedValidTeamsUrl() {
         Course course = new Course();
         course.setTitle(CourseDataGenerator.randomCourseName());
@@ -907,7 +907,7 @@ public class EditCourseTests extends TestsBase {
     // </editor-fold>
 
     // <editor-fold desc="Edit Unpublished Course">
-    @Test(description = "Edit Unpublished Title Only", groups = "6. Edit Course Tests", priority = 31)
+    @Test(description = "Edit Unpublished Title Only", groups = "Edit Course Tests", priority = 31)
     public void editUnpublishedTitleOnly() {
         Course course = new Course();
         course.setTitle(CourseDataGenerator.randomCourseName());
@@ -939,7 +939,7 @@ public class EditCourseTests extends TestsBase {
         courseManagementPage.verifyAlertMessage("update");
     }
 
-    @Test(description = "Edit Unpublished Description Only", groups = "6. Edit Course Tests", priority = 32)
+    @Test(description = "Edit Unpublished Description Only", groups = "Edit Course Tests", priority = 32)
     public void editUnpublishedDescriptionOnly() {
         Course course = new Course();
         course.setTitle(CourseDataGenerator.randomCourseName());
@@ -971,7 +971,7 @@ public class EditCourseTests extends TestsBase {
         courseManagementPage.verifyAlertMessage("update");
     }
 
-    @Test(description = "Edit Unpublished Duration Only", groups = "6. Edit Course Tests", priority = 33)
+    @Test(description = "Edit Unpublished Duration Only", groups = "Edit Course Tests", priority = 33)
     public void editUnpublishedDurationOnly() {
         Course course = new Course();
         course.setTitle(CourseDataGenerator.randomCourseName());
@@ -1003,7 +1003,7 @@ public class EditCourseTests extends TestsBase {
         courseManagementPage.verifyAlertMessage("update");
     }
 
-    @Test(description = "Edit Unpublished Level Only", groups = "6. Edit Course Tests", priority = 34)
+    @Test(description = "Edit Unpublished Level Only", groups = "Edit Course Tests", priority = 34)
     public void editUnpublishedLevelOnly() {
         Course course = new Course();
         course.setTitle(CourseDataGenerator.randomCourseName());
@@ -1035,7 +1035,7 @@ public class EditCourseTests extends TestsBase {
         courseManagementPage.verifyAlertMessage("update");
     }
 
-    @Test(description = "Edit Unpublished Price Only", groups = "6. Edit Course Tests", priority = 35)
+    @Test(description = "Edit Unpublished Price Only", groups = "Edit Course Tests", priority = 35)
     public void editUnpublishedPriceOnly() {
         Course course = new Course();
         course.setTitle(CourseDataGenerator.randomCourseName());
@@ -1067,7 +1067,7 @@ public class EditCourseTests extends TestsBase {
         courseManagementPage.verifyAlertMessage("update");
     }
 
-    @Test(description = "Edit Unpublished Thumbnail URL Only", groups = "6. Edit Course Tests", priority = 36)
+    @Test(description = "Edit Unpublished Thumbnail URL Only", groups = "Edit Course Tests", priority = 36)
     public void editUnpublishedThumbnailUrlOnly() {
         Course course = new Course();
         course.setTitle(CourseDataGenerator.randomCourseName());
@@ -1099,7 +1099,7 @@ public class EditCourseTests extends TestsBase {
         courseManagementPage.verifyAlertMessage("update");
     }
 
-    @Test(description = "Edit Unpublished Meeting Link Only", groups = "6. Edit Course Tests", priority = 37)
+    @Test(description = "Edit Unpublished Meeting Link Only", groups = "Edit Course Tests", priority = 37)
     public void editUnpublishedMeetingUrlOnly() {
         Course course = new Course();
         course.setTitle(CourseDataGenerator.randomCourseName());
@@ -1131,7 +1131,7 @@ public class EditCourseTests extends TestsBase {
         courseManagementPage.verifyAlertMessage("update");
     }
 
-    @Test(description = "Edit Unpublished course to Published", groups = "6. Edit Course Tests", priority = 38)
+    @Test(description = "Edit Unpublished course to Published", groups = "Edit Course Tests", priority = 38)
     public void editUnpublishedToPublishedOnly() {
         Course course = new Course();
         course.setTitle(CourseDataGenerator.randomCourseName());
@@ -1165,7 +1165,7 @@ public class EditCourseTests extends TestsBase {
     // </editor-fold>
 
     // <editor-fold desc="Edit Published Course">
-    @Test(description = "Edit Published Title Only", groups = "6. Edit Course Tests", priority = 39)
+    @Test(description = "Edit Published Title Only", groups = "Edit Course Tests", priority = 39)
     public void editPublishedTitleOnly() {
         Course course = new Course();
         course.setTitle(CourseDataGenerator.randomCourseName());
@@ -1197,7 +1197,7 @@ public class EditCourseTests extends TestsBase {
         courseManagementPage.verifyAlertMessage("update");
     }
 
-    @Test(description = "Edit Published Description Only", groups = "6. Edit Course Tests", priority = 40)
+    @Test(description = "Edit Published Description Only", groups = "Edit Course Tests", priority = 40)
     public void editPublishedDescriptionOnly() {
         Course course = new Course();
         course.setTitle(CourseDataGenerator.randomCourseName());
@@ -1229,7 +1229,7 @@ public class EditCourseTests extends TestsBase {
         courseManagementPage.verifyAlertMessage("update");
     }
 
-    @Test(description = "Edit Published Duration Only", groups = "6. Edit Course Tests", priority = 41)
+    @Test(description = "Edit Published Duration Only", groups = "Edit Course Tests", priority = 41)
     public void editPublishedDurationOnly() {
         Course course = new Course();
         course.setTitle(CourseDataGenerator.randomCourseName());
@@ -1261,7 +1261,7 @@ public class EditCourseTests extends TestsBase {
         courseManagementPage.verifyAlertMessage("update");
     }
 
-    @Test(description = "Edit Published Level Only", groups = "6. Edit Course Tests", priority = 42)
+    @Test(description = "Edit Published Level Only", groups = "Edit Course Tests", priority = 42)
     public void editPublishedLevelOnly() {
         Course course = new Course();
         course.setTitle(CourseDataGenerator.randomCourseName());
@@ -1293,7 +1293,7 @@ public class EditCourseTests extends TestsBase {
         courseManagementPage.verifyAlertMessage("update");
     }
 
-    @Test(description = "Edit Published Price Only", groups = "6. Edit Course Tests", priority = 43)
+    @Test(description = "Edit Published Price Only", groups = "Edit Course Tests", priority = 43)
     public void editPublishedPriceOnly() {
         Course course = new Course();
         course.setTitle(CourseDataGenerator.randomCourseName());
@@ -1325,7 +1325,7 @@ public class EditCourseTests extends TestsBase {
         courseManagementPage.verifyAlertMessage("update");
     }
 
-    @Test(description = "Edit Published Thumbnail URL Only", groups = "6. Edit Course Tests", priority = 44)
+    @Test(description = "Edit Published Thumbnail URL Only", groups = "Edit Course Tests", priority = 44)
     public void editPublishedThumbnailUrlOnly() {
         Course course = new Course();
         course.setTitle(CourseDataGenerator.randomCourseName());
@@ -1357,7 +1357,7 @@ public class EditCourseTests extends TestsBase {
         courseManagementPage.verifyAlertMessage("update");
     }
 
-    @Test(description = "Edit Published Meeting Link Only", groups = "6. Edit Course Tests", priority = 45)
+    @Test(description = "Edit Published Meeting Link Only", groups = "Edit Course Tests", priority = 45)
     public void editPublishedMeetingUrlOnly() {
         Course course = new Course();
         course.setTitle(CourseDataGenerator.randomCourseName());
@@ -1389,7 +1389,7 @@ public class EditCourseTests extends TestsBase {
         courseManagementPage.verifyAlertMessage("update");
     }
 
-    @Test(description = "Edit Published course to Unpublished", groups = "6. Edit Course Tests", priority = 46)
+    @Test(description = "Edit Published course to Unpublished", groups = "Edit Course Tests", priority = 46)
     public void editPublishedToUnpublishedOnly() {
         Course course = new Course();
         course.setTitle(CourseDataGenerator.randomCourseName());

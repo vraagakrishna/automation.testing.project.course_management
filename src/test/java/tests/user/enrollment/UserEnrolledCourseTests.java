@@ -100,7 +100,7 @@ public class UserEnrolledCourseTests extends TestsBase {
     // </editor-fold>
 
     // <editor-fold desc="Public Methods">
-    @Test(description = "User sees Enrolled Course", groups = "8. User Enrolled Course Tests")
+    @Test(description = "User sees Enrolled Course", groups = "User Enrolled Course Tests")
     public void userSeesEnrolledCourse() {
         Course course = new Course();
         course.setTitle(CourseDataGenerator.randomCourseName());

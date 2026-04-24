@@ -83,7 +83,7 @@ public class CourseEnrollmentTests extends TestsBase {
     // </editor-fold>
 
     // <editor-fold desc="Public Methods">
-    @Test(description = "Enroll user to Unpublished Course", groups = "5. Enrollment Tests")
+    @Test(description = "Enroll user to Unpublished Course", groups = "Enrollment Tests")
     public void enrollUserToUnpublishedCourse() {
         Course course = new Course();
         course.setTitle(CourseDataGenerator.randomCourseName());
@@ -99,7 +99,7 @@ public class CourseEnrollmentTests extends TestsBase {
         );
     }
 
-    @Test(description = "Enroll user to Published Course", groups = "5. Enrollment Tests")
+    @Test(description = "Enroll user to Published Course", groups = "Enrollment Tests")
     public void enrollUserToPublishedCourse() {
         Course course = new Course();
         course.setTitle(CourseDataGenerator.randomCourseName());

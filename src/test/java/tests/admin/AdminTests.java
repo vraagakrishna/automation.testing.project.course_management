@@ -47,7 +47,7 @@ public class AdminTests extends TestsBase {
     // </editor-fold>
 
     // <editor-fold desc="Public Methods">
-    @Test(description = "Navigate to Admin Dashboard", groups = "3. Admin Tests")
+    @Test(description = "Navigate to Admin Dashboard", groups = "Admin Tests")
     public void navigateToAdminDashboard() {
         navigationBar.goToAdminPanel();
 
@@ -58,7 +58,7 @@ public class AdminTests extends TestsBase {
         dashboardPage.verifyDashboardPageIsDisplayed();
     }
 
-    @Test(description = "Navigate to Manage Courses page from Quick Actions", groups = "3. Admin Tests", dependsOnMethods = "navigateToAdminDashboard", priority = 1)
+    @Test(description = "Navigate to Manage Courses page from Quick Actions", groups = "Admin Tests", dependsOnMethods = "navigateToAdminDashboard", priority = 1)
     public void navigateToManageCoursePageFromQuickActions() {
         navigationBar.goToAdminPanel();
 
@@ -73,7 +73,7 @@ public class AdminTests extends TestsBase {
         dashboardPage.verifyDashboardPageIsDisplayed();
     }
 
-    @Test(description = "Navigate to Manage Courses page", groups = "3. Admin Tests", dependsOnMethods = "navigateToAdminDashboard", priority = 2)
+    @Test(description = "Navigate to Manage Courses page", groups = "Admin Tests", dependsOnMethods = "navigateToAdminDashboard", priority = 2)
     public void navigateToManageCoursePage() {
         navigationBar.goToAdminPanel();
 
