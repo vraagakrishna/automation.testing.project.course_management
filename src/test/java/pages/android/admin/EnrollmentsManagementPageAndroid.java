@@ -101,6 +101,7 @@ public class EnrollmentsManagementPageAndroid extends BasePageAndroid implements
         By userResult = By.xpath("//android.widget.Button[contains(@content-desc, \"" + userEmail + "\")]");
         clickButton(userResult);
 
+        closeKeyboardIfOpen();
         clickButton(enrollSubmitBtn);
 
         logger.info("Enrolled user '" + userEmail + "' to course '" + courseName + "'");
