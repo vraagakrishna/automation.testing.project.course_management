@@ -3,6 +3,7 @@ package pages.android;
 import io.appium.java_client.AppiumBy;
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -199,7 +200,23 @@ public class BasePageAndroid extends BasePage {
     @Override
     protected void enterKeys(By by, Object keys) {
         closeKeyboardIfOpen();
-        super.enterKeys(by, keys);
+
+        int attempts = 0;
+
+        while (attempts < 2) {
+            try {
+                super.enterKeys(by, keys);
+                return;
+            } catch (StaleElementReferenceException ex) {
+                attempts++;
+
+                // Short sleep to let the UI settle before the next attempt
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException ignored) {
+                }
+            }
+        }
     }
     // </editor-fold>
 
