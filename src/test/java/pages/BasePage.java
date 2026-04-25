@@ -58,6 +58,9 @@ public class BasePage {
         if (currentText != null && currentText.equals(keys.toString()))
             return;
 
+        // Re-fetch to avoid stale after attribute read
+        element = this.getElement(by);
+
         element.click();
         element.clear();
         element.sendKeys((CharSequence) keys);
