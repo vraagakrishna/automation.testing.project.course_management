@@ -9,8 +9,8 @@
             <!--<class name="tests.auth.LoginTests" />-->
             <!--<class name="tests.admin.AdminTests" />-->
             <!--<class name="tests.admin.course.CreateCourseTests" />-->
-            <class name="tests.admin.course.EditCourseTests" />
-            <!--<class name="tests.admin.enrollment.CourseEnrollmentTests" />-->
+            <!--<class name="tests.admin.course.EditCourseTests" />-->
+            <class name="tests.admin.enrollment.CourseEnrollmentTests" />
             <!--<class name="tests.user.course.CourseVisibilityTests" />-->
             <!--<class name="tests.user.enrollment.UserEnrolledCourseTests"/>-->
         </classes>
