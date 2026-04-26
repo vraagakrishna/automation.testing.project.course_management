@@ -192,6 +192,12 @@ public class BasePageAndroid extends BasePage {
         }
     }
 
+    protected void scrollUp() {
+        driver.findElements(AppiumBy.androidUIAutomator(
+                "new UiScrollable(new UiSelector().scrollable(true)).scrollToBeginning(10)"
+        ));
+    }
+
     @Override
     protected String getElementText(WebElement element) {
         return element.getAttribute("text");

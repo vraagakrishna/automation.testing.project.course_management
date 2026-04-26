@@ -69,7 +69,12 @@ public class NavigationBarAndroid extends BasePageAndroid implements INavigation
                 this.clickButton(logoutBtn);
                 break;
             } catch (NoSuchElementException | TimeoutException ex) {
-                ScreenshotUtils.captureAndAttach(driver, "Logout did not work (attempt" + (attempts + 1) + ")");
+                ScreenshotUtils.captureAndAttach(driver, "Logout did not work (attempt " + (attempts + 1) + ")");
+                this.scrollUp();
+                ScreenshotUtils.captureAndAttach(
+                        driver,
+                        "Logout did not work (attempt " + (attempts + 1) + ") - Scrolled Up"
+                );
                 this.clickNavBurger();
             } finally {
                 attempts++;
