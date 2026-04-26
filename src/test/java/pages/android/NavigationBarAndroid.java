@@ -6,6 +6,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
 import pages.interfaces.INavigationBar;
+import utils.ScreenshotUtils;
 
 import java.util.logging.Logger;
 
@@ -64,9 +65,11 @@ public class NavigationBarAndroid extends BasePageAndroid implements INavigation
 
         while (attempts < maxAttempts) {
             try {
+                logger.info("Attempt " + (attempts + 1) + " of " + maxAttempts);
                 this.clickButton(logoutBtn);
                 break;
             } catch (NoSuchElementException | TimeoutException ex) {
+                ScreenshotUtils.captureAndAttach(driver, "Logout did not work (attempt" + (attempts + 1) + ")");
                 this.clickNavBurger();
             } finally {
                 attempts++;
