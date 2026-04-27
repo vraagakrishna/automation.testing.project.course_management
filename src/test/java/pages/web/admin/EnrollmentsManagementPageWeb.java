@@ -127,7 +127,7 @@ public class EnrollmentsManagementPageWeb extends BasePageWeb implements IEnroll
             return;
         }
 
-        WebElement tableContainer = driver.findElement(
+        WebElement tableContainer = getElement(
                 By.xpath("//div[@class='admin-enrollments']//table//tr[1]")
         );
 
