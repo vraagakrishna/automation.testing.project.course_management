@@ -7,6 +7,7 @@ import org.testng.Assert;
 import pages.interfaces.admin.IEnrollmentsManagementPage;
 import pages.web.BasePageWeb;
 import utils.ReportManager;
+import utils.ScreenshotUtils;
 
 import java.util.List;
 import java.util.logging.Logger;
@@ -101,6 +102,9 @@ public class EnrollmentsManagementPageWeb extends BasePageWeb implements IEnroll
         logger.info("Enrolled user '" + userEmail + "' to course '" + courseName + "'");
         ReportManager.getTest()
                      .info("Enrolled user '" + userEmail + "' to course '" + courseName + "'");
+        ScreenshotUtils.captureAndAttach(
+                driver, "Enrolled user '" + userEmail + "' to course '" + courseName + "'"
+        );
     }
 
     @Override
