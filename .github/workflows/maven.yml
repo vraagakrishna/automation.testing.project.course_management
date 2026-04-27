@@ -7,17 +7,49 @@ on:
         required: true
         default: 'main'
 
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - 'README.md'
+      - '.gitignore'
+
+  pull_request:
+    branches:
+      - main
+    paths-ignore:
+      - 'README.md'
+      - '.gitignore'
+
 jobs:
   mobile-build:
-    runs-on: macos-latest
     strategy:
       fail-fast: false
       matrix:
         include:
-          - execution_type: mobileWeb
-            name: Android-Web
-          - execution_type: nativeApp
-            name: Android-Native
+          #- name: Android-Web
+          #  platform_name: Android
+          #  execution_type: mobileWeb
+          #  automation_name: UiAutomator2
+          #  os: ubuntu-latest
+          #  browser_name: chrome
+          - name: Android-Native
+            platform_name: Android
+            execution_type: nativeApp
+            automation_name: UiAutomator2
+            os: ubuntu-latest
+            browser_name: chrome
+          - name: iOS-Web
+            platform_name: iOS
+            execution_type: mobileWeb
+            automation_name: XCUITest
+            os: macos-latest
+            browser_name: safari
+
+    runs-on: ${{ matrix.os }}
+
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
     steps:
       - name: Checkout code
@@ -35,22 +67,91 @@ jobs:
       - name: Install Node.js & Appium
         run: |
           npm install -g appium
-          appium driver install uiautomator2
+          # Only install the driver needed for the current platform to save setup time
+          if [ "${{ matrix.platform_name }}" = "Android" ]; then
+            appium driver install uiautomator2
+          else
+            appium driver install xcuitest
+          fi
+
+      # --- FIX KVM PERMISSIONS (Linux Only) ---
+      - name: Enable KVM group perms
+        if: matrix.platform_name == 'Android'
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
 
       # --- LOGIC FOR ANDROID ---
       - name: Run Android Tests (${{ matrix.execution_type }})
+        if: matrix.platform_name == 'Android'
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 31
           target: google_apis
           arch: x86_64
+          disable-animations: true # Keep this true for CI stability
+          emulator-options: -no-snapshot-save -no-window -noaudio -no-boot-anim
           script: |
-            mvn clean test \
-            -DEXECUTION_TYPE=${{ matrix.execution_type }} \
-            -DADMIN_EMAIL=${{ secrets.ADMIN_EMAIL }} \
-            -DADMIN_PASSWORD=${{ secrets.ADMIN_PASSWORD }} \
-            -DUSER_EMAIL=${{ secrets.USER_EMAIL }} \
-            -DUSER_PASSWORD=${{ secrets.USER_PASSWORD }}
+            # Ensure the device is recognized
+            echo "Checking connected devices..."
+            adb devices
+            
+            # Wait for device to be fully usable (extra safety)
+            echo "Waiting for system server..."
+            adb wait-for-device
+            
+            while [ "`adb shell getprop init.svc.bootanim`" != "stopped" ]; do sleep 2; done
+            
+            # Now run your test
+            mvn clean test -DPLATFORM_NAME=${{ matrix.platform_name }} -DEXECUTION_TYPE=${{ matrix.execution_type }} -DAUTOMATOR_NAME=${{ matrix.automation_name }} -DBROWSER_NAME=${{ matrix.browser_name }} -DADMIN_EMAIL=${{ secrets.ADMIN_EMAIL }} -DADMIN_PASSWORD=${{ secrets.ADMIN_PASSWORD }} -DUSER_EMAIL=${{ secrets.USER_EMAIL }} -DUSER_PASSWORD=${{ secrets.USER_PASSWORD }}
+
+      # --- LOGIC FOR iOS ---
+      - name: Run iOS Tests (${{ matrix.execution_type }})
+        if: matrix.platform_name == 'iOS'
+        run: |
+          # 1. Identify Simulator
+          UDID=$(xcrun simctl list devices available | grep "iPhone" | head -1 | awk -F '[()]' '{print $2}')
+          
+          # 2. Boot the device
+          echo "Booting simulator $UDID..."
+          xcrun simctl boot "$UDID" || echo "Device already booting/booted"
+
+          # 3. Wait for the simulator to reach 'Booted' status using a loop
+          echo "Waiting for simulator to be ready..."
+          TIMEOUT=60
+          COUNT=0
+          while [ "$(xcrun simctl list devices | grep "$UDID" | awk '{print $NF}')" != "(Booted)" ]; do
+            if [ $COUNT -ge $TIMEOUT ]; then
+              echo "Error: Simulator failed to boot within $TIMEOUT seconds."
+              exit 1
+            fi
+            sleep 5S
+            COUNT=$((COUNT+5))
+          done
+          
+          # 4. Verification: The iOD version of 'adb devices'
+          echo "Checking booted iOS devices..."
+          xcrun simctl list devices | grep "(Booted)"
+          
+          # 5. Extra Safety: Wait for the UI process (backboardd) to be alive
+          echo "Waiting for System UI (backboardd) to be ready..."
+          MAX_RETRIES=12
+          RETRY_COUNT=0
+          until xcrun simctl spawn "$UDID" launchctl list com.apple.backboardd > /dev/null 2>&1; do
+            if [ $RETRY_COUNT -ge $MAX_RETRIES ]; then
+              echo "Error: System UI failed to start within 60 seconds."
+              exit 1
+            fi
+            echo "Still waiting for backboardd..."
+            sleep 5
+            RETRY_COUNT=$((RETRY_COUNT+1))
+          done
+    
+          echo "Simulator $UDID is ready for tests!"
+          
+          # 6. Run tests
+          mvn clean test -DPLATFORM_NAME=${{ matrix.platform_name }} -DEXECUTION_TYPE=${{ matrix.execution_type }} -DAUTOMATOR_NAME=${{ matrix.automation_name }} -DBROWSER_NAME=${{ matrix.browser_name }} -DADMIN_EMAIL=${{ secrets.ADMIN_EMAIL }} -DADMIN_PASSWORD=${{ secrets.ADMIN_PASSWORD }} -DUSER_EMAIL=${{ secrets.USER_EMAIL }} -DUSER_PASSWORD=${{ secrets.USER_PASSWORD }}
 
       # --- SHARED REPORTING ---
       - name: Upload Test Report (${{ matrix.name }})

@@ -91,7 +91,7 @@ public class CourseVisibilityTests extends TestsBase {
     // </editor-fold>
 
     // <editor-fold desc="Public Methods">
-    @Test(description = "User does not see Unpublished Course", groups = "7. User Course Visibility Tests")
+    @Test(description = "User does not see Unpublished Course", groups = "User Course Visibility Tests")
     public void userDoesNotSeeUnpublishedCourse() {
         Course course = new Course();
         course.setTitle(CourseDataGenerator.randomCourseName());
@@ -101,7 +101,7 @@ public class CourseVisibilityTests extends TestsBase {
         addCourseAndDoCourseVisibilityValidation(course);
     }
 
-    @Test(description = "User sees Published Course", groups = "7. User Course Visibility Tests", priority = 1)
+    @Test(description = "User sees Published Course", groups = "User Course Visibility Tests", priority = 1)
     public void userSeesPublishedCourse() {
         Course course = new Course();
         course.setTitle(CourseDataGenerator.randomCourseName());
@@ -111,7 +111,7 @@ public class CourseVisibilityTests extends TestsBase {
         addCourseAndDoCourseVisibilityValidation(course);
     }
 
-    @Test(description = "User sees Published Course with Duration", groups = "7. User Course Visibility Tests", priority = 2)
+    @Test(description = "User sees Published Course with Duration", groups = "User Course Visibility Tests", priority = 2)
     public void userSeesPublishedCourseWithDuration() {
         Course course = new Course();
         course.setTitle(CourseDataGenerator.randomCourseName());
@@ -122,7 +122,7 @@ public class CourseVisibilityTests extends TestsBase {
         addCourseAndDoCourseVisibilityValidation(course);
     }
 
-    @Test(description = "User sees Published Course with Level Intermediate", groups = "7. User Course Visibility Tests", priority = 3)
+    @Test(description = "User sees Published Course with Level Intermediate", groups = "User Course Visibility Tests", priority = 3)
     public void userSeesPublishedCourseWithLevelIntermediate() {
         Course course = new Course();
         course.setTitle(CourseDataGenerator.randomCourseName());
@@ -133,7 +133,7 @@ public class CourseVisibilityTests extends TestsBase {
         addCourseAndDoCourseVisibilityValidation(course);
     }
 
-    @Test(description = "User sees Published Course with Level Advanced", groups = "7. User Course Visibility Tests", priority = 4)
+    @Test(description = "User sees Published Course with Level Advanced", groups = "User Course Visibility Tests", priority = 4)
     public void userSeesPublishedCourseWithLevelAdvanced() {
         Course course = new Course();
         course.setTitle(CourseDataGenerator.randomCourseName());
@@ -144,7 +144,7 @@ public class CourseVisibilityTests extends TestsBase {
         addCourseAndDoCourseVisibilityValidation(course);
     }
 
-    @Test(description = "User sees Published Course with Price", groups = "7. User Course Visibility Tests", priority = 5)
+    @Test(description = "User sees Published Course with Price", groups = "User Course Visibility Tests", priority = 5)
     public void userSeesPublishedCourseWithPrice() {
         Course course = new Course();
         course.setTitle(CourseDataGenerator.randomCourseName());
@@ -155,7 +155,7 @@ public class CourseVisibilityTests extends TestsBase {
         addCourseAndDoCourseVisibilityValidation(course);
     }
 
-    @Test(description = "User sees Published Course with Thumbnail", groups = "7. User Course Visibility Tests", priority = 6)
+    @Test(description = "User sees Published Course with Thumbnail", groups = "User Course Visibility Tests", priority = 6)
     public void userSeesPublishedCourseWithThumbnail() {
         String url = CourseDataGenerator.validThumbnailUrl();
 
@@ -168,7 +168,7 @@ public class CourseVisibilityTests extends TestsBase {
         addCourseAndDoCourseVisibilityValidation(course);
     }
 
-    @Test(description = "User sees edited Title for Published Course", groups = "7. User Course Visibility Tests", priority = 7)
+    @Test(description = "User sees edited Title for Published Course", groups = "User Course Visibility Tests", priority = 7)
     public void userSeesEditedTitleForPublishedCourse() {
         Course course = new Course();
         course.setTitle(CourseDataGenerator.randomCourseName());
@@ -189,7 +189,7 @@ public class CourseVisibilityTests extends TestsBase {
         editCourseAndDoCourseVisibilityValidation(course, editedCourse);
     }
 
-    @Test(description = "User sees edited Description for Published Course", groups = "7. User Course Visibility Tests", priority = 8)
+    @Test(description = "User sees edited Description for Published Course", groups = "User Course Visibility Tests", priority = 8)
     public void userSeesEditedDescriptionForPublishedCourse() {
         Course course = new Course();
         course.setTitle(CourseDataGenerator.randomCourseName());
@@ -210,7 +210,7 @@ public class CourseVisibilityTests extends TestsBase {
         editCourseAndDoCourseVisibilityValidation(course, editedCourse);
     }
 
-    @Test(description = "User sees edited Level for Published Course", groups = "7. User Course Visibility Tests", priority = 9)
+    @Test(description = "User sees edited Level for Published Course", groups = "User Course Visibility Tests", priority = 9)
     public void userSeesEditedLevelForPublishedCourse() {
         Course course = new Course();
         course.setTitle(CourseDataGenerator.randomCourseName());
@@ -231,7 +231,7 @@ public class CourseVisibilityTests extends TestsBase {
         editCourseAndDoCourseVisibilityValidation(course, editedCourse);
     }
 
-    @Test(description = "User sees edited Price for Published Course", groups = "7. User Course Visibility Tests", priority = 10)
+    @Test(description = "User sees edited Price for Published Course", groups = "User Course Visibility Tests", priority = 10)
     public void userSeesEditedPriceForPublishedCourse() {
         Course course = new Course();
         course.setTitle(CourseDataGenerator.randomCourseName());
@@ -252,7 +252,7 @@ public class CourseVisibilityTests extends TestsBase {
         editCourseAndDoCourseVisibilityValidation(course, editedCourse);
     }
 
-    @Test(description = "User sees edited Thumbnail URL for Published Course", groups = "7. User Course Visibility Tests", priority = 11)
+    @Test(description = "User sees edited Thumbnail URL for Published Course", groups = "User Course Visibility Tests", priority = 11)
     public void userSeesEditedThumbnailUrlForPublishedCourse() {
         Course course = new Course();
         course.setTitle(CourseDataGenerator.randomCourseName());
@@ -273,7 +273,7 @@ public class CourseVisibilityTests extends TestsBase {
         editCourseAndDoCourseVisibilityValidation(course, editedCourse);
     }
 
-    @Test(description = "User does not see edited Unpublished Course", groups = "7. User Course Visibility Tests", priority = 12)
+    @Test(description = "User does not see edited Unpublished Course", groups = "User Course Visibility Tests", priority = 12)
     public void userDoesNotSeeEditedUnpublishedCourse() {
         Course course = new Course();
         course.setTitle(CourseDataGenerator.randomCourseName());

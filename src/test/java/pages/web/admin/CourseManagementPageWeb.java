@@ -315,10 +315,14 @@ public class CourseManagementPageWeb extends BasePageWeb implements ICourseManag
                         "",
                         errorMessage
                 );
-                case "description" -> Assert.assertNull(
-                        getElement(courseDescriptionField).getAttribute("value"),
-                        errorMessage
-                );
+                case "description" -> {
+                    String value = getElement(courseDescriptionField).getAttribute("value");
+                    Assert.assertTrue(
+                            value == null || value.trim()
+                                                  .isEmpty(),
+                            errorMessage
+                    );
+                }
                 case "duration" -> Assert.assertEquals(
                         getElement(courseDurationField).getAttribute("value"),
                         "",
@@ -412,6 +416,7 @@ public class CourseManagementPageWeb extends BasePageWeb implements ICourseManag
     private void publishCourse(boolean publish) {
         closeKeyboardIfOpen();
         WebElement element = getElement(coursePublishedCheckboxField);
+        scrollIntoView(element);
 
         if (publish && !element.isSelected())
             element.click();

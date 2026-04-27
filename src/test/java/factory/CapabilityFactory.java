@@ -8,6 +8,7 @@ import utils.ApkDownloader;
 import utils.ConfigManager;
 
 import java.io.File;
+import java.time.Duration;
 
 public class CapabilityFactory {
 
@@ -22,7 +23,9 @@ public class CapabilityFactory {
         if (platform.equalsIgnoreCase(Constants.PLATFORM_ANDROID)) {
             UiAutomator2Options options = new UiAutomator2Options()
                     .setAutomationName(automatorName)
-                    .setPlatformName(platform);
+                    .setPlatformName(platform)
+                    .setAdbExecTimeout(Duration.ofSeconds(60))        // Give ADB 60s instead of 30s
+                    .setAppWaitDuration(Duration.ofSeconds(60));      // Wait longer for Appium to hook into the app
 
             if (executionType.equalsIgnoreCase(Constants.EXECUTION_TYPE_MOBILE_WEB)) {
                 options.withBrowserName(browserName);
@@ -38,10 +41,17 @@ public class CapabilityFactory {
         } else if (platform.equalsIgnoreCase(Constants.PLATFORM_IOS)) {
             XCUITestOptions options = new XCUITestOptions()
                     .setAutomationName(automatorName)
-                    .setPlatformName(platform);
+                    .setPlatformName(platform)
+                    .setWdaLaunchTimeout(Duration.ofMinutes(10))    // Wait up to 10 mins for the build
+                    .setWdaConnectionTimeout(Duration.ofMinutes(5)) // Wait for the server to respond
+                    .setUseNewWDA(false);                           // Don't rebuild if already built
 
             if (executionType.equalsIgnoreCase(Constants.EXECUTION_TYPE_MOBILE_WEB)) {
                 options.withBrowserName(browserName);
+
+                options.setCapability("appium:includeSafariInWebviews", true);
+                options.setCapability("appium:webviewConnectTimeout", 60000);
+                options.setCapability("appium:shouldUseSingletonTestManager", false);
             } else if (executionType.equalsIgnoreCase(Constants.EXECUTION_TYPE_NATIVE_APP)) {
                 throw new UnsupportedOperationException(platform + " is not supported yet for " + executionType);
             } else {

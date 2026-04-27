@@ -1,13 +1,19 @@
 package pages.web;
 
+import common.Constants;
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import pages.BasePage;
+import utils.ConfigManager;
 
+import java.time.Duration;
 import java.util.List;
 
 public class BasePageWeb extends BasePage {
@@ -24,12 +30,23 @@ public class BasePageWeb extends BasePage {
 
     // <editor-fold desc="Protected Methods">
     protected void scrollToViewThenClickButton(By by) {
-        WebElement element = this.getElement(by);
+        WebElement element = this.getElement(by, 50);
         scrollIntoView(element);
         clickButton(element);
     }
 
+    @Override
+    protected void clickButton(By by) {
+        scrollToViewThenClickButton(by);
+    }
+
     protected void clickButton(WebElement element) {
+        if (ConfigManager.getPlatformName()
+                         .equalsIgnoreCase(Constants.PLATFORM_IOS)) {
+            element.click();  // better for Safari alert handling
+            return;
+        }
+
         ((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
     }
 
@@ -59,7 +76,11 @@ public class BasePageWeb extends BasePage {
         scrollIntoView(element);
         element.click();
 
-        List<WebElement> options = element.findElements(By.tagName("option"));
+        // Wait until options are present
+        List<WebElement> options = new WebDriverWait(driver, Duration.ofSeconds(10)).until(driver -> {
+            List<WebElement> opts = element.findElements(By.tagName("option"));
+            return opts.size() > 1 ? opts : null;
+        });
 
         for (WebElement option : options) {
             String text = option.getText()
@@ -85,7 +106,8 @@ public class BasePageWeb extends BasePage {
     protected String getValidationMessage(By by) {
         WebElement element = getElement(by);
         return driver.executeScript("return arguments[0].validationMessage;", element)
-                     .toString();
+                     .toString()
+                     .toLowerCase();
     }
 
     protected void scrollIntoView(WebElement element) {
@@ -126,6 +148,31 @@ public class BasePageWeb extends BasePage {
             return element.getText();
         else
             return element.getAttribute("value");
+    }
+
+    @Override
+    protected void enterKeys(By by, Object keys) {
+        closeKeyboardIfOpen();
+        WebElement element = this.getElement(by);
+        scrollIntoView(element);
+
+        String currentText = getElementText(element);
+
+        if (currentText != null && currentText.equals(keys.toString()))
+            return;
+
+        element.click();
+        element.clear();
+        element.sendKeys((CharSequence) keys);
+    }
+
+    protected void invisibilityOfElement(By by) {
+        try {
+            new WebDriverWait(driver, Duration.ofSeconds(20))
+                    .until(ExpectedConditions.invisibilityOfElementLocated(by));
+        } catch (TimeoutException ignored) {
+            // overlay might not exist, that's fine
+        }
     }
     // </editor-fold>
 

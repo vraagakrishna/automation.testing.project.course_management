@@ -2,6 +2,7 @@ package factory;
 
 import common.Constants;
 import io.appium.java_client.AppiumDriver;
+import org.openqa.selenium.JavascriptExecutor;
 import services.AppiumServiceManager;
 import utils.ConfigManager;
 
@@ -32,6 +33,15 @@ public class DriverFactory {
         return driverInstance;
     }
 
+    public static void reInitDriver(AppiumDriver driver) {
+        resetBrowserState(driver);
+
+        if (ConfigManager.getExecutionType()
+                         .equalsIgnoreCase(Constants.EXECUTION_TYPE_MOBILE_WEB)) {
+            driver.get(Constants.DEV_URL);
+        }
+    }
+
     public static AppiumDriver getDriver() {
         return driver.get();
     }
@@ -40,11 +50,32 @@ public class DriverFactory {
         driver.set(driverInstance);
     }
 
+    public static void cleanDriver() {
+        AppiumDriver driverInstance = driver.get();
+        if (driverInstance != null)
+            resetBrowserState(driverInstance);
+    }
+
     public static void quitDriver() {
         AppiumDriver driverInstance = driver.get();
         if (driverInstance != null) {
             driverInstance.quit();
             driver.remove();
+        }
+    }
+    // </editor-fold>
+
+    // <editor-fold desc="Public Methods">
+    private static void resetBrowserState(AppiumDriver driver) {
+        if (ConfigManager.getExecutionType()
+                         .equalsIgnoreCase(Constants.EXECUTION_TYPE_MOBILE_WEB)) {
+            driver.manage()
+                  .deleteAllCookies();
+
+            // Clear local & session storage
+            ((JavascriptExecutor) driver).executeScript(
+                    "window.localStorage.clear(); window.sessionStorage.clear();"
+            );
         }
     }
     // </editor-fold>

@@ -39,6 +39,7 @@ public class AppiumServiceManager {
 
             service = new AppiumServiceBuilder()
                     .usingAnyFreePort()
+                    .withArgument(GeneralServerFlag.ALLOW_INSECURE, "*:chromedriver_autodownload")
                     .withLogFile(new File(destinationPath))
                     .withArgument(GeneralServerFlag.LOG_LEVEL, "info:debug")
                     .withArgument(GeneralServerFlag.LOG_TIMESTAMP)

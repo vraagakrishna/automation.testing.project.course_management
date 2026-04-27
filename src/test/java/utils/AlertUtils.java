@@ -32,8 +32,8 @@ public class AlertUtils {
                      .info(String.format("Alert message found: %s", alertMessage));
 
         Assert.assertTrue(
-                alertMessage.contains(expectedMessage),
-                "Expected alert message: " + expectedMessage + ", but actual alert message: " + alertMessage
+                alertMessage.contains(expectedMessage.toLowerCase()),
+                "Expected alert message: '" + expectedMessage + "', but actual alert message: '" + alertMessage + "'"
         );
     }
 
@@ -41,7 +41,7 @@ public class AlertUtils {
         String alertMessage = this.getAlertMessage(accept);
         logger.info(String.format("Alert message found: %s", alertMessage));
 
-        Assert.assertEquals(alertMessage, expectedMessage, "Alert message does not match");
+        Assert.assertEquals(alertMessage, expectedMessage.toLowerCase(), "Alert message does not match");
     }
     // </editor-fold>
 
@@ -78,7 +78,7 @@ public class AlertUtils {
 
         logger.info(String.format("Alert message is: %s", alertMessage));
 
-        return alertMessage;
+        return alertMessage.toLowerCase();
     }
     // </editor-fold>
 

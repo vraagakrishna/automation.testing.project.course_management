@@ -14,4 +14,6 @@ public class Constants {
 
     public static final String DEV_APK_URL = "https://ndosisimplifiedautomation.vercel.app/MobileApps/app-qa-release.apk";
 
+    public static final String BROWSER_NAME_CHROME = "chrome";
+
 }

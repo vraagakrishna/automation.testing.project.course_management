@@ -6,6 +6,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
 import pages.interfaces.INavigationBar;
+import utils.ScreenshotUtils;
 
 import java.util.logging.Logger;
 
@@ -16,11 +17,17 @@ public class NavigationBarAndroid extends BasePageAndroid implements INavigation
 
     private final By navBurgerBtn = By.xpath("//android.widget.Button");
 
-    private final By loginBtn = By.xpath("//android.widget.Button[@content-desc=\"Login / Sign Up\"]");
+    private final By loginBtn = AppiumBy.androidUIAutomator("new UiScrollable(" +
+            "new UiSelector().scrollable(true)).scrollIntoView(new UiSelector().description(\"Login / Sign Up\")" +
+            ")");
 
-    private final By logoutBtn = By.xpath("//android.widget.Button[@content-desc=\"Logout\"]");
+    private final By logoutBtn = AppiumBy.androidUIAutomator("new UiScrollable(" +
+            "new UiSelector().scrollable(true)).scrollIntoView(new UiSelector().description(\"Logout\")" +
+            ")");
 
-    private final By adminPanelBtn = By.xpath("//android.widget.Button[@content-desc=\"Admin Panel\"]");
+    private final By adminPanelBtn = AppiumBy.androidUIAutomator("new UiScrollable(" +
+            "new UiSelector().scrollable(true)).scrollIntoView(new UiSelector().description(\"Admin Panel\")" +
+            ")");
 
     private final By adminNavBurgerBtn = AppiumBy.androidUIAutomator("new UiSelector().clickable(true).instance(0)");
 
@@ -30,7 +37,9 @@ public class NavigationBarAndroid extends BasePageAndroid implements INavigation
 
     private final By enrollmentsNavBtn = By.xpath("//android.widget.Button[@content-desc=\"Enrollments\"]");
 
-    private final By backToWebsiteBtn = By.xpath("//android.widget.Button[@content-desc=\"Back to Home\"]");
+    private final By backToWebsiteBtn = AppiumBy.androidUIAutomator("new UiScrollable(" +
+            "new UiSelector().scrollable(true)).scrollIntoView(new UiSelector().description(\"Back to Home\")" +
+            ")");
     // </editor-fold>
 
     // <editor-fold desc="Ctor">
@@ -56,9 +65,16 @@ public class NavigationBarAndroid extends BasePageAndroid implements INavigation
 
         while (attempts < maxAttempts) {
             try {
+                logger.info("Attempt " + (attempts + 1) + " of " + maxAttempts);
                 this.clickButton(logoutBtn);
                 break;
             } catch (NoSuchElementException | TimeoutException ex) {
+                ScreenshotUtils.captureAndAttach(driver, "Logout did not work (attempt " + (attempts + 1) + ")");
+                this.scrollUp();
+                ScreenshotUtils.captureAndAttach(
+                        driver,
+                        "Logout did not work (attempt " + (attempts + 1) + ") - Scrolled Up"
+                );
                 this.clickNavBurger();
             } finally {
                 attempts++;

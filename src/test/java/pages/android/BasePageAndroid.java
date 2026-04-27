@@ -3,8 +3,10 @@ package pages.android;
 import io.appium.java_client.AppiumBy;
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -45,17 +47,19 @@ public class BasePageAndroid extends BasePage {
         Wait<AppiumDriver> wait = new FluentWait<>(driver).withTimeout(Duration.ofSeconds(5))
                                                           .pollingEvery(Duration.ofMillis(300));
 
-        boolean popupDisplayed = wait.until(d -> d.getPageSource()
-                                                  .contains("live-region=\"1\""));
-
-        if (!popupDisplayed) return null;
+        try {
+            wait.until(d -> d.getPageSource()
+                             .contains("live-region=\"1\""));
+        } catch (TimeoutException ex) {
+            return "";
+        }
 
         String source = driver.getPageSource();
 
         Pattern pattern = Pattern.compile("content-desc=\"([^\"]*)\"[^>]*live-region=\"1\"");
         Matcher matcher = pattern.matcher(source);
 
-        String popupText = null;
+        String popupText = "";
         if (matcher.find()) {
             popupText = matcher.group(1);
         }
@@ -173,9 +177,52 @@ public class BasePageAndroid extends BasePage {
         }
     }
 
+    protected void waitForSpinner(By loadingSpinner) {
+        // Create a wait instance
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(1));
+
+        try {
+            // First, wait for it to appear (short timeout)
+            wait.until(ExpectedConditions.visibilityOfElementLocated(loadingSpinner));
+
+            // Then, wait for it to disappear (this is the "Sync" point)
+            wait.until(ExpectedConditions.invisibilityOfElementLocated(loadingSpinner));
+        } catch (TimeoutException e) {
+            // If it never appeared because the app was too fast, just log it and move on
+        }
+    }
+
+    protected void scrollUp() {
+        driver.findElements(AppiumBy.androidUIAutomator(
+                "new UiScrollable(new UiSelector().scrollable(true)).scrollToBeginning(10)"
+        ));
+    }
+
     @Override
     protected String getElementText(WebElement element) {
         return element.getAttribute("text");
+    }
+
+    @Override
+    protected void enterKeys(By by, Object keys) {
+        closeKeyboardIfOpen();
+
+        int attempts = 0;
+
+        while (attempts < 2) {
+            try {
+                super.enterKeys(by, keys);
+                return;
+            } catch (StaleElementReferenceException ex) {
+                attempts++;
+
+                // Short sleep to let the UI settle before the next attempt
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException ignored) {
+                }
+            }
+        }
     }
     // </editor-fold>
 

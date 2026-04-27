@@ -1,5 +1,6 @@
 package pages.android.dashboard;
 
+import io.appium.java_client.AppiumBy;
 import io.appium.java_client.AppiumDriver;
 import models.Course;
 import org.openqa.selenium.By;
@@ -47,8 +48,11 @@ public class UserDashboardPageAndroid extends BasePageAndroid implements IUserDa
 
     // <editor-fold desc="Private Methods">
     private WebElement findCourse(String courseTitle) {
-        return getElement(
-                By.xpath("//android.view.View[@content-desc=\"" + courseTitle + "\"]")
+        return driver.findElement(
+                AppiumBy.androidUIAutomator(
+                        "new UiScrollable(new UiSelector().scrollable(true))" +
+                                ".scrollIntoView(new UiSelector().description(\"" + courseTitle + "\"))"
+                )
         );
     }
     // </editor-fold>

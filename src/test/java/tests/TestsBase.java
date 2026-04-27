@@ -1,14 +1,12 @@
 package tests;
 
+import common.Constants;
 import factory.DriverFactory;
 import io.appium.java_client.AppiumDriver;
 import models.Course;
 import org.openqa.selenium.WebElement;
 import org.testng.ITestResult;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.*;
 import pages.interfaces.INavigationBar;
 import pages.interfaces.admin.ICourseManagementPage;
 import pages.interfaces.admin.IEnrollmentsManagementPage;
@@ -45,9 +43,15 @@ public class TestsBase {
 
         logger.info("Setting up the driver");
 
-        driver = DriverFactory.initDriver();
+        driver = DriverFactory.getDriver();
 
-        DriverFactory.setDriver(driver);
+        if (driver == null) {
+            driver = DriverFactory.initDriver();
+
+            DriverFactory.setDriver(driver);
+        } else {
+            DriverFactory.reInitDriver(driver);
+        }
 
         SoftAssertManager.getSoftAssert();
 
@@ -56,15 +60,27 @@ public class TestsBase {
     }
 
     @AfterMethod(alwaysRun = true)
-    public void tearDownTest(ITestResult result) {
+    public void cleanTest(ITestResult result) {
         cleanUpPage();
 
+        if (driver != null) {
+            logger.info("Cleaning driver...");
+            DriverFactory.cleanDriver();
+        }
+
+        if (ConfigManager.getExecutionType()
+                         .equalsIgnoreCase(Constants.EXECUTION_TYPE_NATIVE_APP)) {
+            // Native App Tests will quit driver in @AfterMethod
+            quitDriver();
+        }
+    }
+
+    @AfterClass(alwaysRun = true)
+    public void tearDownTest() {
         logger.info("Tearing down...");
 
         if (driver != null) {
-            logger.info("Quitting driver...");
-            DriverFactory.quitDriver();
-            driver = null;
+            quitDriver();
         }
     }
 
@@ -108,7 +124,8 @@ public class TestsBase {
     ) {
         ConfigManager.courses
                 .stream()
-                .filter(course -> course.getTitle() != null)
+                .filter(course -> course.getTitle() != null && !course.getTitle()
+                                                                      .isEmpty())
                 .forEach(course -> {
                     logger.info("Cleaning up course: " + course);
 
@@ -185,7 +202,7 @@ public class TestsBase {
 
         courseManagementPage.editCourse(courseElement, editedCourse);
 
-        courseManagementPage.verifyAlertMessage("updated");
+        courseManagementPage.verifyAlertMessage("update");
 
         return getCourse(
                 editedCourse,
@@ -227,6 +244,14 @@ public class TestsBase {
                 ConfigManager.getUserEmail(),
                 course.isPublished()
         );
+    }
+    // </editor-fold>
+
+    // <editor-fold desc="Private Methods">
+    private void quitDriver() {
+        logger.info("Quitting driver...");
+        DriverFactory.quitDriver();
+        driver = null;
     }
     // </editor-fold>
 

@@ -10,23 +10,27 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Logger;
 
 public class ScreenshotUtils {
 
     // <editor-fold desc="Class Fields / Constants">
     private static final String SCREENSHOT_DIR = System.getProperty("user.dir") + File.separator +
             "Reports" + File.separator + "Screenshots";
+
+    private static final Logger logger = Logger.getLogger(ScreenshotUtils.class.getName());
     // </editor-fold>
 
     // <editor-fold desc="Public Methods">
     public static void captureAndAttach(WebDriver driver, String label) {
         if (driver == null) return;
 
+        logger.info("Screenshot: " + label);
         String timestamp = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(new Date());
         String path = takeScreenshot(driver, label.replace(" ", "_") + "_" + timestamp);
         ReportManager.getTest()
                      .info("Screenshot: " + label)
-                     .addScreenCaptureFromPath(path, label);//
+                     .addScreenCaptureFromPath(path, label);
     }
     // </editor-fold>
 

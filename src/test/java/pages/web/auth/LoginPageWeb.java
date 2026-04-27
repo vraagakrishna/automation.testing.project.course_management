@@ -73,6 +73,7 @@ public class LoginPageWeb extends BasePageWeb implements ILoginPage {
 
     @Override
     public void verifyErrorMessage(String expectedMessage) {
+        logger.info("Verifying Error Message is: " + expectedMessage);
         this.alertUtils.verifyIfAlertMessageIsCorrect(expectedMessage);
     }
     // </editor-fold>

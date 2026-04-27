@@ -7,6 +7,7 @@ import org.testng.Assert;
 import pages.interfaces.admin.IEnrollmentsManagementPage;
 import pages.web.BasePageWeb;
 import utils.ReportManager;
+import utils.ScreenshotUtils;
 
 import java.util.List;
 import java.util.logging.Logger;
@@ -15,6 +16,8 @@ public class EnrollmentsManagementPageWeb extends BasePageWeb implements IEnroll
 
     // <editor-fold desc="Class Fields / Constants">
     private static final Logger logger = Logger.getLogger(EnrollmentsManagementPageWeb.class.getName());
+
+    private final By overlay = By.xpath("//div[contains(@style,'box-shadow')]");
 
     private final By emailField = By.xpath("//input[@placeholder=\"Search by email...\"]");
 
@@ -99,13 +102,14 @@ public class EnrollmentsManagementPageWeb extends BasePageWeb implements IEnroll
         logger.info("Enrolled user '" + userEmail + "' to course '" + courseName + "'");
         ReportManager.getTest()
                      .info("Enrolled user '" + userEmail + "' to course '" + courseName + "'");
+        ScreenshotUtils.captureAndAttach(driver, "Enrolled user to course");
     }
 
     @Override
     public void searchForEnrollment(String courseName, String userEmail, boolean shouldExist) {
         logger.info("Searching for enrollment: user '" + userEmail + "' to course '" + courseName + "'");
         ReportManager.getTest()
-                     .info("Searching for enrollment: user " + userEmail + " to course " + courseName);
+                     .info("Searching for enrollment: user '" + userEmail + "' to course '" + courseName + "'");
         searchEmail(userEmail);
         boolean courseFound = searchCourse(courseName);
 
@@ -124,6 +128,12 @@ public class EnrollmentsManagementPageWeb extends BasePageWeb implements IEnroll
             Assert.assertTrue(shouldExist, "Enrollment should exist, but does not exist");
             return;
         }
+
+        WebElement tableContainer = getElement(
+                By.xpath("//div[@class='admin-enrollments']//table//tr[1]")
+        );
+
+        scrollIntoView(tableContainer);
 
         By rows = By.xpath(
                 "//div[@class='admin-enrollments']//table//tr[" +
@@ -154,8 +164,13 @@ public class EnrollmentsManagementPageWeb extends BasePageWeb implements IEnroll
     // <editor-fold desc="Private Methods">
     private void searchEmail(String email) {
         logger.info("Search for email: " + email);
+        waitForOverlayToDisappear();
         enterKeys(emailField, email);
         closeKeyboardIfOpen();
+    }
+
+    private void waitForOverlayToDisappear() {
+        this.invisibilityOfElement(overlay);
     }
 
     private boolean searchCourse(String courseName) {

@@ -24,7 +24,7 @@ public class ConfigManager {
     }
 
     public static String getBrowserName() {
-        return System.getProperty("BROWSER_NAME", "chrome");
+        return System.getProperty("BROWSER_NAME", Constants.BROWSER_NAME_CHROME);
     }
 
     public static String getAppPath() {

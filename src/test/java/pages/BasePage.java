@@ -31,6 +31,11 @@ public class BasePage {
                 .until(visibilityOfElementLocated(by));
     }
 
+    protected WebElement getElement(By by, int seconds) {
+        return new WebDriverWait(driver, Duration.ofSeconds(seconds))
+                .until(visibilityOfElementLocated(by));
+    }
+
     protected void clickButton(By by) {
         this.getElement(by)
             .click();
@@ -52,6 +57,9 @@ public class BasePage {
 
         if (currentText != null && currentText.equals(keys.toString()))
             return;
+
+        // Re-fetch to avoid stale after attribute read
+        element = this.getElement(by);
 
         element.click();
         element.clear();
