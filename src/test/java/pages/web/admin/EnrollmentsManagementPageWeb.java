@@ -102,9 +102,7 @@ public class EnrollmentsManagementPageWeb extends BasePageWeb implements IEnroll
         logger.info("Enrolled user '" + userEmail + "' to course '" + courseName + "'");
         ReportManager.getTest()
                      .info("Enrolled user '" + userEmail + "' to course '" + courseName + "'");
-        ScreenshotUtils.captureAndAttach(
-                driver, "Enrolled user '" + userEmail + "' to course '" + courseName + "'"
-        );
+        ScreenshotUtils.captureAndAttach(driver, "Enrolled user to course");
     }
 
     @Override
